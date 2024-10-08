@@ -6,8 +6,8 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
 
-        Character player = new Character();
-        Character opponent = new Character();
+        Character player = new Character("Abba","A",0,0);
+        Character opponent = new Character("Test","T",9,14);
 
         //Variablen
         Scanner scanner = new Scanner(System.in);
@@ -37,26 +37,22 @@ public class Main {
                 "Dein Ziel? Den Gegner in Einzelteile zu zerlegen – bis zur letzten Schraube! Jeder Kampf ist ein Test deiner Reflexe, deiner Strategie und deiner Entschlossenheit.\n"+
                 "Dein Roboter wird nicht aufgeben, solange du an den Steuerhebeln sitzt. \n" +
                 "Bist du bereit für die ultimative Schlacht? Die Arena wartet auf dich!");
-
         System.out.println();
 
+        //Namen setzen von Spieler und Opponent
         System.out.println("Wie heißt dein Roboter?: ");
-        spielerName = scanner.nextLine();
+        player.setName(scanner.nextLine());
         System.out.println();
 
         System.out.println("Und wie heißt dein Gegner..?: ");
-        gegnerName = scanner.nextLine();
+        opponent.setName(scanner.nextLine());
         System.out.println();
 
-        System.out.println("Cool. " + spielerName + " ist bereit für ein Kampf!");
-
-        //Namen setzen
-        player.setName(spielerName);
-        opponent.setName(gegnerName);
+        System.out.println("Cool. " + player.getName() + " ist bereit für ein Kampf!");
 
         //Erste Buchstabe von Name bekommen
-        player.setNameChar(getFirstChar(spielerName));
-        opponent.setNameChar(getFirstChar(gegnerName));
+        player.setNameChar(getFirstChar(player.getName()));
+        opponent.setNameChar(getFirstChar(opponent.getName()));
 
         //Spielfeld generieren
         String [][] spielFeld = new String [10][15];
@@ -67,8 +63,8 @@ public class Main {
         }
 
         //Startposition
-        spielFeld[0][0]  = player.getChar();
-        spielFeld[9][14]  = opponent.getChar();
+        spielFeld[player.getPositionX()][player.getPositionY()]  = player.getChar();
+        spielFeld[opponent.getPositionX()][opponent.getPositionY()]  = opponent.getChar();
 
         while (true) {
             updatePlayfield(spielFeld);

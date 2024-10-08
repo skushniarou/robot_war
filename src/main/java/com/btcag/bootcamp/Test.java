@@ -14,7 +14,7 @@ public class Test {
         System.out.println(player.name);
         System.out.println(player.nameChar);
 
-        Character player2 = new Character("Anna","A");
+        Character player2 = new Character("Anna","A",1,1);
         System.out.println();
         System.out.println(player2.name);
         System.out.println(player2.nameChar);
