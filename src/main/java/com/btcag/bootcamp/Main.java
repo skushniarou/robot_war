@@ -1,6 +1,7 @@
 package com.btcag.bootcamp;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,6 +9,9 @@ public class Main {
         //Variablen
         String spielerName = "";
         String spielerBuchstabe = "";
+        String gegnerName = "";
+        String gegnerBuchstabe = "";
+        Random random = new Random();
 
         System.out.println("Welcome to Robot Wars!");
         System.out.println("        _____            ");
@@ -38,14 +42,20 @@ public class Main {
 
         System.out.println();
 
-        System.out.println("Wie heißt dein Roboter?");
+        System.out.println("Wie heißt dein Roboter?: ");
         spielerName = scanner.nextLine();
-
         System.out.println();
+
+        System.out.println("Und wie heißt dein Gegner..?: ");
+        gegnerName = scanner.nextLine();
+        System.out.println();
+
         System.out.println("Cool. " + spielerName + " ist bereit für ein Kampf!");
 
         spielerBuchstabe = "[" + spielerName.charAt(0) + "]";
+        gegnerBuchstabe = "[" + gegnerName.charAt(0) + "]";
 
+        //Spielfeld generieren
         String [][] spielFeld = new String [10][15];
         for (int i = 0; i < spielFeld.length; i++) {
             for (int j = 0; j < spielFeld[i].length; j++) {
@@ -55,13 +65,34 @@ public class Main {
 
         //Startposition
         spielFeld[0][0]  = spielerBuchstabe;
+        spielFeld[9][14]  = gegnerBuchstabe;
 
+        while (true) {
+            updatePlayfield(spielFeld);
+            playerTurn();
+            enemyTurn();
+            checkWinCondition();
+        }
+    }
+
+    private static void checkWinCondition() {
+        //do smth
+    }
+
+    private static void enemyTurn() {
+        //do smth
+    }
+
+    private static void playerTurn() {
+        //do something
+    }
+
+    public static void updatePlayfield (String [][] spielFeld) {
         for (int i = 0; i < spielFeld.length; i++) {
             for (int j = 0; j < spielFeld[i].length; j++) {
                 System.out.print(spielFeld[i][j] + " ");
             }
             System.out.println();
         }
-
     }
 }
