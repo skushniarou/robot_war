@@ -1,8 +1,6 @@
 package com.btcag.bootcamp;
 
 import java.util.Scanner;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import static com.btcag.bootcamp.Mechanics.playerMove;
 
@@ -59,17 +57,19 @@ public class Main {
     public static void playerTurn(Scanner scanner, Character player) {
         String choise = "";
         boolean check = false;
-        while (true) {
+        while (!check) {
+            System.out.println();
             System.out.println("""
                     Du hasst folgende Aktionen: Welche willst du auswählen?\s
                     1 = Bewegen
                     2 = Angreifen
                     3 = Aufgeben""");
             choise = scanner.nextLine();
-            while(!check){
+            while(true){
                 if (choise.matches("[123]+")) {
                     if (choise.equals("1")) {
                         playerMove(scanner, player);
+                        check = true;
                         break;
                     }
                     else if (choise.equals("2")) {
@@ -82,7 +82,6 @@ public class Main {
                     }
                 }   else {
                     System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
-                    System.out.println();
                     break;
                 }
             }
@@ -97,8 +96,6 @@ public class Main {
 
     public static void updatePlayfield (String [][] spielFeld, Character player, Character opponent) {
         System.out.println();
-        //spielFeld[player.getPositionX()][player.getPositionY()]  = player.getChar();
-        //spielFeld[opponent.getPositionX()][opponent.getPositionY()]  = opponent.getChar();
         for (int i = 0; i < spielFeld.length; i++) {
             for (int j = 0; j < spielFeld[i].length; j++) {
                 if ( i == player.getPositionX() && j == player.getPositionY()) {
