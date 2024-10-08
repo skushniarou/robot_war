@@ -10,7 +10,6 @@ public class Test {
         player.setName("Olaf");
         player.setNameChar("O");
 
-
         System.out.println(player.name);
         System.out.println(player.nameChar);
 

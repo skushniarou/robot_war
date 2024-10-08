@@ -42,7 +42,7 @@ public class Character {
     }
 
     public void setNameChar (String nameChar){
-        this.nameChar = nameChar;
+        this.nameChar = nameChar + " ";
     }
 
     public void setCurrentPosition (int currentPositionX, int currentPositionY){
