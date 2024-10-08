@@ -10,10 +10,9 @@ public class Main {
         Character opponent = new Character();
 
         //Variablen
+        Scanner scanner = new Scanner(System.in);
         String spielerName = "";
-        String spielerBuchstabe = "";
         String gegnerName = "";
-        String gegnerBuchstabe = "";
 
         //Intro
         System.out.println("Welcome to Robot Wars!");
@@ -30,11 +29,7 @@ public class Main {
         System.out.println(" / |  |       |  | \\   ");
         System.out.println("/__|__|_______|__|__\\  ");
         System.out.println("   /_/         \\_\\     ");
-
         System.out.println();
-
-        Scanner scanner = new Scanner(System.in);
-
 
         System.out.println("In einer Zukunft, in der Maschinen die Arenen beherrschen, übernimmst du die Kontrolle über einen mächtigen Kampfroboter.\n" +
                 "Ausgestattet mit scharfen Klingen, schweren Geschützen und unzerstörbaren Panzerplatten, trittst du gegen andere stählerne Krieger an.\n" +
