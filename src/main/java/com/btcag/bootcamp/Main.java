@@ -6,13 +6,16 @@ import java.util.Random;
 public class Main {
     public static void main(String[] args) {
 
+        Character player = new Character();
+        Character opponent = new Character();
+
         //Variablen
         String spielerName = "";
         String spielerBuchstabe = "";
         String gegnerName = "";
         String gegnerBuchstabe = "";
-        Random random = new Random();
 
+        //Intro
         System.out.println("Welcome to Robot Wars!");
         System.out.println("        _____            ");
         System.out.println("       /     \\          ");
@@ -52,8 +55,13 @@ public class Main {
 
         System.out.println("Cool. " + spielerName + " ist bereit für ein Kampf!");
 
-        spielerBuchstabe = "[" + spielerName.charAt(0) + "]";
-        gegnerBuchstabe = "[" + gegnerName.charAt(0) + "]";
+        //Namen setzen
+        player.setName(spielerName);
+        opponent.setName(gegnerName);
+
+        //Erste Buchstabe von Name bekommen
+        player.setNameChar(getFirstChar(spielerName));
+        opponent.setNameChar(getFirstChar(gegnerName));
 
         //Spielfeld generieren
         String [][] spielFeld = new String [10][15];
@@ -64,14 +72,15 @@ public class Main {
         }
 
         //Startposition
-        spielFeld[0][0]  = spielerBuchstabe;
-        spielFeld[9][14]  = gegnerBuchstabe;
+        spielFeld[0][0]  = player.getChar();
+        spielFeld[9][14]  = opponent.getChar();
 
         while (true) {
             updatePlayfield(spielFeld);
             playerTurn();
             enemyTurn();
             checkWinCondition();
+            break;
         }
     }
 
@@ -87,7 +96,12 @@ public class Main {
         //do something
     }
 
+    private static String getFirstChar (String name) {
+        return "[" + name.charAt(0) + "]";
+    }
+
     public static void updatePlayfield (String [][] spielFeld) {
+        System.out.println();
         for (int i = 0; i < spielFeld.length; i++) {
             for (int j = 0; j < spielFeld[i].length; j++) {
                 System.out.print(spielFeld[i][j] + " ");
