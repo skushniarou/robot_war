@@ -5,12 +5,16 @@ import java.util.Scanner;
 import static com.btcag.bootcamp.Mechanics.playerMove;
 
 public class Main {
+    public static boolean gameStatus = true;
+    public static boolean turnStatus = true;
+
     public static void main(String[] args) {
 
         //Constructor
-        Character player = new Character("Abba","A",0,0);
+        Character player = new Character("Abba","A",9,13);
         Character opponent = new Character("Test","T",9,14);
         Scanner scanner = new Scanner(System.in);
+
 
         //Intro
         introduction();
@@ -38,16 +42,19 @@ public class Main {
             }
         }
 
-        while (true) {
+        while (gameStatus) {
             updatePlayfield(spielFeld,player,opponent);
             playerTurn(scanner,player);
             enemyTurn();
-            checkWinCondition();
+            checkWinCondition(player,opponent);
         }
     }
 
-    private static void checkWinCondition() {
-        //do smth
+    private static void checkWinCondition(Character player, Character opponent) {
+        if (player.getPositionX() == opponent.getPositionX() && player.getPositionY() == opponent.getPositionY()){
+            System.out.println("Endlich! Du hasst " + opponent.getName() + " gewonnen.");
+            gameStatus = false;
+        }
     }
 
     private static void enemyTurn() {
@@ -56,8 +63,8 @@ public class Main {
 
     public static void playerTurn(Scanner scanner, Character player) {
         String choise = "";
-        boolean check = false;
-        while (!check) {
+        turnStatus = true;
+        while (turnStatus) {
             System.out.println();
             System.out.println("""
                     Du hasst folgende Aktionen: Welche willst du auswählen?\s
@@ -69,7 +76,7 @@ public class Main {
                 if (choise.matches("[123]+")) {
                     if (choise.equals("1")) {
                         playerMove(scanner, player);
-                        check = true;
+                        turnStatus = false;
                         break;
                     }
                     else if (choise.equals("2")) {
@@ -77,7 +84,9 @@ public class Main {
                         break;
                     }
                     else if (choise.equals("3")) {
-                        // Aufgeben
+                        gameStatus = false;
+                        turnStatus = false;
+                        System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
                         break;
                     }
                 }   else {
