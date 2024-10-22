@@ -42,6 +42,7 @@ public class Main {
             }
         }
 
+        //Game turn order
         while (gameStatus) {
             updatePlayfield(spielFeld,player,opponent);
             playerTurn(scanner,player);
@@ -50,17 +51,24 @@ public class Main {
         }
     }
 
+    //Checks if player or opponent wins the game
     private static void checkWinCondition(Character player, Character opponent) {
         if (player.getPositionX() == opponent.getPositionX() && player.getPositionY() == opponent.getPositionY()){
             System.out.println("Endlich! Du hasst " + opponent.getName() + " gewonnen.");
             gameStatus = false;
         }
+        if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()){
+            System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
+            gameStatus = false;
+        }
     }
 
+    //Enemy player decides what to do on his turn
     private static void enemyTurn() {
         //do smth
     }
 
+    //Spieler wird abgefragt was er machen will
     public static void playerTurn(Scanner scanner, Character player) {
         String choise;
         turnStatus = true;
@@ -97,12 +105,12 @@ public class Main {
         }
     }
 
-
-
+    //Saves first Character of Players/Opponents Name
     private static String getFirstChar (String name) {
         return "[" + name.charAt(0) + "]";
     }
 
+    //Updates Playfield on users interface
     public static void updatePlayfield (String [][] spielFeld, Character player, Character opponent) {
         System.out.println();
         for (int i = 0; i < spielFeld.length; i++) {
@@ -119,6 +127,7 @@ public class Main {
         }
     }
 
+    //Introduction at the start of this game
     public static void introduction() {
         System.out.println("Welcome to Robot Wars!");
         System.out.println("        _____            ");

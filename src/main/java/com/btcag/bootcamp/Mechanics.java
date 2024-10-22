@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Mechanics {
 
+    //Function to move object on battlefield and check viability of this move
     public static void playerMove(Scanner scanner, Character player) {
         String move = "";
         boolean check = false;
