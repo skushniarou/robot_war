@@ -82,11 +82,12 @@ public class Main {
                     Du hasst folgende Aktionen: Welche willst du auswählen?\s
                     1 = Bewegen
                     2 = Angreifen
-                    3 = Aufgeben""");
+                    3 = Warten
+                    4 = Aufgeben""");
             choise = scanner.nextLine();
             label:
             while(true){
-                if (choise.matches("[123]+")) {
+                if (choise.matches("[1234]+")) {
                     switch (choise) {
                         case "1":
                             playerMove(scanner, player);
@@ -96,6 +97,10 @@ public class Main {
                             // Angreifen
                             break label;
                         case "3":
+                            //Warten
+                            turnStatus = false;
+                            break label;
+                        case "4":
                             gameStatus = false;
                             turnStatus = false;
                             System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
