@@ -1,5 +1,8 @@
 package com.btcag.bootcamp;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Mechanics {
@@ -60,4 +63,35 @@ public class Mechanics {
         }
     }
 
+    public static void enemyMove(Character opponent) {
+        Random random = new Random();
+        List<Integer> availableMoves = new ArrayList<>();
+        availableMoves.add(1); // w
+        availableMoves.add(2); // a
+        availableMoves.add(3); // s
+        availableMoves.add(4); // d
+        if (opponent.getPositionY() + 1 > 14) { // Prüfung auf "d"
+            availableMoves.remove((Integer) 4);
+        }
+        if (opponent.getPositionY() - 1 < 0) { // Prüfung auf "s"
+            availableMoves.remove((Integer) 3);
+        }
+        if (opponent.getPositionX() + 1 > 9) { // Prüfung auf "a"
+            availableMoves.remove((Integer) 2);
+        }
+        if (opponent.getPositionX() - 1 < 0) { // Prüfung auf "w"
+            availableMoves.remove((Integer) 1);
+        }
+        int randomIndex = random.nextInt(availableMoves.size());
+        int randomNumber = availableMoves.get(randomIndex);
+        if (randomNumber == 1){
+            opponent.currentPositionX -= 1;
+        } else if (randomNumber == 2) {
+            opponent.currentPositionX += 1;
+        } else if (randomNumber == 3) {
+            opponent.currentPositionY -= 1;
+        } else if (randomNumber == 4) {
+            opponent.currentPositionY += 1;
+        }
+    }
 }

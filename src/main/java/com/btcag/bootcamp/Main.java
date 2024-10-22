@@ -2,6 +2,7 @@ package com.btcag.bootcamp;
 
 import java.util.Scanner;
 
+import static com.btcag.bootcamp.Mechanics.enemyMove;
 import static com.btcag.bootcamp.Mechanics.playerMove;
 
 public class Main {
@@ -11,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
 
         //Constructor
-        Character player = new Character("Abba","A",0,0);
+        Character player = new Character("Abba","A",9,13);
         Character opponent = new Character("Test","T",9,14);
         Scanner scanner = new Scanner(System.in);
 
@@ -46,32 +47,35 @@ public class Main {
         while (gameStatus) {
             updatePlayfield(spielFeld,player,opponent);
             playerTurn(scanner,player);
-            enemyTurn();
+            checkWinCondition(player,opponent);
+            enemyTurn(opponent);
             checkWinCondition(player,opponent);
         }
     }
 
     //Checks if player or opponent wins the game
     private static void checkWinCondition(Character player, Character opponent) {
-        if (player.getPositionX() == opponent.getPositionX() && player.getPositionY() == opponent.getPositionY()){
-            System.out.println("Endlich! Du hasst " + opponent.getName() + " gewonnen.");
-            gameStatus = false;
-        }
-        if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()){
-            System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
-            gameStatus = false;
-        }
+        if (turnStatus == false) {
+            if (player.getPositionX() == opponent.getPositionX() && player.getPositionY() == opponent.getPositionY()) {
+                System.out.println("Endlich! Du hasst " + opponent.getName() + " gewonnen.");
+                gameStatus = false;
+            }
+        } else
+            if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()){
+                System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
+                gameStatus = false;
+            }
     }
 
-    //Enemy player decides what to do on his turn
-    private static void enemyTurn() {
-        //do smth
+    //Opponent decides what to do on his turn
+    private static void enemyTurn(Character opponent) {
+        enemyMove(opponent);
+        turnStatus = true;
     }
 
     //Spieler wird abgefragt was er machen will
     public static void playerTurn(Scanner scanner, Character player) {
         String choise;
-        turnStatus = true;
         while (turnStatus) {
             System.out.println();
             System.out.println("""
