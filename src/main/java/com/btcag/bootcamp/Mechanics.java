@@ -35,7 +35,7 @@ public class Mechanics {
                             move = scanner.nextLine();
                         }
                     } else if (move.equals("s") || move.equals("S")) {
-                        if (player.getPositionX() < 10) {
+                        if (player.getPositionX() < 9) {
                             player.currentPositionX += 1;
                             check = true;
                         } else {

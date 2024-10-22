@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
 
         //Constructor
-        Character player = new Character("Abba","A",9,13);
+        Character player = new Character("Abba","A",0,0);
         Character opponent = new Character("Test","T",9,14);
         Scanner scanner = new Scanner(System.in);
 
@@ -30,7 +30,7 @@ public class Main {
 
         System.out.println("Cool. " + player.getName() + " ist bereit für ein Kampf!");
 
-        //Erste Buchstabe von Name bekommen
+        //Erster Buchstabe von Name bekommen
         player.setNameChar(getFirstChar(player.getName()));
         opponent.setNameChar(getFirstChar(opponent.getName()));
 
@@ -62,7 +62,7 @@ public class Main {
     }
 
     public static void playerTurn(Scanner scanner, Character player) {
-        String choise = "";
+        String choise;
         turnStatus = true;
         while (turnStatus) {
             System.out.println();
@@ -72,22 +72,22 @@ public class Main {
                     2 = Angreifen
                     3 = Aufgeben""");
             choise = scanner.nextLine();
+            label:
             while(true){
                 if (choise.matches("[123]+")) {
-                    if (choise.equals("1")) {
-                        playerMove(scanner, player);
-                        turnStatus = false;
-                        break;
-                    }
-                    else if (choise.equals("2")) {
-                        // Angreifen
-                        break;
-                    }
-                    else if (choise.equals("3")) {
-                        gameStatus = false;
-                        turnStatus = false;
-                        System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
-                        break;
+                    switch (choise) {
+                        case "1":
+                            playerMove(scanner, player);
+                            turnStatus = false;
+                            break label;
+                        case "2":
+                            // Angreifen
+                            break label;
+                        case "3":
+                            gameStatus = false;
+                            turnStatus = false;
+                            System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
+                            break label;
                     }
                 }   else {
                     System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
@@ -136,12 +136,13 @@ public class Main {
         System.out.println("   /_/         \\_\\     ");
         System.out.println();
 
-        System.out.println("In einer Zukunft, in der Maschinen die Arenen beherrschen, übernimmst du die Kontrolle über einen mächtigen Kampfroboter.\n" +
-                "Ausgestattet mit scharfen Klingen, schweren Geschützen und unzerstörbaren Panzerplatten, trittst du gegen andere stählerne Krieger an.\n" +
-                "\n" +
-                "Dein Ziel? Den Gegner in Einzelteile zu zerlegen – bis zur letzten Schraube! Jeder Kampf ist ein Test deiner Reflexe, deiner Strategie und deiner Entschlossenheit.\n"+
-                "Dein Roboter wird nicht aufgeben, solange du an den Steuerhebeln sitzt. \n" +
-                "Bist du bereit für die ultimative Schlacht? Die Arena wartet auf dich!");
+        System.out.println("""
+                In einer Zukunft, in der Maschinen die Arenen beherrschen, übernimmst du die Kontrolle über einen mächtigen Kampfroboter.
+                Ausgestattet mit scharfen Klingen, schweren Geschützen und unzerstörbaren Panzerplatten, trittst du gegen andere stählerne Krieger an.
+                
+                Dein Ziel? Den Gegner in Einzelteile zu zerlegen – bis zur letzten Schraube! Jeder Kampf ist ein Test deiner Reflexe, deiner Strategie und deiner Entschlossenheit.
+                Dein Roboter wird nicht aufgeben, solange du an den Steuerhebeln sitzt.\s
+                Bist du bereit für die ultimative Schlacht? Die Arena wartet auf dich!""");
         System.out.println();
     }
 }
