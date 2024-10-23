@@ -4,8 +4,7 @@ import java.util.Scanner;
 
 import static com.btcag.bootcamp.Battlefield.*;
 import static com.btcag.bootcamp.Game.*;
-import static com.btcag.bootcamp.Mechanics.enemyMove;
-import static com.btcag.bootcamp.Mechanics.playerMove;
+import static com.btcag.bootcamp.Mechanics.*;
 import static com.btcag.bootcamp.Other.*;
 
 public class Main {
@@ -33,52 +32,8 @@ public class Main {
             updateBattlefield(battlefield, player, opponent);
             playerTurn(scanner, player, battlefield);
             checkWinConditionPlayer(player, opponent);
-            enemyTurn(opponent,battlefield);
-            checkWinConditionOpponent(player, opponent);
-        }
-    }
-
-    //Opponent decides what to do on his turn
-    private static void enemyTurn(Character opponent, Battlefield battlefield) {
-        enemyMove(opponent,battlefield);
-        playersTurn = true;
-    }
-
-    //Spieler wird abgefragt was er machen will
-    public static void playerTurn(Scanner scanner, Character player, Battlefield battlefield) {
-        String choice;
-        while (playersTurn) { // ToDo: regex oder turnStatus
-            System.out.println();
-            System.out.println("""
-                    Du hasst folgende Aktionen: Welche willst du auswählen?\s
-                    1 = Bewegen
-                    2 = Angreifen
-                    3 = Warten
-                    4 = Aufgeben""");
-            choice = scanner.nextLine();
-            label:
-            if (choice.matches("[1234]+")) {
-                switch (choice) {
-                    case "1":
-                        playerMove(scanner, player,battlefield);
-                        playersTurn = false;
-                        break label;
-                    case "2":
-                        // Angreifen
-                        break label;
-                    case "3":
-                        //Warten
-                        playersTurn = false;
-                        break label;
-                    case "4":
-                        gameOver = false;
-                        playersTurn = false;
-                        System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
-                        break label;
-                }
-            } else {
-                System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
-            }
+            aiTurn(opponent,battlefield);
+            checkWinConditionAI(player, opponent);
         }
     }
 }

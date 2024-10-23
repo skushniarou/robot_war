@@ -2,7 +2,54 @@ package com.btcag.bootcamp;
 
 import java.util.*;
 
+import static com.btcag.bootcamp.Game.gameOver;
+import static com.btcag.bootcamp.Game.playersTurn;
+
 public class Mechanics {
+
+    //Spieler wird abgefragt was er machen will
+    public static void playerTurn(Scanner scanner, Character player, Battlefield battlefield) {
+        String choice;
+        while (playersTurn) { // ToDo: regex oder turnStatus
+            System.out.println();
+            System.out.println("""
+                    Du hasst folgende Aktionen: Welche willst du auswählen?\s
+                    1 = Bewegen
+                    2 = Angreifen
+                    3 = Warten
+                    4 = Aufgeben""");
+            choice = scanner.nextLine();
+            label:
+            if (choice.matches("[1234]+")) {
+                switch (choice) {
+                    case "1":
+                        playerMove(scanner, player,battlefield);
+                        playersTurn = false;
+                        break label;
+                    case "2":
+                        // Angreifen
+                        break label;
+                    case "3":
+                        //Warten
+                        playersTurn = false;
+                        break label;
+                    case "4":
+                        gameOver = false;
+                        playersTurn = false;
+                        System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
+                        break label;
+                }
+            } else {
+                System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
+            }
+        }
+    }
+
+    //Opponent decides what to do on his turn
+    static void aiTurn(Character opponent, Battlefield battlefield) {
+        aiMove(opponent,battlefield);
+        playersTurn = true;
+    }
 
     //Function to move object on battlefield and check viability of this move
     public static void playerMove(Scanner scanner, Character player, Battlefield battlefield) {
@@ -36,7 +83,7 @@ public class Mechanics {
                             move = scanner.nextLine();
                         }
                     } else if (move.equals("s") || move.equals("S")) {
-                        if (player.getPositionX() < battlefield.hight-1) {
+                        if (player.getPositionX() < battlefield.height-1) {
                             player.currentPositionX += 1;
                             check = true;
                         } else {
@@ -60,7 +107,7 @@ public class Mechanics {
         }
     }
 
-    public static void enemyMove(Character opponent, Battlefield battlefield) {
+    public static void aiMove(Character opponent, Battlefield battlefield) {
         Random random = new Random();
         List<Integer> availableMoves = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         // 1 - w - Oben; 2 - a - Links; 3 -  s - Unten; 4 - d - Rechts
@@ -71,7 +118,7 @@ public class Mechanics {
         if (opponent.getPositionY() - 1 < 0) { // Prüfung auf "s"
             availableMoves.remove((Integer) 3);
         }
-        if (opponent.getPositionX() + 1 > battlefield.hight-1) { // Prüfung auf "a"
+        if (opponent.getPositionX() + 1 > battlefield.height-1) { // Prüfung auf "a"
             availableMoves.remove((Integer) 2);
         }
         if (opponent.getPositionX() - 1 < 0) { // Prüfung auf "w"

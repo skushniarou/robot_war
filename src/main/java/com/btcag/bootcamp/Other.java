@@ -38,7 +38,7 @@ public class Other {
         player.setName(scanner.nextLine());
         System.out.println();
         //Name von Opponent setzen
-        System.out.println("Und wie heißt dein Gegner..?: ");
+        System.out.println("Und wie heißt dein Gegner?: ");
         opponent.setName(scanner.nextLine());
         System.out.println();
 

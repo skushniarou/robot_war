@@ -14,7 +14,7 @@ public class Game {
     }
 
     //Checks if opponent wins the game
-    static void checkWinConditionOpponent(Character player, Character opponent) {
+    static void checkWinConditionAI(Character player, Character opponent) {
         if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()) {
             System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
             gameOver = false;
