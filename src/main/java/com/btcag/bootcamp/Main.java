@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] args) {
 
         //Constructor
-        Character player = new Character("Abba","A",9,13);
-        Character opponent = new Character("Test","T",9,14);
+        Character player = new Character("Abba", "A", 9, 13);
+        Character opponent = new Character("Test", "T", 9, 14);
         Scanner scanner = new Scanner(System.in);
 
 
@@ -36,7 +36,7 @@ public class Main {
         opponent.setNameChar(getFirstChar(opponent.getName()));
 
         //Spielfeld generieren
-        String [][] spielFeld = new String [10][15];
+        String[][] spielFeld = new String[10][15];
         for (int i = 0; i < spielFeld.length; i++) {
             for (int j = 0; j < spielFeld[i].length; j++) {
                 spielFeld[i][j] = "[ ]";
@@ -45,26 +45,26 @@ public class Main {
 
         //Game turn order
         while (gameStatus) {
-            updatePlayfield(spielFeld,player,opponent);
-            playerTurn(scanner,player);
-            checkWinCondition(player,opponent);
+            updatePlayfield(spielFeld, player, opponent);
+            playerTurn(scanner, player);
+            checkWinCondition(player, opponent);
             enemyTurn(opponent);
-            checkWinCondition(player,opponent);
+            checkWinCondition(player, opponent);
         }
     }
 
     //Checks if player or opponent wins the game
+    // ToDo: 2 Funktionen machen für Spieler und Opponent + turnStatus rausnehmen
     private static void checkWinCondition(Character player, Character opponent) {
         if (turnStatus == false) {
             if (player.getPositionX() == opponent.getPositionX() && player.getPositionY() == opponent.getPositionY()) {
                 System.out.println("Endlich! Du hasst " + opponent.getName() + " gewonnen.");
                 gameStatus = false;
             }
-        } else
-            if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()){
-                System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
-                gameStatus = false;
-            }
+        } else if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()) {
+            System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
+            gameStatus = false;
+        }
     }
 
     //Opponent decides what to do on his turn
@@ -76,7 +76,7 @@ public class Main {
     //Spieler wird abgefragt was er machen will
     public static void playerTurn(Scanner scanner, Character player) {
         String choise;
-        while (turnStatus) {
+        while (turnStatus) { // ToDo: regex oder turnStatus
             System.out.println();
             System.out.println("""
                     Du hasst folgende Aktionen: Welche willst du auswählen?\s
@@ -86,47 +86,45 @@ public class Main {
                     4 = Aufgeben""");
             choise = scanner.nextLine();
             label:
-            while(true){
-                if (choise.matches("[1234]+")) {
-                    switch (choise) {
-                        case "1":
-                            playerMove(scanner, player);
-                            turnStatus = false;
-                            break label;
-                        case "2":
-                            // Angreifen
-                            break label;
-                        case "3":
-                            //Warten
-                            turnStatus = false;
-                            break label;
-                        case "4":
-                            gameStatus = false;
-                            turnStatus = false;
-                            System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
-                            break label;
-                    }
-                }   else {
-                    System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
-                    break;
+            if (choise.matches("[1234]+")) {
+                switch (choise) {
+                    case "1":
+                        playerMove(scanner, player);
+                        turnStatus = false;
+                        break label;
+                    case "2":
+                        // Angreifen
+                        break label;
+                    case "3":
+                        //Warten
+                        turnStatus = false;
+                        break label;
+                    case "4":
+                        gameStatus = false; // ToDo: rename gameOver
+                        turnStatus = false;
+                        System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
+                        break label;
                 }
+            } else {
+                System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
+                break;
             }
         }
     }
 
     //Saves first Character of Players/Opponents Name
-    private static String getFirstChar (String name) {
+    private static String getFirstChar(String name) {
         return "[" + name.charAt(0) + "]";
     }
 
     //Updates Playfield on users interface
-    public static void updatePlayfield (String [][] spielFeld, Character player, Character opponent) {
+    public static void updatePlayfield(String[][] spielFeld, Character player, Character opponent) {
         System.out.println();
         for (int i = 0; i < spielFeld.length; i++) {
             for (int j = 0; j < spielFeld[i].length; j++) {
-                if ( i == player.getPositionX() && j == player.getPositionY()) {
+                if (i == player.getPositionX() && j == player.getPositionY()) {
                     System.out.print(player.getChar());
-                } else if ( i == opponent.getPositionX() && j == opponent.getPositionY()) {
+                } else if (i == opponent.getPositionX() && j == opponent.getPositionY()) {
                     System.out.print(opponent.getChar());
                 } else {
                     System.out.print(spielFeld[i][j] + " ");

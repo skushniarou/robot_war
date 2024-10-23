@@ -65,11 +65,12 @@ public class Mechanics {
 
     public static void enemyMove(Character opponent) {
         Random random = new Random();
-        List<Integer> availableMoves = new ArrayList<>();
-        availableMoves.add(1); // w
-        availableMoves.add(2); // a
-        availableMoves.add(3); // s
-        availableMoves.add(4); // d
+        List<Integer> availableMoves = new ArrayList<>(); // ToDo: Liste {1,2,3,4} machen
+        availableMoves.add(1); // w - Oben
+        availableMoves.add(2); // a - Links
+        availableMoves.add(3); // s - Unten
+        availableMoves.add(4); // d - Rechts
+        // ToDo: playField auf high/width umstellen
         if (opponent.getPositionY() + 1 > 14) { // Prüfung auf "d"
             availableMoves.remove((Integer) 4);
         }
