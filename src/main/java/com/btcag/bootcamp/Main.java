@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import static com.btcag.bootcamp.Mechanics.enemyMove;
 import static com.btcag.bootcamp.Mechanics.playerMove;
+import static com.btcag.bootcamp.Other.*;
 
 public class Main {
     public static boolean gameOver = true;
@@ -16,24 +17,12 @@ public class Main {
         Character opponent = new Character("Test", "T", 9, 14);
         Scanner scanner = new Scanner(System.in);
 
-
         //Intro
         introduction();
 
         //Namen setzen von Spieler und Opponent
-        System.out.println("Wie heißt dein Roboter?: ");
-        player.setName(scanner.nextLine());
-        System.out.println();
-
-        System.out.println("Und wie heißt dein Gegner..?: ");
-        opponent.setName(scanner.nextLine());
-        System.out.println();
-
-        System.out.println("Cool. " + player.getName() + " ist bereit für ein Kampf!");
-
-        //Erster Buchstabe von Name bekommen
-        player.setNameChar(getFirstChar(player.getName()));
-        opponent.setNameChar(getFirstChar(opponent.getName()));
+        getCharactersNames(scanner,player,opponent);
+        getCharactersSymbol(player,opponent);
 
         //Spielfeld generieren
         String[][] spielFeld = new String[10][15];
@@ -114,9 +103,6 @@ public class Main {
     }
 
     //Saves first Character of Players/Opponents Name
-    private static String getFirstChar(String name) {
-        return "[" + name.charAt(0) + "]";
-    }
 
     //Updates Playfield on users interface
     public static void updatePlayfield(String[][] spielFeld, Character player, Character opponent) {
@@ -133,33 +119,5 @@ public class Main {
             }
             System.out.println();
         }
-    }
-
-    //Introduction at the start of this game
-    public static void introduction() {
-        System.out.println("Welcome to Robot Wars!");
-        System.out.println("        _____            ");
-        System.out.println("       /     \\          ");
-        System.out.println("      | () () |         ");
-        System.out.println("      |  |_|  |         ");
-        System.out.println("      |  (_)  |         ");
-        System.out.println("      |_______|         ");
-        System.out.println("     /  / _ \\  \\       ");
-        System.out.println("    /  / (_) \\  \\      ");
-        System.out.println("   |  |       |  |     ");
-        System.out.println("  /|  |_______|  |\\    ");
-        System.out.println(" / |  |       |  | \\   ");
-        System.out.println("/__|__|_______|__|__\\  ");
-        System.out.println("   /_/         \\_\\     ");
-        System.out.println();
-
-        System.out.println("""
-                In einer Zukunft, in der Maschinen die Arenen beherrschen, übernimmst du die Kontrolle über einen mächtigen Kampfroboter.
-                Ausgestattet mit scharfen Klingen, schweren Geschützen und unzerstörbaren Panzerplatten, trittst du gegen andere stählerne Krieger an.
-                
-                Dein Ziel? Den Gegner in Einzelteile zu zerlegen – bis zur letzten Schraube! Jeder Kampf ist ein Test deiner Reflexe, deiner Strategie und deiner Entschlossenheit.
-                Dein Roboter wird nicht aufgeben, solange du an den Steuerhebeln sitzt.\s
-                Bist du bereit für die ultimative Schlacht? Die Arena wartet auf dich!""");
-        System.out.println();
     }
 }
