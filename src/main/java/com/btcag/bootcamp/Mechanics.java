@@ -1,9 +1,6 @@
 package com.btcag.bootcamp;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Mechanics {
 
@@ -65,11 +62,8 @@ public class Mechanics {
 
     public static void enemyMove(Character opponent) {
         Random random = new Random();
-        List<Integer> availableMoves = new ArrayList<>(); // ToDo: Liste {1,2,3,4} machen
-        availableMoves.add(1); // w - Oben
-        availableMoves.add(2); // a - Links
-        availableMoves.add(3); // s - Unten
-        availableMoves.add(4); // d - Rechts
+        List<Integer> availableMoves = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        // 1 - w - Oben; 2 - a - Links; 3 -  s - Unten; 4 - d - Rechts
         // ToDo: playField auf high/width umstellen
         if (opponent.getPositionY() + 1 > 14) { // Prüfung auf "d"
             availableMoves.remove((Integer) 4);

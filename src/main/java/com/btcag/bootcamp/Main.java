@@ -6,8 +6,8 @@ import static com.btcag.bootcamp.Mechanics.enemyMove;
 import static com.btcag.bootcamp.Mechanics.playerMove;
 
 public class Main {
-    public static boolean gameStatus = true;
-    public static boolean turnStatus = true;
+    public static boolean gameOver = true;
+    public static boolean playersTurn = true;
 
     public static void main(String[] args) {
 
@@ -44,7 +44,7 @@ public class Main {
         }
 
         //Game turn order
-        while (gameStatus) {
+        while (gameOver) {
             updatePlayfield(spielFeld, player, opponent);
             playerTurn(scanner, player);
             checkWinConditionPlayer(player, opponent);
@@ -57,7 +57,7 @@ public class Main {
     private static void checkWinConditionPlayer(Character player, Character opponent) {
         if (player.getPositionX() == opponent.getPositionX() && player.getPositionY() == opponent.getPositionY()) {
             System.out.println("Endlich! Du hasst " + opponent.getName() + " gewonnen.");
-            gameStatus = false;
+            gameOver = false;
         }
     }
 
@@ -65,20 +65,20 @@ public class Main {
     private static void checkWinConditionOpponent(Character player, Character opponent) {
         if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()) {
             System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
-            gameStatus = false;
+            gameOver = false;
         }
     }
 
     //Opponent decides what to do on his turn
     private static void enemyTurn(Character opponent) {
         enemyMove(opponent);
-        turnStatus = true;
+        playersTurn = true;
     }
 
     //Spieler wird abgefragt was er machen will
     public static void playerTurn(Scanner scanner, Character player) {
-        String choise;
-        while (turnStatus) { // ToDo: regex oder turnStatus
+        String choice;
+        while (playersTurn) { // ToDo: regex oder turnStatus
             System.out.println();
             System.out.println("""
                     Du hasst folgende Aktionen: Welche willst du auswählen?\s
@@ -86,30 +86,29 @@ public class Main {
                     2 = Angreifen
                     3 = Warten
                     4 = Aufgeben""");
-            choise = scanner.nextLine();
+            choice = scanner.nextLine();
             label:
-            if (choise.matches("[1234]+")) {
-                switch (choise) {
+            if (choice.matches("[1234]+")) {
+                switch (choice) {
                     case "1":
                         playerMove(scanner, player);
-                        turnStatus = false;
+                        playersTurn = false;
                         break label;
                     case "2":
                         // Angreifen
                         break label;
                     case "3":
                         //Warten
-                        turnStatus = false;
+                        playersTurn = false;
                         break label;
                     case "4":
-                        gameStatus = false; // ToDo: rename gameOver
-                        turnStatus = false;
+                        gameOver = false;
+                        playersTurn = false;
                         System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
                         break label;
                 }
             } else {
                 System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
-                break;
             }
         }
     }
