@@ -47,21 +47,23 @@ public class Main {
         while (gameStatus) {
             updatePlayfield(spielFeld, player, opponent);
             playerTurn(scanner, player);
-            checkWinCondition(player, opponent);
+            checkWinConditionPlayer(player, opponent);
             enemyTurn(opponent);
-            checkWinCondition(player, opponent);
+            checkWinConditionOpponent(player, opponent);
         }
     }
 
-    //Checks if player or opponent wins the game
-    // ToDo: 2 Funktionen machen für Spieler und Opponent + turnStatus rausnehmen
-    private static void checkWinCondition(Character player, Character opponent) {
-        if (turnStatus == false) {
-            if (player.getPositionX() == opponent.getPositionX() && player.getPositionY() == opponent.getPositionY()) {
-                System.out.println("Endlich! Du hasst " + opponent.getName() + " gewonnen.");
-                gameStatus = false;
-            }
-        } else if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()) {
+    //Checks if player wins the game
+    private static void checkWinConditionPlayer(Character player, Character opponent) {
+        if (player.getPositionX() == opponent.getPositionX() && player.getPositionY() == opponent.getPositionY()) {
+            System.out.println("Endlich! Du hasst " + opponent.getName() + " gewonnen.");
+            gameStatus = false;
+        }
+    }
+
+    //Checks if opponent wins the game
+    private static void checkWinConditionOpponent(Character player, Character opponent) {
+        if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()) {
             System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
             gameStatus = false;
         }
