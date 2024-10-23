@@ -28,4 +28,21 @@ public class Battlefield {
         battlefield.battlefieldArray = newBattlefield;
         return battlefield;
     }
+
+    //Updates Battlefield on users interface
+    public static void updateBattlefield(Battlefield battlefield, Character player, Character opponent) {
+        System.out.println();
+        for (int i = 0; i < battlefield.hight; i++) {
+            for (int j = 0; j < battlefield.width; j++) {
+                if (i == player.getPositionX() && j == player.getPositionY()) {
+                    System.out.print(player.getChar());
+                } else if (i == opponent.getPositionX() && j == opponent.getPositionY()) {
+                    System.out.print(opponent.getChar());
+                } else {
+                    System.out.print(battlefield.battlefieldArray[i][j] + " ");
+                }
+            }
+            System.out.println();
+        }
+    }
 }
