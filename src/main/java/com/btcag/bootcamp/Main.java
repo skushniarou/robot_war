@@ -2,19 +2,20 @@ package com.btcag.bootcamp;
 
 import java.util.Scanner;
 
+import static com.btcag.bootcamp.Battlefield.createBattlefield;
+import static com.btcag.bootcamp.Game.*;
 import static com.btcag.bootcamp.Mechanics.enemyMove;
 import static com.btcag.bootcamp.Mechanics.playerMove;
 import static com.btcag.bootcamp.Other.*;
 
 public class Main {
-    public static boolean gameOver = true;
-    public static boolean playersTurn = true;
 
     public static void main(String[] args) {
 
         //Constructor
         Character player = new Character("Abba", "A", 9, 13);
         Character opponent = new Character("Test", "T", 9, 14);
+        Battlefield battlefield = new Battlefield(10,15);
         Scanner scanner = new Scanner(System.in);
 
         //Intro
@@ -25,36 +26,15 @@ public class Main {
         getCharactersSymbol(player,opponent);
 
         //Spielfeld generieren
-        String[][] spielFeld = new String[10][15];
-        for (int i = 0; i < spielFeld.length; i++) {
-            for (int j = 0; j < spielFeld[i].length; j++) {
-                spielFeld[i][j] = "[ ]";
-            }
-        }
+        createBattlefield(battlefield);
 
         //Game turn order
         while (gameOver) {
-            updatePlayfield(spielFeld, player, opponent);
+            updateBattlefield(battlefield, player, opponent);
             playerTurn(scanner, player);
             checkWinConditionPlayer(player, opponent);
             enemyTurn(opponent);
             checkWinConditionOpponent(player, opponent);
-        }
-    }
-
-    //Checks if player wins the game
-    private static void checkWinConditionPlayer(Character player, Character opponent) {
-        if (player.getPositionX() == opponent.getPositionX() && player.getPositionY() == opponent.getPositionY()) {
-            System.out.println("Endlich! Du hasst " + opponent.getName() + " gewonnen.");
-            gameOver = false;
-        }
-    }
-
-    //Checks if opponent wins the game
-    private static void checkWinConditionOpponent(Character player, Character opponent) {
-        if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()) {
-            System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
-            gameOver = false;
         }
     }
 
@@ -104,17 +84,17 @@ public class Main {
 
     //Saves first Character of Players/Opponents Name
 
-    //Updates Playfield on users interface
-    public static void updatePlayfield(String[][] spielFeld, Character player, Character opponent) {
+    //Updates Battlefield on users interface
+    public static void updateBattlefield(Battlefield battlefield, Character player, Character opponent) {
         System.out.println();
-        for (int i = 0; i < spielFeld.length; i++) {
-            for (int j = 0; j < spielFeld[i].length; j++) {
+        for (int i = 0; i < battlefield.width; i++) {
+            for (int j = 0; j < battlefield.hight; j++) {
                 if (i == player.getPositionX() && j == player.getPositionY()) {
                     System.out.print(player.getChar());
                 } else if (i == opponent.getPositionX() && j == opponent.getPositionY()) {
                     System.out.print(opponent.getChar());
                 } else {
-                    System.out.print(spielFeld[i][j] + " ");
+                    System.out.print(battlefield.battlefieldArray[i][j] + " ");
                 }
             }
             System.out.println();
