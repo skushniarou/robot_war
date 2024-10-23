@@ -4,7 +4,7 @@ public class Battlefield {
 
     public int hight;
     public int width;
-    public String [][] battlefieldArray;
+    public static String [][] battlefieldArray;
 
     Battlefield() {
         hight = 0;
@@ -19,12 +19,13 @@ public class Battlefield {
     }
 
     static Battlefield createBattlefield(Battlefield battlefield) {
-        String[][] newBattlefield = new String[battlefield.width][battlefield.hight];
+        String[][] newBattlefield = new String[battlefield.hight][battlefield.width];
         for (int i = 0; i < newBattlefield.length; i++) {
             for (int j = 0; j < newBattlefield[i].length; j++) {
                 newBattlefield[i][j] = "[ ]";
             }
         }
+        battlefield.battlefieldArray = newBattlefield;
         return battlefield;
     }
 }

@@ -45,12 +45,14 @@ public class Other {
         System.out.println("Cool. " + player.getName() + " ist bereit für ein Kampf!");
     }
 
+    // Gets first Character of Opponent and Player
+    // ToDo: Zwei verschiedene Funktionen machen
     public static void getCharactersSymbol(Character player, Character opponent){
-        //Erster Buchstabe von Name bekommen
         player.setNameChar(setFirstChar(player.getName()));
         opponent.setNameChar(setFirstChar(opponent.getName()));
     }
 
+    //Saves first Character of Players/Opponents Name
     public static String setFirstChar(String name) {
         return "[" + name.charAt(0) + "]";
     }

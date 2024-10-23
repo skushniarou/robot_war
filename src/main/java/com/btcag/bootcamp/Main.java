@@ -82,13 +82,11 @@ public class Main {
         }
     }
 
-    //Saves first Character of Players/Opponents Name
-
     //Updates Battlefield on users interface
     public static void updateBattlefield(Battlefield battlefield, Character player, Character opponent) {
         System.out.println();
-        for (int i = 0; i < battlefield.width; i++) {
-            for (int j = 0; j < battlefield.hight; j++) {
+        for (int i = 0; i < battlefield.hight; i++) {
+            for (int j = 0; j < battlefield.width; j++) {
                 if (i == player.getPositionX() && j == player.getPositionY()) {
                     System.out.print(player.getChar());
                 } else if (i == opponent.getPositionX() && j == opponent.getPositionY()) {
