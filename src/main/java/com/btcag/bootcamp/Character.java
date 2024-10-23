@@ -44,9 +44,4 @@ public class Character {
     public void setNameChar (String nameChar){
         this.nameChar = nameChar + " ";
     }
-
-    public void setCurrentPosition (int currentPositionX, int currentPositionY){
-        this.currentPositionX = currentPositionX;
-        this.currentPositionY = currentPositionY;
-    }
 }
