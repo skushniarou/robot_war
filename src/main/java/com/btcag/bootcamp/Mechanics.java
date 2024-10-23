@@ -5,7 +5,7 @@ import java.util.*;
 public class Mechanics {
 
     //Function to move object on battlefield and check viability of this move
-    public static void playerMove(Scanner scanner, Character player) {
+    public static void playerMove(Scanner scanner, Character player, Battlefield battlefield) {
         String move = "";
         boolean check = false;
         while (!check) {
@@ -28,7 +28,7 @@ public class Mechanics {
                             move = scanner.nextLine();
                         }
                     } else if (move.equals("d") || move.equals("D")) {
-                        if (player.getPositionY() < 14) {
+                        if (player.getPositionY() < battlefield.width-1) {
                             player.currentPositionY += 1;
                             check = true;
                         } else {
@@ -36,7 +36,7 @@ public class Mechanics {
                             move = scanner.nextLine();
                         }
                     } else if (move.equals("s") || move.equals("S")) {
-                        if (player.getPositionX() < 9) {
+                        if (player.getPositionX() < battlefield.hight-1) {
                             player.currentPositionX += 1;
                             check = true;
                         } else {
@@ -60,18 +60,18 @@ public class Mechanics {
         }
     }
 
-    public static void enemyMove(Character opponent) {
+    public static void enemyMove(Character opponent, Battlefield battlefield) {
         Random random = new Random();
         List<Integer> availableMoves = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         // 1 - w - Oben; 2 - a - Links; 3 -  s - Unten; 4 - d - Rechts
         // ToDo: playField auf high/width umstellen
-        if (opponent.getPositionY() + 1 > 14) { // Prüfung auf "d"
+        if (opponent.getPositionY() + 1 > battlefield.width-1) { // Prüfung auf "d"
             availableMoves.remove((Integer) 4);
         }
         if (opponent.getPositionY() - 1 < 0) { // Prüfung auf "s"
             availableMoves.remove((Integer) 3);
         }
-        if (opponent.getPositionX() + 1 > 9) { // Prüfung auf "a"
+        if (opponent.getPositionX() + 1 > battlefield.hight-1) { // Prüfung auf "a"
             availableMoves.remove((Integer) 2);
         }
         if (opponent.getPositionX() - 1 < 0) { // Prüfung auf "w"

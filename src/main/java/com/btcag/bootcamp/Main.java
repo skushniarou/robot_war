@@ -31,21 +31,21 @@ public class Main {
         //Game turn order
         while (gameOver) {
             updateBattlefield(battlefield, player, opponent);
-            playerTurn(scanner, player);
+            playerTurn(scanner, player, battlefield);
             checkWinConditionPlayer(player, opponent);
-            enemyTurn(opponent);
+            enemyTurn(opponent,battlefield);
             checkWinConditionOpponent(player, opponent);
         }
     }
 
     //Opponent decides what to do on his turn
-    private static void enemyTurn(Character opponent) {
-        enemyMove(opponent);
+    private static void enemyTurn(Character opponent, Battlefield battlefield) {
+        enemyMove(opponent,battlefield);
         playersTurn = true;
     }
 
     //Spieler wird abgefragt was er machen will
-    public static void playerTurn(Scanner scanner, Character player) {
+    public static void playerTurn(Scanner scanner, Character player, Battlefield battlefield) {
         String choice;
         while (playersTurn) { // ToDo: regex oder turnStatus
             System.out.println();
@@ -60,7 +60,7 @@ public class Main {
             if (choice.matches("[1234]+")) {
                 switch (choice) {
                     case "1":
-                        playerMove(scanner, player);
+                        playerMove(scanner, player,battlefield);
                         playersTurn = false;
                         break label;
                     case "2":
