@@ -30,7 +30,7 @@ public class Battlefield {
     }
 
     //Updates Battlefield on users interface
-    public static void updateBattlefield(Battlefield battlefield, Character player, Character opponent) {
+    public static void updateBattlefield(Battlefield battlefield, Robot player, Robot opponent) {
         System.out.println();
         for (int i = 0; i < battlefield.height; i++) {
             for (int j = 0; j < battlefield.width; j++) {

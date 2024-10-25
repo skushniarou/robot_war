@@ -12,8 +12,8 @@ public class Main {
     public static void main(String[] args) {
 
         //Constructor
-        Character player = new Character("Abba", "A", 9, 13, Colors.BLACK);
-        Character opponent = new Character("Test", "T", 9, 14,Colors.BLACK);
+        Robot player = new Robot("Abba", "A", 9, 13, Colors.BLACK, true);
+        Robot opponent = new Robot("Test", "T", 9, 14,Colors.BLACK, false);
         Battlefield battlefield = new Battlefield(10,15);
         Scanner scanner = new Scanner(System.in);
 
@@ -21,17 +21,15 @@ public class Main {
         introduction();
 
         //Namen setzen von Spieler und Opponent
-        getCharacterName(scanner,player,opponent);
+        getRobotName(scanner,player,opponent);
 
-        //Name farbig machen
+        //Namen farbig machen
         player.setColor(scanner);
         opponent.setColor(scanner);
 
-        //Erster Buchstabe von Name als Symbol benutzen
+        //Erster Buchstabe von Objektname als Symbol benutzen
         player.setNameChar(player.getName());
         opponent.setNameChar(opponent.getName());
-        //getPlayerSymbol(player);
-        //getOpponentSymbol(opponent);
 
         //Spielfeld generieren
         createBattlefield(battlefield);

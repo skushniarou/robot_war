@@ -8,7 +8,7 @@ import static com.btcag.bootcamp.Game.playersTurn;
 public class Mechanics {
 
     //Spieler wird abgefragt was er machen will
-    public static void playerTurn(Scanner scanner, Character player, Battlefield battlefield) {
+    public static void playerTurn(Scanner scanner, Robot player, Battlefield battlefield) {
         String choice;
         while (playersTurn) { // ToDo: regex oder turnStatus
             System.out.println();
@@ -46,13 +46,13 @@ public class Mechanics {
     }
 
     //Opponent decides what to do on his turn
-    static void aiTurn(Character opponent, Battlefield battlefield) {
+    static void aiTurn(Robot opponent, Battlefield battlefield) {
         aiMove(opponent,battlefield);
         playersTurn = true;
     }
 
     //Function to move object on battlefield and check viability of this move
-    public static void playerMove(Scanner scanner, Character player, Battlefield battlefield) {
+    public static void playerMove(Scanner scanner, Robot player, Battlefield battlefield) {
         String move = "";
         boolean check = false;
         while (!check) {
@@ -107,7 +107,7 @@ public class Mechanics {
         }
     }
 
-    public static void aiMove(Character opponent, Battlefield battlefield) {
+    public static void aiMove(Robot opponent, Battlefield battlefield) {
         Random random = new Random();
         List<Integer> availableMoves = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         // 1 - w - Oben; 2 - a - Links; 3 -  s - Unten; 4 - d - Rechts

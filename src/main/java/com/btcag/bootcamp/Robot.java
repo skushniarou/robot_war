@@ -1,33 +1,23 @@
 package com.btcag.bootcamp;
 
-import java.awt.*;
 import java.util.Scanner;
 
-import static com.btcag.bootcamp.Colors.*;
-import static com.btcag.bootcamp.Other.setFirstChar;
-
-public class Character {
+public class Robot {
 
     String name;
     String nameChar;
     int currentPositionX;
     int currentPositionY;
     Colors color;
+    boolean human;
 
-    Character() {
-        name = "Test";
-        nameChar = "T";
-        currentPositionX = 0;
-        currentPositionY = 0;
-        color = BLACK;
-    }
-
-    Character(String initialName, String initialNameChar, int initialPositionX, int initialPositionY, Colors initColor) {
+    Robot(String initialName, String initialNameChar, int initialPositionX, int initialPositionY, Colors initColor, boolean initHuman) {
         name = initialName;
         nameChar = initialNameChar;
         currentPositionX = initialPositionX;
         currentPositionY = initialPositionY;
         color = initColor;
+        human = initHuman;
     }
 
     String getName (){
@@ -65,9 +55,7 @@ public class Character {
             3 - GREEN
             4 - YELLOW
             5 - BLUE
-            6 - PURPLE
-            7 - CYAN
-            8 - WHITE
+            6 - CYAN
             Ihre Wahl: """);
 
             int input;
@@ -81,7 +69,6 @@ public class Character {
                     case 4 -> { this.color = Colors.YELLOW; validInput = true; }
                     case 5 -> { this.color = Colors.BLUE; validInput = true; }
                     case 6 -> { this.color = Colors.CYAN; validInput = true; }
-                    case 7 -> { this.color = Colors.WHITE; validInput = true; }
                     default -> System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 8.");
                 }
             } catch (NumberFormatException e) {
