@@ -32,7 +32,7 @@ public class Other {
         System.out.println();
     }
 
-    public static void getCharactersNames(Scanner scanner, Character player, Character opponent){
+    public static void getCharacterName(Scanner scanner, Character player, Character opponent){
         //Name von Spieler setzen
         System.out.println("Wie heißt dein Roboter?: ");
         player.setName(scanner.nextLine());
@@ -45,10 +45,15 @@ public class Other {
         System.out.println("Cool. " + player.getName() + " ist bereit für ein Kampf!");
     }
 
-    // Gets first Character of Opponent and Player
-    // ToDo: Zwei verschiedene Funktionen machen
-    public static void getCharactersSymbol(Character player, Character opponent){
+
+
+    // Gets first Character of Player
+    public static void getPlayerSymbol(Character player){
         player.setNameChar(setFirstChar(player.getName()));
+    }
+
+    // Gets first Character of Opponent
+    public static void getOpponentSymbol(Character opponent){
         opponent.setNameChar(setFirstChar(opponent.getName()));
     }
 

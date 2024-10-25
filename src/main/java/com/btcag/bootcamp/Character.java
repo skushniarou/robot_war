@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.Scanner;
 
 import static com.btcag.bootcamp.Colors.*;
+import static com.btcag.bootcamp.Other.setFirstChar;
 
 public class Character {
 
@@ -49,8 +50,8 @@ public class Character {
         this.name = name;
     }
 
-    public void setNameChar (String nameChar){
-        this.nameChar = nameChar + " ";
+    public void setNameChar (String charName){
+        this.nameChar = "[" + color.getAnsiCode() + charName.charAt(0) + Colors.resetColor() + "]";
     }
 
     public void setColor(Scanner scanner){

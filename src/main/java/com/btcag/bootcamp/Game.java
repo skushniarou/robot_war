@@ -1,5 +1,7 @@
 package com.btcag.bootcamp;
 
+import static com.btcag.bootcamp.Other.setFirstChar;
+
 public class Game {
 
     public static boolean gameOver = true;
