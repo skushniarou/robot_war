@@ -3,7 +3,6 @@ package com.btcag.bootcamp;
 public class Game {
 
     public static boolean gameOver = true;
-    public static boolean playersTurn = true;
     public static int playerCounter;
 
     //Checks if player wins the game

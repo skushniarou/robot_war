@@ -15,13 +15,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //Constructor
-        Robot player = new Robot("Abba", "A", 9, 13, Colors.BLACK, true);
-        Robot opponent = new Robot("Test", "T", 9, 14,Colors.BLACK, false);
-        Battlefield battlefield = new Battlefield(10,15);
         Scanner scanner = new Scanner(System.in);
 
         //Spielfeld generieren
+        Battlefield battlefield = new Battlefield(10,15);
         createBattlefield(battlefield);
 
         //Intro
@@ -39,13 +36,9 @@ public class Main {
         //Game with Turnorder
         while (gameOver) {
             for (int i = 0; i < playerCounter; i++){
-                //Players turns
+                updateBattlefield(battlefield, (ArrayList<Robot>) robotList);
+                playerTurn(scanner,robotList.get(i),battlefield);
             }
-            updateBattlefield(battlefield, player, opponent);
-            playerTurn(scanner, player, battlefield);
-            checkWinConditionPlayer(player, opponent);
-            aiTurn(opponent,battlefield);
-            checkWinConditionAI(player, opponent);
         }
     }
 }

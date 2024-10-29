@@ -1,5 +1,7 @@
 package com.btcag.bootcamp;
 
+import java.util.ArrayList;
+
 public class Battlefield {
 
     public int height;
@@ -30,15 +32,19 @@ public class Battlefield {
     }
 
     //Updates Battlefield on users interface
-    public static void updateBattlefield(Battlefield battlefield, Robot player, Robot opponent) {
+    public static void updateBattlefield(Battlefield battlefield,  ArrayList<Robot> robotList) {
         System.out.println();
         for (int i = 0; i < battlefield.height; i++) {
             for (int j = 0; j < battlefield.width; j++) {
-                if (i == player.getPositionX() && j == player.getPositionY()) {
-                    System.out.print(player.getChar() + " ");
-                } else if (i == opponent.getPositionX() && j == opponent.getPositionY()) {
-                    System.out.print(opponent.getChar()  + " ");
-                } else {
+                boolean robotFound = false;
+                for (Robot robot : robotList) {
+                    if (i == robot.getPositionX() && j == robot.getPositionY()) {
+                        System.out.print(robot.getChar() + " ");
+                        robotFound = true;
+                        break; // Roboter gefunden, keine weitere Überprüfung nötig
+                    }
+                }
+                if (!robotFound) {
                     System.out.print(battlefield.battlefieldArray[i][j] + " ");
                 }
             }
