@@ -38,6 +38,8 @@ public class Main {
             for (int i = 0; i < playerCounter; i++){
                 updateBattlefield(battlefield, (ArrayList<Robot>) robotList);
                 playerTurn(scanner,robotList.get(i),battlefield);
+                checkWinConditionPlayer(i,(ArrayList<Robot>) robotList);
+                if (!gameOver) break;
             }
         }
     }
