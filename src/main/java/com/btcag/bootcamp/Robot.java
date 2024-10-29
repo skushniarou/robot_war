@@ -18,6 +18,8 @@ public class Robot {
     Colors color;
     boolean isHuman;
 
+    public Robot(){}
+
     Robot(String name, String nameChar, int currentPositionX, int currentPositionY, Colors color, boolean isHuman) {
         this.name = name;
         this.nameChar = nameChar;
@@ -31,13 +33,14 @@ public class Robot {
         System.out.println("Gebe Anzahl von Spieler ein: ");
         playerCounter = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < playerCounter; i++ ){
-            robotList.add(new Robot("Test", "T", 0, 0, Colors.BLACK, true));
+            robotList.add(new Robot());
             System.out.print("Gib den neuen Namen für den Roboter " + (i+1) + " ein: ");
             String newName = scanner.nextLine();
             robotList.get(i).setName(newName);
             robotList.get(i).setColor(scanner);
             robotList.get(i).setNameChar(newName);
             robotList.get(i).generateXYPosition(battlefield);
+            robotList.get(i).isHuman = true;
         }
     }
 

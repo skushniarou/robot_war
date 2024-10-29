@@ -10,12 +10,13 @@ public class Mechanics {
     public static void playerTurn(Scanner scanner, Robot player, Battlefield battlefield) {
         String choice;
         System.out.println();
-        System.out.println("""
-                Du hasst folgende Aktionen: Welche willst du auswählen?\s
-                1 = Bewegen
-                2 = Angreifen
-                3 = Warten
-                4 = Aufgeben""");
+        System.out.println(String.format("""
+            Du hast folgende Aktionen %s: Welche willst du auswählen?\s
+            1 = Bewegen
+            2 = Angreifen
+            3 = Warten
+            4 = Aufgeben
+            """, player.getName()));
         choice = scanner.nextLine();
         label:
         if (choice.matches("[1234]+")) {
