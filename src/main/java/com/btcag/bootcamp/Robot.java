@@ -10,7 +10,7 @@ import static com.btcag.bootcamp.Game.playerCounter;
 
 public class Robot {
 
-    public static List<Robot> robotList = new ArrayList<Robot>();
+    public static List<Robot> robotList = new ArrayList<>();
 
     String name;
     String nameChar;
@@ -34,15 +34,6 @@ public class Robot {
         this.DM = 1.0F;
         this.AB = 0.00F;
         this.AP = 10;
-    }
-
-    Robot(String name, String nameChar, int currentPositionX, int currentPositionY, Colors color, boolean isHuman) {
-        this.name = name;
-        this.nameChar = nameChar;
-        this.currentPositionX = currentPositionX;
-        this.currentPositionY = currentPositionY;
-        this.color = color;
-        this.isHuman = isHuman;
     }
 
     public static void createRobot (Scanner scanner, Battlefield battlefield){
@@ -148,7 +139,6 @@ public class Robot {
 
     public void setColor(Scanner scanner){
         boolean validInput = false;
-        Colors color;
         while (!validInput) {
             System.out.print("Wähle bitte Farbe von deinem Roboter? 1 - BLACK, 2 - RED, 3 - GREEN, 4 - YELLOW, 5 - BLUE, 6 - PURPLE, 7 - CYAN: ");
 
