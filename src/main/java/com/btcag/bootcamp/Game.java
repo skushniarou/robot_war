@@ -1,11 +1,37 @@
 package com.btcag.bootcamp;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game {
 
     public static boolean gameOver = true;
     public static int playerCounter;
+
+    // Increases Player Robot Attributes for every Win
+    public static void increaseAttributes(Scanner scanner, int playerIndex, ArrayList<Robot> robotList){
+        boolean done = false;
+        while (!done) {
+            System.out.println("Welche Attributen wollen Sie erhöhen");
+            int input;
+            try {
+                input = Integer.parseInt(scanner.nextLine());
+
+                switch (input) {
+                    case 1 -> {} // increaseHP();
+                    case 2 -> {} // increaseEP();
+                    case 3 -> {} // increaseMS();
+                    case 4 -> {} // increaseAS();
+                    case 5 -> {} // increaseDM();
+                    case 6 -> {} // increaseAB();
+                    case 7 -> {done = true;}
+                    default -> System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 7.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
+            }
+        }
+    }
 
     //Checks if player wins the game
     static void checkWinConditionPlayer(int currentPlayerIndex, ArrayList<Robot> robotList) {

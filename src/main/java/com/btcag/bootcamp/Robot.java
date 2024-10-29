@@ -17,8 +17,23 @@ public class Robot {
     int currentPositionY;
     Colors color;
     boolean isHuman;
+    int HP; //Health Points - If Health Points fall below zero, player will lose
+    int EP; // Energy Points - Needed to use Special Weapons
+    int MS; // Movement Speed - Distance how far can robot Move
+    int AS; // Armor Score - Amount of damage reduction
+    float DM; // Damage Modification - Increases amount of sum damage output
+    float AB; // Accuracy Bonus - Increases hit chance of Weapons
+    int AP; // Attributes Points
 
-    public Robot(){}
+    public Robot(){
+        this.HP = 10;
+        this.EP = 10;
+        this.MS = 1;
+        this.AS = 0;
+        this.DM = 1.0F;
+        this.AB = 0.00F;
+        this.AP = 10;
+    }
 
     Robot(String name, String nameChar, int currentPositionX, int currentPositionY, Colors color, boolean isHuman) {
         this.name = name;
@@ -34,7 +49,7 @@ public class Robot {
         playerCounter = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < playerCounter; i++ ){
             robotList.add(new Robot());
-            System.out.print("Gib den neuen Namen für den Roboter " + (i+1) + " ein: ");
+            System.out.print("Gib den neuen Namen für dein Roboter " + (i+1));
             String newName = scanner.nextLine();
             robotList.get(i).setName(newName);
             robotList.get(i).setColor(scanner);

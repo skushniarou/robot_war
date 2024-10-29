@@ -27,10 +27,13 @@ public class Main {
         // Erstellt eine Liste aus Spieler
         createRobot(scanner,battlefield);
 
+
         //Gibt Liste von Spieler aus mit Attributen
         System.out.println("Liste der Roboter:");
         for (Robot robot : robotList) {
             System.out.println("Name='" + robot.name + "', Symbol='" + robot.nameChar + "', x=" + robot.currentPositionX + ", y=" + robot.currentPositionY + ", Color=" + robot.color + ", isHuman=" + robot.isHuman + " ");
+            System.out.println("HP = " + robot.HP + ", EP = " + robot.EP + ", MS = " + robot.MS + ", AS = " + robot.AS + ", Damage Mod. = " + robot.DM + ", AC-Bonus = " + robot.AB);
+            System.out.println();
         }
 
         //Game with Turnorder
