@@ -31,17 +31,4 @@ public class Other {
                 Bist du bereit für die ultimative Schlacht? Die Arena wartet auf dich!""");
         System.out.println();
     }
-
-    public static void getRobotName(Scanner scanner, Robot player, Robot opponent){
-        //Name von Spieler setzen
-        System.out.println("Wie heißt dein Roboter?: ");
-        player.setName(scanner.nextLine());
-        System.out.println();
-        //Name von Opponent setzen
-        System.out.println("Und wie heißt dein Gegner?: ");
-        opponent.setName(scanner.nextLine());
-        System.out.println();
-
-        System.out.println("Cool. " + player.getName() + " ist bereit für ein Kampf!");
-    }
 }

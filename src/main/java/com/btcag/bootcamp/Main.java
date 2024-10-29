@@ -8,6 +8,8 @@ import static com.btcag.bootcamp.Battlefield.*;
 import static com.btcag.bootcamp.Game.*;
 import static com.btcag.bootcamp.Mechanics.*;
 import static com.btcag.bootcamp.Other.*;
+import static com.btcag.bootcamp.Robot.createRobot;
+import static com.btcag.bootcamp.Robot.robotList;
 
 public class Main {
 
@@ -19,38 +21,26 @@ public class Main {
         Battlefield battlefield = new Battlefield(10,15);
         Scanner scanner = new Scanner(System.in);
 
-        //Intro
-        introduction();
-
-        int playercounter;
-        System.out.println("Gebe Anzahl von Spieler ein");
-        playercounter = Integer.parseInt(scanner.nextLine());
-        List<Robot> robotList = new ArrayList<Robot>();
-        for (int i = 0; i <= playercounter; i++ ){
-            System.out.println("Wie heißt dein Roboter?: ");
-            String name = scanner.nextLine();
-            System.out.println();
-            robotList.add(new Robot(name, "A", 9, 13, Colors.BLACK, true));
-
-        }
-
-        //Namen setzen von Spieler und Opponent
-        getRobotName(scanner,player,opponent);
-
-        //Namen farbig machen
-        //robotList.get(1).setColor();
-        player.setColor(scanner);
-        opponent.setColor(scanner);
-
-        //Erster Buchstabe von Objektname als Symbol benutzen
-        player.setNameChar(player.getName());
-        opponent.setNameChar(opponent.getName());
-
         //Spielfeld generieren
         createBattlefield(battlefield);
 
-        //Game turn order
+        //Intro
+        introduction();
+
+        // Erstellt eine Liste aus Spieler
+        createRobot(scanner,battlefield);
+
+        //Gibt Liste von Spieler aus mit Attributen
+        System.out.println("Liste der Roboter:");
+        for (Robot robot : robotList) {
+            System.out.println("Name='" + robot.name + "', Symbol='" + robot.nameChar + "', x=" + robot.currentPositionX + ", y=" + robot.currentPositionY + ", Color=" + robot.color + ", isHuman=" + robot.isHuman + " ");
+        }
+
+        //Game with Turnorder
         while (gameOver) {
+            for (int i = 0; i < playerCounter; i++){
+                //Players turns
+            }
             updateBattlefield(battlefield, player, opponent);
             playerTurn(scanner, player, battlefield);
             checkWinConditionPlayer(player, opponent);
