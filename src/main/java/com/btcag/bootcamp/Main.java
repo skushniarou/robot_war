@@ -1,5 +1,7 @@
 package com.btcag.bootcamp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static com.btcag.bootcamp.Battlefield.*;
@@ -20,10 +22,23 @@ public class Main {
         //Intro
         introduction();
 
+        int playercounter;
+        System.out.println("Gebe Anzahl von Spieler ein");
+        playercounter = Integer.parseInt(scanner.nextLine());
+        List<Robot> robotList = new ArrayList<Robot>();
+        for (int i = 0; i <= playercounter; i++ ){
+            System.out.println("Wie heißt dein Roboter?: ");
+            String name = scanner.nextLine();
+            System.out.println();
+            robotList.add(new Robot(name, "A", 9, 13, Colors.BLACK, true));
+
+        }
+
         //Namen setzen von Spieler und Opponent
         getRobotName(scanner,player,opponent);
 
         //Namen farbig machen
+        //robotList.get(1).setColor();
         player.setColor(scanner);
         opponent.setColor(scanner);
 
