@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static com.btcag.bootcamp.Game.increaseAttributes;
 import static com.btcag.bootcamp.Game.playerCounter;
 
 public class Robot {
@@ -26,8 +27,8 @@ public class Robot {
     int AP; // Attributes Points
 
     public Robot(){
-        this.HP = 10;
-        this.EP = 10;
+        this.HP = 20;
+        this.EP = 5;
         this.MS = 1;
         this.AS = 0;
         this.DM = 1.0F;
@@ -49,13 +50,14 @@ public class Robot {
         playerCounter = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < playerCounter; i++ ){
             robotList.add(new Robot());
-            System.out.print("Gib den neuen Namen für dein Roboter " + (i+1));
+            System.out.print("Wie heißt Roboter " + (i+1) + ": ");
             String newName = scanner.nextLine();
             robotList.get(i).setName(newName);
             robotList.get(i).setColor(scanner);
             robotList.get(i).setNameChar(newName);
             robotList.get(i).generateXYPosition(battlefield);
             robotList.get(i).isHuman = true;
+            increaseAttributes(scanner, i , (ArrayList<Robot>) robotList);
         }
     }
 
@@ -75,12 +77,68 @@ public class Robot {
         return currentPositionY;
     }
 
+    int getHP (){
+        return HP;
+    }
+
+    int getEP (){
+        return EP;
+    }
+
+    int getMS (){
+        return AP;
+    }
+
+    int getAS (){
+        return AS;
+    }
+
+    float getDM (){
+        return DM;
+    }
+
+    float getAB (){
+        return AB;
+    }
+
+    int getAP (){
+        return AP;
+    }
+
     public void setName (String name){
         this.name = name;
     }
 
     public void setNameChar (String charName){
         this.nameChar = "[" + color.getAnsiCode() + charName.charAt(0) + Colors.resetColor() + "]";
+    }
+
+    public void setHP (int HP){
+        this.HP = HP;
+    }
+
+    public void setEP (int EP){
+        this.EP = EP;
+    }
+
+    public void setMS (int MS){
+        this.MS = MS;
+    }
+
+    public void setAS (int AS){
+        this.AS = AS;
+    }
+
+    public void setDM (float DM){
+        this.DM = DM;
+    }
+
+    public void setAB (float AB){
+        this.AB = AB;
+    }
+
+    public void setAP (int AP){
+        this.AP = AP;
     }
 
     private void generateXYPosition(Battlefield battlefield) {
@@ -92,16 +150,7 @@ public class Robot {
         boolean validInput = false;
         Colors color;
         while (!validInput) {
-            System.out.println("""
-            Wählen Sie eine Farbe:
-            1 - BLACK
-            2 - RED
-            3 - GREEN
-            4 - YELLOW
-            5 - BLUE
-            6 - PURPLE
-            7 - CYAN
-            Ihre Wahl: """);
+            System.out.print("Wähle bitte Farbe von deinem Roboter? 1 - BLACK, 2 - RED, 3 - GREEN, 4 - YELLOW, 5 - BLUE, 6 - PURPLE, 7 - CYAN: ");
 
             int input;
             try {
