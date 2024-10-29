@@ -3,52 +3,46 @@ package com.btcag.bootcamp;
 import java.util.*;
 
 import static com.btcag.bootcamp.Game.gameOver;
-import static com.btcag.bootcamp.Game.playersTurn;
 
 public class Mechanics {
 
     //Spieler wird abgefragt was er machen will
     public static void playerTurn(Scanner scanner, Robot player, Battlefield battlefield) {
         String choice;
-        while (playersTurn) { // ToDo: regex oder turnStatus
-            System.out.println();
-            System.out.println("""
-                    Du hasst folgende Aktionen: Welche willst du auswählen?\s
-                    1 = Bewegen
-                    2 = Angreifen
-                    3 = Warten
-                    4 = Aufgeben""");
-            choice = scanner.nextLine();
-            label:
-            if (choice.matches("[1234]+")) {
-                switch (choice) {
-                    case "1":
-                        playerMove(scanner, player,battlefield);
-                        playersTurn = false;
-                        break label;
-                    case "2":
-                        // Angreifen
-                        break label;
-                    case "3":
-                        //Warten
-                        playersTurn = false;
-                        break label;
-                    case "4":
-                        gameOver = false;
-                        playersTurn = false;
-                        System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
-                        break label;
-                }
-            } else {
-                System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
+        System.out.println();
+        System.out.println(String.format("""
+            Du hast folgende Aktionen %s: Welche willst du auswählen?\s
+            1 = Bewegen
+            2 = Angreifen
+            3 = Warten
+            4 = Aufgeben
+            """, player.getName()));
+        choice = scanner.nextLine();
+        label:
+        if (choice.matches("[1234]+")) {
+            switch (choice) {
+                case "1":
+                    playerMove(scanner, player,battlefield);
+                    break label;
+                case "2":
+                    // Angreifen
+                    break label;
+                case "3":
+                    //Warten
+                    break label;
+                case "4":
+                    gameOver = false;
+                    System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
+                    break label;
             }
+        } else {
+            System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
         }
     }
 
     //Opponent decides what to do on his turn
     static void aiTurn(Robot opponent, Battlefield battlefield) {
         aiMove(opponent,battlefield);
-        playersTurn = true;
     }
 
     //Function to move object on battlefield and check viability of this move

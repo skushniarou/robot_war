@@ -1,46 +1,46 @@
 package com.btcag.bootcamp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static com.btcag.bootcamp.Battlefield.*;
 import static com.btcag.bootcamp.Game.*;
 import static com.btcag.bootcamp.Mechanics.*;
 import static com.btcag.bootcamp.Other.*;
+import static com.btcag.bootcamp.Robot.createRobot;
+import static com.btcag.bootcamp.Robot.robotList;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        //Constructor
-        Robot player = new Robot("Abba", "A", 9, 13, Colors.BLACK, true);
-        Robot opponent = new Robot("Test", "T", 9, 14,Colors.BLACK, false);
-        Battlefield battlefield = new Battlefield(10,15);
         Scanner scanner = new Scanner(System.in);
+
+        //Spielfeld generieren
+        Battlefield battlefield = new Battlefield(10,15);
+        createBattlefield(battlefield);
 
         //Intro
         introduction();
 
-        //Namen setzen von Spieler und Opponent
-        getRobotName(scanner,player,opponent);
+        // Erstellt eine Liste aus Spieler
+        createRobot(scanner,battlefield);
 
-        //Namen farbig machen
-        player.setColor(scanner);
-        opponent.setColor(scanner);
+        //Gibt Liste von Spieler aus mit Attributen
+        System.out.println("Liste der Roboter:");
+        for (Robot robot : robotList) {
+            System.out.println("Name='" + robot.name + "', Symbol='" + robot.nameChar + "', x=" + robot.currentPositionX + ", y=" + robot.currentPositionY + ", Color=" + robot.color + ", isHuman=" + robot.isHuman + " ");
+        }
 
-        //Erster Buchstabe von Objektname als Symbol benutzen
-        player.setNameChar(player.getName());
-        opponent.setNameChar(opponent.getName());
-
-        //Spielfeld generieren
-        createBattlefield(battlefield);
-
-        //Game turn order
+        //Game with Turnorder
         while (gameOver) {
-            updateBattlefield(battlefield, player, opponent);
-            playerTurn(scanner, player, battlefield);
-            checkWinConditionPlayer(player, opponent);
-            aiTurn(opponent,battlefield);
-            checkWinConditionAI(player, opponent);
+            for (int i = 0; i < playerCounter; i++){
+                updateBattlefield(battlefield, (ArrayList<Robot>) robotList);
+                playerTurn(scanner,robotList.get(i),battlefield);
+                checkWinConditionPlayer(i,(ArrayList<Robot>) robotList);
+                if (!gameOver) break;
+            }
         }
     }
 }
