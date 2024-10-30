@@ -1,27 +1,39 @@
 package com.btcag.bootcamp;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import static com.btcag.bootcamp.Other.*;
 
 public class Game {
 
     public static boolean gameOver = true;
     public static int playerCounter;
+    public static List<Robot> robotList = new ArrayList<>();
+
+    public static void createRobot (Battlefield battlefield){
+        playerCounter = userInputInt("Gebe Anzahl von Spieler ein: ");
+        for (int i = 0; i < playerCounter; i++ ){
+            String newName = userInputStr("Wie heißt Roboter von Spieler " + (i+1) + ": ");
+            robotList.add(new Robot(newName));
+            robotList.get(i).generateXYPosition(battlefield);
+            increaseAttributes(i , (ArrayList<Robot>) robotList);
+        }
+    }
 
     // Increases Player Robot Attributes at generation and for every Win
-    public static void increaseAttributes(Scanner scanner, int playerIndex, ArrayList<Robot> robotList){
+    public static void increaseAttributes(int playerIndex, ArrayList<Robot> robotList){
         boolean done = false;
         while (!done) {
             System.out.println();
             System.out.println("Dein Roboter hat folgende Attribute:");
             System.out.println("HP = " + robotList.get(playerIndex).getHP() + ", EP = " + robotList.get(playerIndex).getEP() + ", MS = " + robotList.get(playerIndex).getMS() + ", AS = " + robotList.get(playerIndex).getAS() + ", Damage Mod. = " + robotList.get(playerIndex).getDM() + ", Acc. Bonus = " + robotList.get(playerIndex).getAB());
             System.out.println("Du hasst " + robotList.get(playerIndex).getAP() + " Attributes Punkten noch übrig");
-            System.out.println("Welche Attributen willst du erhöhen?");
-            System.out.println("1 - HP, 2 - EP, 3 - MS, 4 - AS, 5 - DM, 6 - AB, 7 - Fertig");
 
             int input;
             try {
-                input = Integer.parseInt(scanner.nextLine());
+                input = userInputInt("Welche Attributen willst du erhöhen?\n1 - HP, 2 - EP, 3 - MS, 4 - AS, 5 - DM, 6 - AB, 7 - Fertig");
                 switch (input) {
                     case 1 -> increaseHP(robotList.get(playerIndex)); // increaseHP();
                     case 2 -> increaseEP(robotList.get(playerIndex)); // increaseEP();
@@ -88,7 +100,7 @@ public class Game {
             try {
                 robot.setAP(robot.getAP() - cost);
                 robot.setAS(robot.getAS() + 1);
-                System.out.println("Du hasst MS um 1 erhöht. Dein AS ist jetzt " + robot.getAS() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
+                System.out.println("Du hasst AS um 1 erhöht. Dein AS ist jetzt " + robot.getAS() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }
@@ -102,7 +114,7 @@ public class Game {
             try {
                 robot.setAP(robot.getAP() - cost);
                 robot.setDM((float) (robot.getDM() + 0.15));
-                System.out.println("Du hasst MS um 1 erhöht. Dein DM ist jetzt " + robot.getDM() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
+                System.out.println("Du hasst DM um 15% erhöht. Dein DM ist jetzt " + robot.getDM() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }
@@ -116,7 +128,7 @@ public class Game {
             try {
                 robot.setAP(robot.getAP() - cost);
                 robot.setAB((float) (robot.getAB() + 0.05));
-                System.out.println("Du hasst MS um 1 erhöht. Deine AB ist jetzt " + robot.getAB() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
+                System.out.println("Du hasst AB um 5% erhöht. Deine AB ist jetzt " + robot.getAB() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }

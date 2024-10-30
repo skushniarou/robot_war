@@ -7,8 +7,8 @@ import static com.btcag.bootcamp.Battlefield.*;
 import static com.btcag.bootcamp.Game.*;
 import static com.btcag.bootcamp.Mechanics.*;
 import static com.btcag.bootcamp.Other.*;
-import static com.btcag.bootcamp.Robot.createRobot;
-import static com.btcag.bootcamp.Robot.robotList;
+import static com.btcag.bootcamp.Game.createRobot;
+import static com.btcag.bootcamp.Game.robotList;
 
 public class Main {
 
@@ -24,7 +24,7 @@ public class Main {
         introduction();
 
         // Erstellt eine Liste aus Spieler
-        createRobot(scanner,battlefield);
+        createRobot(battlefield);
 
         //Gibt Liste von Spieler aus mit Attributen
         System.out.println("Liste der Roboter:");

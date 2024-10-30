@@ -1,16 +1,11 @@
 package com.btcag.bootcamp;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.btcag.bootcamp.Game.increaseAttributes;
-import static com.btcag.bootcamp.Game.playerCounter;
+import static com.btcag.bootcamp.Other.*;
 
 public class Robot {
-
-    public static List<Robot> robotList = new ArrayList<>();
 
     private String name;
     private String nameChar;
@@ -58,18 +53,6 @@ public class Robot {
 
     public void setCurrentPositionX(int currentPositionX) {
         this.currentPositionX = currentPositionX;
-    }
-
-    public static void createRobot (Scanner scanner, Battlefield battlefield){
-        System.out.println("Gebe Anzahl von Spieler ein: ");
-        playerCounter = Integer.parseInt(scanner.nextLine());
-        for (int i = 0; i < playerCounter; i++ ){
-            System.out.print("Wie heißt Roboter von Spieler " + (i+1) + ": ");
-            String newName = scanner.nextLine();
-            robotList.add(new Robot(newName));
-            robotList.get(i).generateXYPosition(battlefield);
-            increaseAttributes(scanner, i , (ArrayList<Robot>) robotList);
-        }
     }
 
     String getName (){
@@ -161,15 +144,11 @@ public class Robot {
     }
 
     public Colors chooseColor(){
-        Scanner scanner = new Scanner(System.in);
         boolean validInput = false;
         while (!validInput) {
-            System.out.print("Wähle bitte Farbe von deinem Roboter? 1 - BLACK, 2 - RED, 3 - GREEN, 4 - YELLOW, 5 - BLUE, 6 - PURPLE, 7 - CYAN: ");
-
             int input;
             try {
-                input = Integer.parseInt(scanner.nextLine());
-
+                input = userInputInt("Wähle bitte Farbe von deinem Roboter? 1 - BLACK, 2 - RED, 3 - GREEN, 4 - YELLOW, 5 - BLUE, 6 - PURPLE, 7 - CYAN: ");
                 switch (input) {
                     case 1 -> {validInput = true; return Colors.BLACK;  }
                     case 2 -> {validInput = true; return Colors.RED;}
@@ -187,7 +166,7 @@ public class Robot {
         return null;
     }
 
-    private void generateXYPosition(Battlefield battlefield) {
+    public void generateXYPosition(Battlefield battlefield) {
         this.currentPositionX = ThreadLocalRandom.current().nextInt(0, battlefield.getHeight());
         this.currentPositionY = ThreadLocalRandom.current().nextInt(0, battlefield.getWidth());
     }
