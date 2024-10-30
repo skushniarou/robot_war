@@ -31,4 +31,10 @@ public class Other {
                 Bist du bereit für die ultimative Schlacht? Die Arena wartet auf dich!""");
         System.out.println();
     }
+
+    public String userInput(String text){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(text);
+        return scanner.nextLine();
+    }
 }
