@@ -31,8 +31,8 @@ public class Mechanics {
                     //Warten
                     break label;
                 case "4":
-                    gameOver = false;
                     System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
+                    gameOver = false;
                     break label;
             }
         } else {
@@ -47,7 +47,7 @@ public class Mechanics {
 
     //Function to move object on battlefield and check viability of this move
     public static void playerMove(Scanner scanner, Robot player, Battlefield battlefield) {
-        String move = "";
+        String move;
         boolean check = false;
         while (!check) {
             System.out.println("""
@@ -60,37 +60,42 @@ public class Mechanics {
 
             while(!check){
                 if(move.matches("[wasdWASD]+")){
-                    if (move.equals("w") || move.equals("W")) {
-                        if (player.getPositionX() > 0) {
-                            player.setCurrentPositionX(player.getCurrentPositionX()-1);;
-                            check = true;
-                        } else {
-                            System.out.println("Das Spielfeld geht nicht weiter nach oben.\nWähle eine andere Richtung.");
-                            move = scanner.nextLine();
+                    switch (move) {
+                        case "w", "W" -> {
+                            if (player.getPositionX() > 0) {
+                                player.setCurrentPositionX(player.getCurrentPositionX() - 1);
+                                check = true;
+                            } else {
+                                System.out.println("Das Spielfeld geht nicht weiter nach oben.\nWähle eine andere Richtung.");
+                                move = scanner.nextLine();
+                            }
                         }
-                    } else if (move.equals("d") || move.equals("D")) {
-                        if (player.getPositionY() < battlefield.getWidth()-1) {
-                            player.setCurrentPositionY(player.getCurrentPositionY()+1);
-                            check = true;
-                        } else {
-                            System.out.println("Das Spielfeld geht nicht weiter nach rechts.\nWähle eine andere Richtung.");
-                            move = scanner.nextLine();
+                        case "d", "D" -> {
+                            if (player.getPositionY() < battlefield.getWidth() - 1) {
+                                player.setCurrentPositionY(player.getCurrentPositionY() + 1);
+                                check = true;
+                            } else {
+                                System.out.println("Das Spielfeld geht nicht weiter nach rechts.\nWähle eine andere Richtung.");
+                                move = scanner.nextLine();
+                            }
                         }
-                    } else if (move.equals("s") || move.equals("S")) {
-                        if (player.getPositionX() < battlefield.getHeight()-1) {
-                            player.setCurrentPositionX(player.getCurrentPositionX()+1);
-                            check = true;
-                        } else {
-                            System.out.println("Das Spielfeld geht nicht weiter nach unten.\nWähle eine andere Richtung.");
-                            move = scanner.nextLine();
+                        case "s", "S" -> {
+                            if (player.getPositionX() < battlefield.getHeight() - 1) {
+                                player.setCurrentPositionX(player.getCurrentPositionX() + 1);
+                                check = true;
+                            } else {
+                                System.out.println("Das Spielfeld geht nicht weiter nach unten.\nWähle eine andere Richtung.");
+                                move = scanner.nextLine();
+                            }
                         }
-                    } else if (move.equals("a") || move.equals("A")) {
-                        if (player.getPositionY() > 0) {
-                            player.setCurrentPositionY(player.getCurrentPositionY()-1);
-                            check = true;
-                        } else {
-                            System.out.println("Das Spielfeld geht nicht weiter nach links.\nWähle eine andere Richtung.");
-                            move = scanner.nextLine();
+                        case "a", "A" -> {
+                            if (player.getPositionY() > 0) {
+                                player.setCurrentPositionY(player.getCurrentPositionY() - 1);
+                                check = true;
+                            } else {
+                                System.out.println("Das Spielfeld geht nicht weiter nach links.\nWähle eine andere Richtung.");
+                                move = scanner.nextLine();
+                            }
                         }
                     }
                 } else {

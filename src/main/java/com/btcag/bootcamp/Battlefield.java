@@ -1,18 +1,13 @@
 package com.btcag.bootcamp;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Battlefield {
 
-    private int height;
-    private int width;
+    private final int height;
+    private final int width;
     public static String [][] battlefieldArray;
-
-    Battlefield() {
-        height = 0;
-        width = 0;
-        battlefieldArray = new String[height][width];
-    }
 
     Battlefield(int height, int width){
         this.height = height;
@@ -30,10 +25,8 @@ public class Battlefield {
 
     static Battlefield createBattlefield(Battlefield battlefield) {
         String[][] newBattlefield = new String[battlefield.height][battlefield.width];
-        for (int i = 0; i < newBattlefield.length; i++) {
-            for (int j = 0; j < newBattlefield[i].length; j++) {
-                newBattlefield[i][j] = "[ ]";
-            }
+        for (String[] strings : newBattlefield) {
+            Arrays.fill(strings, "[ ]");
         }
         battlefield.battlefieldArray = newBattlefield;
         return battlefield;
@@ -47,7 +40,7 @@ public class Battlefield {
                 boolean robotFound = false;
                 for (Robot robot : robotList) {
                     if (i == robot.getPositionX() && j == robot.getPositionY()) {
-                        System.out.print(robot.getNameChar() + " ");
+                        System.out.print("[" + robot.getNameChar() + "] ");
                         robotFound = true;
                         break;
                     }

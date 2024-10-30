@@ -16,8 +16,8 @@ public class Robot {
     private String nameChar;
     private int currentPositionX;
     private int currentPositionY;
-    private Colors color;
-    private boolean isHuman;
+    private final Colors color;
+    private final boolean isHuman;
     private int HP; //Health Points - If Health Points fall below zero, player will lose
     private int EP; // Energy Points - Needed to use Special Weapons
     private int MS; // Movement Speed - Distance how far can robot Move
@@ -26,20 +26,10 @@ public class Robot {
     private float AB; // Accuracy Bonus - Increases hit chance of Weapons
     private int AP; // Attributes Points
 
-    public Robot(){
-        this.HP = 20;
-        this.EP = 5;
-        this.MS = 1;
-        this.AS = 0;
-        this.DM = 1.0F;
-        this.AB = 0.00F;
-        this.AP = 100;
-    }
-
     public Robot(String name){
         this.name = name;
-        setNameChar(name);
         this.color = chooseColor();
+        setNameChar(name);
         isHuman = true;
         this.HP = 20;
         this.EP = 5;
@@ -58,16 +48,8 @@ public class Robot {
         this.currentPositionY = currentPositionY;
     }
 
-    public void setColor(Colors color) {
-        this.color = color;
-    }
-
     public boolean isHuman() {
         return isHuman;
-    }
-
-    public void setHuman(boolean human) {
-        isHuman = human;
     }
 
     public int getCurrentPositionX() {
@@ -112,7 +94,7 @@ public class Robot {
 
     boolean getIsHuman(){
         return isHuman;
-    };
+    }
 
     int getHP (){
         return HP;
@@ -146,8 +128,8 @@ public class Robot {
         this.name = name;
     }
 
-    public void setNameChar (String charName){
-        this.nameChar = "[" + color.getAnsiCode() + charName.charAt(0) + Colors.resetColor() + "]";
+    public void setNameChar (String name){
+        this.nameChar = color.getAnsiCode() + name.charAt(0) + Colors.resetColor();
     }
 
     public void setHP (int HP){
@@ -189,14 +171,14 @@ public class Robot {
                 input = Integer.parseInt(scanner.nextLine());
 
                 switch (input) {
-                    case 1 -> { validInput = true; return Colors.BLACK;  }
-                    case 2 -> { validInput = true; return Colors.RED;}
+                    case 1 -> {validInput = true; return Colors.BLACK;  }
+                    case 2 -> {validInput = true; return Colors.RED;}
                     case 3 -> {validInput = true; return Colors.GREEN; }
                     case 4 -> {validInput = true; return Colors.YELLOW; }
                     case 5 -> {validInput = true; return Colors.BLUE; }
                     case 6 -> {validInput = true; return Colors.PURPLE; }
                     case 7 -> {validInput = true; return Colors.CYAN; }
-                    default -> System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 8.");
+                    default -> System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 7.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");

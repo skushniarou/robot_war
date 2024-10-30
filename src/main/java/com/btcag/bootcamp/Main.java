@@ -1,7 +1,6 @@
 package com.btcag.bootcamp;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import static com.btcag.bootcamp.Battlefield.*;
@@ -26,7 +25,6 @@ public class Main {
 
         // Erstellt eine Liste aus Spieler
         createRobot(scanner,battlefield);
-
 
         //Gibt Liste von Spieler aus mit Attributen
         System.out.println("Liste der Roboter:");

@@ -36,5 +36,5 @@ public class Other {
         Scanner scanner = new Scanner(System.in);
         System.out.println(text);
         return scanner.nextLine();
-    };
+    }
 }
