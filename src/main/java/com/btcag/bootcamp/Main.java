@@ -17,14 +17,13 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         //Spielfeld generieren
-        Battlefield battlefield = new Battlefield(10,15);
-        createBattlefield(battlefield);
+        createBattlefield();
 
         //Intro
         introduction();
 
         // Erstellt eine Liste aus Spieler
-        createRobot(battlefield);
+        createRobot();
 
         //Gibt Liste von Spieler aus mit Attributen
         System.out.println("Liste der Roboter:");

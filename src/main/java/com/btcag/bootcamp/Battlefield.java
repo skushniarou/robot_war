@@ -2,16 +2,18 @@ package com.btcag.bootcamp;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Battlefield {
 
     private final int height;
     private final int width;
-    public static String [][] battlefieldArray;
+    private static String [][] battlefieldArray;
 
-    Battlefield(int height, int width){
-        this.height = height;
-        this.width = width;
+    Battlefield(){
+        Random random = new Random();
+        this.height = random.nextInt(15);
+        this.width = random.nextInt(15);
         battlefieldArray = new String[height][width];
     }
 
@@ -23,13 +25,21 @@ public class Battlefield {
         return width;
     }
 
-    static Battlefield createBattlefield(Battlefield battlefield) {
+    public static String[][] getBattlefieldArray() {
+        return battlefieldArray;
+    }
+
+    public static void setBattlefieldArray(String[][] battlefieldArray) {
+        Battlefield.battlefieldArray = battlefieldArray;
+    }
+
+    static void createBattlefield() {
+        Battlefield battlefield = new Battlefield();
         String[][] newBattlefield = new String[battlefield.height][battlefield.width];
         for (String[] strings : newBattlefield) {
             Arrays.fill(strings, "[ ]");
         }
-        battlefield.battlefieldArray = newBattlefield;
-        return battlefield;
+        battlefieldArray = newBattlefield;
     }
 
     //Updates Battlefield on users interface
@@ -46,7 +56,7 @@ public class Battlefield {
                     }
                 }
                 if (!robotFound) {
-                    System.out.print(battlefield.battlefieldArray[i][j] + " ");
+                    System.out.print(battlefieldArray[i][j] + " ");
                 }
             }
             System.out.println();

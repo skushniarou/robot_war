@@ -1,13 +1,12 @@
 package com.btcag.bootcamp;
 
-import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.btcag.bootcamp.Other.*;
 
 public class Robot {
 
-    private String name;
+    private final String name;
     private String nameChar;
     private int currentPositionX;
     private int currentPositionY;
@@ -41,10 +40,6 @@ public class Robot {
 
     public void setCurrentPositionY(int currentPositionY) {
         this.currentPositionY = currentPositionY;
-    }
-
-    public boolean isHuman() {
-        return isHuman;
     }
 
     public int getCurrentPositionX() {
@@ -107,10 +102,6 @@ public class Robot {
         return AP;
     }
 
-    public void setName (String name){
-        this.name = name;
-    }
-
     public void setNameChar (String name){
         this.nameChar = color.getAnsiCode() + name.charAt(0) + Colors.resetColor();
     }
@@ -166,8 +157,8 @@ public class Robot {
         return null;
     }
 
-    public void generateXYPosition(Battlefield battlefield) {
-        this.currentPositionX = ThreadLocalRandom.current().nextInt(0, battlefield.getHeight());
-        this.currentPositionY = ThreadLocalRandom.current().nextInt(0, battlefield.getWidth());
+    public void generateXYPosition(String [][] battlefieldArray) {
+        this.currentPositionX = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
+        this.currentPositionY = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
     }
 }

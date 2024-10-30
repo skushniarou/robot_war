@@ -2,8 +2,7 @@ package com.btcag.bootcamp;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
+import static com.btcag.bootcamp.Battlefield.*;
 import static com.btcag.bootcamp.Other.*;
 
 public class Game {
@@ -12,12 +11,12 @@ public class Game {
     public static int playerCounter;
     public static List<Robot> robotList = new ArrayList<>();
 
-    public static void createRobot (Battlefield battlefield){
+    public static void createRobot (){
         playerCounter = userInputInt("Gebe Anzahl von Spieler ein: ");
         for (int i = 0; i < playerCounter; i++ ){
             String newName = userInputStr("Wie heißt Roboter von Spieler " + (i+1) + ": ");
             robotList.add(new Robot(newName));
-            robotList.get(i).generateXYPosition(battlefield);
+            robotList.get(i).generateXYPosition(getBattlefieldArray());
             increaseAttributes(i , (ArrayList<Robot>) robotList);
         }
     }
