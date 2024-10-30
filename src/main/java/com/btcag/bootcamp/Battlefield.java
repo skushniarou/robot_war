@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Battlefield {
 
-    public int height;
-    public int width;
+    private int height;
+    private int width;
     public static String [][] battlefieldArray;
 
     Battlefield() {
@@ -18,6 +18,14 @@ public class Battlefield {
         this.height = height;
         this.width = width;
         battlefieldArray = new String[height][width];
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 
     static Battlefield createBattlefield(Battlefield battlefield) {
@@ -39,9 +47,9 @@ public class Battlefield {
                 boolean robotFound = false;
                 for (Robot robot : robotList) {
                     if (i == robot.getPositionX() && j == robot.getPositionY()) {
-                        System.out.print(robot.getChar() + " ");
+                        System.out.print(robot.getNameChar() + " ");
                         robotFound = true;
-                        break; // Roboter gefunden, keine weitere Überprüfung nötig
+                        break;
                     }
                 }
                 if (!robotFound) {

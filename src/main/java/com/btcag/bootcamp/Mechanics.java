@@ -62,23 +62,23 @@ public class Mechanics {
                 if(move.matches("[wasdWASD]+")){
                     if (move.equals("w") || move.equals("W")) {
                         if (player.getPositionX() > 0) {
-                            player.currentPositionX -= 1;
+                            player.setCurrentPositionX(player.getCurrentPositionX()-1);;
                             check = true;
                         } else {
                             System.out.println("Das Spielfeld geht nicht weiter nach oben.\nWähle eine andere Richtung.");
                             move = scanner.nextLine();
                         }
                     } else if (move.equals("d") || move.equals("D")) {
-                        if (player.getPositionY() < battlefield.width-1) {
-                            player.currentPositionY += 1;
+                        if (player.getPositionY() < battlefield.getWidth()-1) {
+                            player.setCurrentPositionY(player.getCurrentPositionY()+1);
                             check = true;
                         } else {
                             System.out.println("Das Spielfeld geht nicht weiter nach rechts.\nWähle eine andere Richtung.");
                             move = scanner.nextLine();
                         }
                     } else if (move.equals("s") || move.equals("S")) {
-                        if (player.getPositionX() < battlefield.height-1) {
-                            player.currentPositionX += 1;
+                        if (player.getPositionX() < battlefield.getHeight()-1) {
+                            player.setCurrentPositionX(player.getCurrentPositionX()+1);
                             check = true;
                         } else {
                             System.out.println("Das Spielfeld geht nicht weiter nach unten.\nWähle eine andere Richtung.");
@@ -86,7 +86,7 @@ public class Mechanics {
                         }
                     } else if (move.equals("a") || move.equals("A")) {
                         if (player.getPositionY() > 0) {
-                            player.currentPositionY -= 1;
+                            player.setCurrentPositionY(player.getCurrentPositionY()-1);
                             check = true;
                         } else {
                             System.out.println("Das Spielfeld geht nicht weiter nach links.\nWähle eine andere Richtung.");
@@ -104,15 +104,14 @@ public class Mechanics {
     public static void aiMove(Robot opponent, Battlefield battlefield) {
         Random random = new Random();
         List<Integer> availableMoves = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-        // 1 - w - Oben; 2 - a - Links; 3 -  s - Unten; 4 - d - Rechts
-        // ToDo: playField auf high/width umstellen
-        if (opponent.getPositionY() + 1 > battlefield.width-1) { // Prüfung auf "d"
+        // 1 - w - oben; 2 - a - links; 3 - s - unten; 4 - d - rechts
+        if (opponent.getPositionY() + 1 > battlefield.getWidth()-1) { // Prüfung auf "d"
             availableMoves.remove((Integer) 4);
         }
         if (opponent.getPositionY() - 1 < 0) { // Prüfung auf "s"
             availableMoves.remove((Integer) 3);
         }
-        if (opponent.getPositionX() + 1 > battlefield.height-1) { // Prüfung auf "a"
+        if (opponent.getPositionX() + 1 > battlefield.getHeight()-1) { // Prüfung auf "a"
             availableMoves.remove((Integer) 2);
         }
         if (opponent.getPositionX() - 1 < 0) { // Prüfung auf "w"
@@ -121,13 +120,13 @@ public class Mechanics {
         int randomIndex = random.nextInt(availableMoves.size());
         int randomNumber = availableMoves.get(randomIndex);
         if (randomNumber == 1){
-            opponent.currentPositionX -= 1;
+            opponent.setCurrentPositionX(opponent.getCurrentPositionX()-1);
         } else if (randomNumber == 2) {
-            opponent.currentPositionX += 1;
+            opponent.setCurrentPositionX(opponent.getCurrentPositionX()+1);
         } else if (randomNumber == 3) {
-            opponent.currentPositionY -= 1;
+            opponent.setCurrentPositionY(opponent.getCurrentPositionY()-1);
         } else if (randomNumber == 4) {
-            opponent.currentPositionY += 1;
+            opponent.setCurrentPositionY(opponent.getCurrentPositionY()+1);
         }
     }
 }

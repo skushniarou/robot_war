@@ -12,19 +12,19 @@ public class Robot {
 
     public static List<Robot> robotList = new ArrayList<>();
 
-    String name;
-    String nameChar;
-    int currentPositionX;
-    int currentPositionY;
-    Colors color;
-    boolean isHuman;
-    int HP; //Health Points - If Health Points fall below zero, player will lose
-    int EP; // Energy Points - Needed to use Special Weapons
-    int MS; // Movement Speed - Distance how far can robot Move
-    int AS; // Armor Score - Amount of damage reduction
-    float DM; // Damage Modification - Increases amount of sum damage output
-    float AB; // Accuracy Bonus - Increases hit chance of Weapons
-    int AP; // Attributes Points
+    private String name;
+    private String nameChar;
+    private int currentPositionX;
+    private int currentPositionY;
+    private Colors color;
+    private boolean isHuman;
+    private int HP; //Health Points - If Health Points fall below zero, player will lose
+    private int EP; // Energy Points - Needed to use Special Weapons
+    private int MS; // Movement Speed - Distance how far can robot Move
+    private int AS; // Armor Score - Amount of damage reduction
+    private float DM; // Damage Modification - Increases amount of sum damage output
+    private float AB; // Accuracy Bonus - Increases hit chance of Weapons
+    private int AP; // Attributes Points
 
     public Robot(){
         this.HP = 20;
@@ -33,21 +33,59 @@ public class Robot {
         this.AS = 0;
         this.DM = 1.0F;
         this.AB = 0.00F;
-        this.AP = 10;
+        this.AP = 100;
+    }
+
+    public Robot(String name){
+        this.name = name;
+        setNameChar(name);
+        this.color = chooseColor();
+        isHuman = true;
+        this.HP = 20;
+        this.EP = 5;
+        this.MS = 1;
+        this.AS = 0;
+        this.DM = 1.0F;
+        this.AB = 0.00F;
+        this.AP = 100;
+    }
+
+    public int getCurrentPositionY() {
+        return currentPositionY;
+    }
+
+    public void setCurrentPositionY(int currentPositionY) {
+        this.currentPositionY = currentPositionY;
+    }
+
+    public void setColor(Colors color) {
+        this.color = color;
+    }
+
+    public boolean isHuman() {
+        return isHuman;
+    }
+
+    public void setHuman(boolean human) {
+        isHuman = human;
+    }
+
+    public int getCurrentPositionX() {
+        return currentPositionX;
+    }
+
+    public void setCurrentPositionX(int currentPositionX) {
+        this.currentPositionX = currentPositionX;
     }
 
     public static void createRobot (Scanner scanner, Battlefield battlefield){
         System.out.println("Gebe Anzahl von Spieler ein: ");
         playerCounter = Integer.parseInt(scanner.nextLine());
         for (int i = 0; i < playerCounter; i++ ){
-            robotList.add(new Robot());
-            System.out.print("Wie heißt Roboter " + (i+1) + ": ");
+            System.out.print("Wie heißt Roboter von Spieler " + (i+1) + ": ");
             String newName = scanner.nextLine();
-            robotList.get(i).setName(newName);
-            robotList.get(i).setColor(scanner);
-            robotList.get(i).setNameChar(newName);
+            robotList.add(new Robot(newName));
             robotList.get(i).generateXYPosition(battlefield);
-            robotList.get(i).isHuman = true;
             increaseAttributes(scanner, i , (ArrayList<Robot>) robotList);
         }
     }
@@ -56,7 +94,7 @@ public class Robot {
         return name;
     }
 
-    String getChar () {
+    String getNameChar () {
         return nameChar;
     }
 
@@ -68,6 +106,14 @@ public class Robot {
         return currentPositionY;
     }
 
+    Colors getColor(){
+        return color;
+    }
+
+    boolean getIsHuman(){
+        return isHuman;
+    };
+
     int getHP (){
         return HP;
     }
@@ -77,7 +123,7 @@ public class Robot {
     }
 
     int getMS (){
-        return AP;
+        return MS;
     }
 
     int getAS (){
@@ -132,12 +178,8 @@ public class Robot {
         this.AP = AP;
     }
 
-    private void generateXYPosition(Battlefield battlefield) {
-        this.currentPositionX = ThreadLocalRandom.current().nextInt(0, battlefield.height);
-        this.currentPositionY = ThreadLocalRandom.current().nextInt(0, battlefield.width);
-    }
-
-    public void setColor(Scanner scanner){
+    public Colors chooseColor(){
+        Scanner scanner = new Scanner(System.in);
         boolean validInput = false;
         while (!validInput) {
             System.out.print("Wähle bitte Farbe von deinem Roboter? 1 - BLACK, 2 - RED, 3 - GREEN, 4 - YELLOW, 5 - BLUE, 6 - PURPLE, 7 - CYAN: ");
@@ -147,18 +189,24 @@ public class Robot {
                 input = Integer.parseInt(scanner.nextLine());
 
                 switch (input) {
-                    case 1 -> { this.color = Colors.BLACK; validInput = true; }
-                    case 2 -> { this.color = Colors.RED; validInput = true; }
-                    case 3 -> { this.color = Colors.GREEN; validInput = true; }
-                    case 4 -> { this.color = Colors.YELLOW; validInput = true; }
-                    case 5 -> { this.color = Colors.BLUE; validInput = true; }
-                    case 6 -> { this.color = Colors.PURPLE; validInput = true; }
-                    case 7 -> { this.color = Colors.CYAN; validInput = true; }
+                    case 1 -> { validInput = true; return Colors.BLACK;  }
+                    case 2 -> { validInput = true; return Colors.RED;}
+                    case 3 -> {validInput = true; return Colors.GREEN; }
+                    case 4 -> {validInput = true; return Colors.YELLOW; }
+                    case 5 -> {validInput = true; return Colors.BLUE; }
+                    case 6 -> {validInput = true; return Colors.PURPLE; }
+                    case 7 -> {validInput = true; return Colors.CYAN; }
                     default -> System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 8.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }
         }
+        return null;
+    }
+
+    private void generateXYPosition(Battlefield battlefield) {
+        this.currentPositionX = ThreadLocalRandom.current().nextInt(0, battlefield.getHeight());
+        this.currentPositionY = ThreadLocalRandom.current().nextInt(0, battlefield.getWidth());
     }
 }

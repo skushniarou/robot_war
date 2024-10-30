@@ -11,13 +11,13 @@ public class Game {
     // Increases Player Robot Attributes at generation and for every Win
     public static void increaseAttributes(Scanner scanner, int playerIndex, ArrayList<Robot> robotList){
         boolean done = false;
-        System.out.println();
         while (!done) {
+            System.out.println();
             System.out.println("Dein Roboter hat folgende Attribute:");
-            System.out.println("HP = " + robotList.get(playerIndex).HP + ", EP = " + robotList.get(playerIndex).EP + ", MS = " + robotList.get(playerIndex).MS + ", AS = " + robotList.get(playerIndex).AS + ", Damage Mod. = " + robotList.get(playerIndex).DM + ", AC-Bonus = " + robotList.get(playerIndex).AB);
+            System.out.println("HP = " + robotList.get(playerIndex).getHP() + ", EP = " + robotList.get(playerIndex).getEP() + ", MS = " + robotList.get(playerIndex).getMS() + ", AS = " + robotList.get(playerIndex).getAS() + ", Damage Mod. = " + robotList.get(playerIndex).getDM() + ", Acc. Bonus = " + robotList.get(playerIndex).getAB());
             System.out.println("Du hasst " + robotList.get(playerIndex).getAP() + " Attributes Punkten noch übrig");
             System.out.println("Welche Attributen willst du erhöhen?");
-            System.out.println("1 - HP, 2 - EP, 3 - MS, 4 - AS, 5 - DM, 6 - AB");
+            System.out.println("1 - HP, 2 - EP, 3 - MS, 4 - AS, 5 - DM, 6 - AB, 7 - Fertig");
 
             int input;
             try {
@@ -41,26 +41,26 @@ public class Game {
     static void increaseHP(Robot robot) {
         int cost = (int) (double) (robot.getHP() / 8);
         if (cost > robot.getAP()){
-            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + ", aber haben nur " + robot.getAP());
+            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + " AP, aber haben nur " + robot.getAP());
         } else
             try {
                 robot.setAP(robot.getAP() - cost);
-                robot.setHP(robot.getHP() + 2);
-            System.out.println("Du hasst HP um 3 erhöht. Deine HP ist jetzt " + robot.getHP() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
+                robot.setHP(robot.getHP() + 3);
+            System.out.println("Du hasst HP um 3 erhöht. Dein HP ist jetzt " + robot.getHP() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }
     }
 
     static void increaseEP(Robot robot) {
-        int cost = (int) (double) (robot.getEP() / 5);
+        int cost = (int) (double) (robot.getEP() / 3);
         if (cost > robot.getAP()){
-            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + ", aber haben nur " + robot.getAP());
+            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + " AP, aber haben nur " + robot.getAP());
         } else
             try {
                 robot.setAP(robot.getAP() - cost);
-                robot.setEP(robot.getEP() + 3);
-                System.out.println("Du hasst EP um 3 erhöht. Deine EP ist jetzt " + robot.getEP() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
+                robot.setEP(robot.getEP() + 2);
+                System.out.println("Du hasst EP um 2 erhöht. Dein EP ist jetzt " + robot.getEP() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }
@@ -69,26 +69,26 @@ public class Game {
     static void increaseMS(Robot robot) {
         int cost = (int) Math.ceil(robot.getMS() * 1.5);
         if (cost > robot.getAP()){
-            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + ", aber haben nur " + robot.getAP());
+            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + " AP, aber haben nur " + robot.getAP());
         } else
             try {
                 robot.setAP(robot.getAP() - cost);
                 robot.setMS(robot.getMS() + 1);
-                System.out.println("Du hasst MS um 1 erhöht. Deine EP ist jetzt " + robot.getMS() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
+                System.out.println("Du hasst MS um 1 erhöht. Dein MS ist jetzt " + robot.getMS() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }
     }
 
     static void increaseAS(Robot robot) {
-        int cost = (int) Math.ceil(robot.getAS() * 2.2);
+        int cost = (int) Math.ceil((robot.getAS() * 1.7)+2);
         if (cost > robot.getAP()){
-            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + ", aber haben nur " + robot.getAP());
+            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + " AP, aber haben nur " + robot.getAP());
         } else
             try {
                 robot.setAP(robot.getAP() - cost);
                 robot.setAS(robot.getAS() + 1);
-                System.out.println("Du hasst MS um 1 erhöht. Deine EP ist jetzt " + robot.getAS() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
+                System.out.println("Du hasst MS um 1 erhöht. Dein AS ist jetzt " + robot.getAS() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }
@@ -97,12 +97,12 @@ public class Game {
     static void increaseDM(Robot robot) {
         int cost = (int) Math.ceil((robot.getDM() * 1.6)+1);
         if (cost > robot.getAP()){
-            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + ", aber haben nur " + robot.getAP());
+            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + " AP, aber haben nur " + robot.getAP());
         } else
             try {
                 robot.setAP(robot.getAP() - cost);
                 robot.setDM((float) (robot.getDM() + 0.15));
-                System.out.println("Du hasst MS um 1 erhöht. Deine EP ist jetzt " + robot.getDM() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
+                System.out.println("Du hasst MS um 1 erhöht. Dein DM ist jetzt " + robot.getDM() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }
@@ -111,12 +111,12 @@ public class Game {
     static void increaseAB(Robot robot) {
         int cost = (int) Math.ceil((robot.getAB() * 7.5)+2);
         if (cost > robot.getAP()){
-            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + ", aber haben nur " + robot.getAP());
+            System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + " AP, aber haben nur " + robot.getAP());
         } else
             try {
                 robot.setAP(robot.getAP() - cost);
                 robot.setAB((float) (robot.getAB() + 0.05));
-                System.out.println("Du hasst MS um 1 erhöht. Deine EP ist jetzt " + robot.getAB() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
+                System.out.println("Du hasst MS um 1 erhöht. Deine AB ist jetzt " + robot.getAB() + ". Es hat dir " + robot.getAP() + " Attribut Punkte gekostet");
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }

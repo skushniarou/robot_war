@@ -31,8 +31,8 @@ public class Main {
         //Gibt Liste von Spieler aus mit Attributen
         System.out.println("Liste der Roboter:");
         for (Robot robot : robotList) {
-            System.out.println("Name='" + robot.name + "', Symbol='" + robot.nameChar + "', x=" + robot.currentPositionX + ", y=" + robot.currentPositionY + ", Color=" + robot.color + ", isHuman=" + robot.isHuman + " ");
-            System.out.println("HP = " + robot.HP + ", EP = " + robot.EP + ", MS = " + robot.MS + ", AS = " + robot.AS + ", Damage Mod. = " + robot.DM + ", AC-Bonus = " + robot.AB);
+            System.out.println("Name='" + robot.getName() + "', Symbol='" + robot.getNameChar() + "', x=" + robot.getPositionX() + ", y=" + robot.getPositionY() + ", Color=" + robot.getColor() + ", isHuman=" + robot.getIsHuman() + " ");
+            System.out.println("HP = " + robot.getHP() + ", EP = " + robot.getEP() + ", MS = " + robot.getMS() + ", AS = " + robot.getAS() + ", Damage Mod. = " + robot.getDM() + ", AC-Bonus = " + robot.getAB());
             System.out.println();
         }
 
