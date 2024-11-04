@@ -22,7 +22,7 @@ public class Mechanics {
         if (choice.matches("[1234]+")) {
             switch (choice) {
                 case "1":
-                    playerMove(scanner, player,battlefield);
+                    playerMove(scanner, player, battlefield);
                     break label;
                 case "2":
                     // Angreifen

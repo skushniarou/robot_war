@@ -6,9 +6,15 @@ import java.util.Random;
 
 public class Battlefield {
 
+    public static Battlefield battlefield = new Battlefield(10,15);
     private final int height;
     private final int width;
     private static String [][] battlefieldArray;
+
+    Battlefield(int height, int width){
+        this.height = height;
+        this.width = width;
+    }
 
     Battlefield(){
         Random random = new Random();
@@ -25,28 +31,27 @@ public class Battlefield {
         return width;
     }
 
-    public static String[][] getBattlefieldArray() {
+    public String[][] getBattlefieldArray() {
         return battlefieldArray;
     }
 
-    public static void setBattlefieldArray(String[][] battlefieldArray) {
+    public void setBattlefieldArray(String[][] battlefieldArray) {
         Battlefield.battlefieldArray = battlefieldArray;
     }
 
     static void createBattlefield() {
-        Battlefield battlefield = new Battlefield();
-        String[][] newBattlefield = new String[battlefield.height][battlefield.width];
+        String[][] newBattlefield = new String[battlefield.getHeight()][battlefield.getWidth()];
         for (String[] strings : newBattlefield) {
             Arrays.fill(strings, "[ ]");
         }
-        battlefieldArray = newBattlefield;
+        battlefield.setBattlefieldArray(newBattlefield);
     }
 
     //Updates Battlefield on users interface
-    public static void updateBattlefield(Battlefield battlefield,  ArrayList<Robot> robotList) {
+    public static void updateBattlefield(ArrayList<Robot> robotList) {
         System.out.println();
-        for (int i = 0; i < battlefield.height; i++) {
-            for (int j = 0; j < battlefield.width; j++) {
+        for (int i = 0; i < battlefield.getHeight(); i++) {
+            for (int j = 0; j < battlefield.getWidth(); j++) {
                 boolean robotFound = false;
                 for (Robot robot : robotList) {
                     if (i == robot.getPositionX() && j == robot.getPositionY()) {
