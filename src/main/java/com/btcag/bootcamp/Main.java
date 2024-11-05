@@ -14,14 +14,11 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        //Spielfeld generieren
-        createBattlefield();
-
         //Intro
         introduction();
 
-        // Erstellt eine Liste aus Spieler
-        createRobot();
+        //Spielfeld generieren + eine Spielerliste aus Roboter
+        createGameComponents();
 
         //Gibt Liste von Spieler aus mit Attributen
         System.out.println("Liste der Roboter:");
@@ -36,7 +33,7 @@ public class Main {
         while (gameOver) {
             for (int i = 0; i < getRobotListLength(); i++){
                 if (robotList.get(i).getIsHuman() == true) {
-                    playerTurn(scanner, robotList.get(i), battlefield);
+                    //playerTurn(scanner, robotList.get(i), battlefield);
                     //checkWinConditionPlayer(i,(ArrayList<Robot>) robotList);
                     if (!gameOver) break;
                 } else {

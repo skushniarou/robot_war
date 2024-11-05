@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
+import static com.btcag.bootcamp.Game.createRobot;
+
 public class Battlefield {
 
     public static Battlefield battlefield = new Battlefield(2,2);
@@ -48,8 +50,13 @@ public class Battlefield {
         return !battlefieldArray[x][y].equals("[ ]");
     }
 
-    static void createBattlefield() {
+    static void createGameComponents(){
         String[][] newBattlefield = new String[battlefield.getHeight()][battlefield.getWidth()];
+        createClearBattlefield(newBattlefield);
+        createRobot();
+    }
+
+    static void createClearBattlefield(String[][] newBattlefield) {
         for (String[] strings : newBattlefield) {
             Arrays.fill(strings, "[ ]");
         }
@@ -58,20 +65,24 @@ public class Battlefield {
 
     //Updates Battlefield on users interface
     public static void updateBattlefield(ArrayList<Robot> robotList) {
+        String[][] battlefieldArray = battlefield.getBattlefieldArray();
+        createClearBattlefield(battlefieldArray);
+
         System.out.println();
+        for (Robot robot : robotList) {
+            int x = robot.getPositionX();
+            int y = robot.getPositionY();
+
+            // Wenn Koordinaten mit Roboter stimmen, ersetze Zelle mit Roboter-Char
+            if (y >= 0 && y < battlefield.getHeight() && x >= 0 && x < battlefield.getWidth()) {
+                battlefieldArray[y][x] = "[" + robot.getNameChar() + "]";
+            }
+        }
+
+        // Spielfeld auf der Konsole anzeigen
         for (int i = 0; i < battlefield.getHeight(); i++) {
             for (int j = 0; j < battlefield.getWidth(); j++) {
-                boolean robotFound = false;
-                for (Robot robot : robotList) {
-                    if (i == robot.getPositionY() && j == robot.getPositionX()) {
-                        System.out.print("[" + robot.getNameChar() + "] ");
-                        robotFound = true;
-                        break;
-                    }
-                }
-                if (!robotFound) {
-                    System.out.print(battlefieldArray[i][j] + " ");
-                }
+                System.out.print(battlefieldArray[i][j] + " ");
             }
             System.out.println();
         }
