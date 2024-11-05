@@ -36,7 +36,7 @@ public class Main {
             for (int i = 0; i < getRobotListLength(); i++){
                 if (robotList.get(i).getIsHuman() == true) {
                     playerTurn(scanner, robotList.get(i), battlefield);
-                    checkWinConditionPlayer(i,(ArrayList<Robot>) robotList);
+                    //checkWinConditionPlayer(i,(ArrayList<Robot>) robotList);
                     if (!gameOver) break;
                 } else {
                     aiTurn(robotList.get(i), battlefield);

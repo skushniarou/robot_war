@@ -28,7 +28,6 @@ public class Mechanics {
                     for (int i = 0; i < player.getMS(); i++) {
                         playerMove(scanner, player, battlefield);
                         updateBattlefield((ArrayList<Robot>) robotList);
-                        player.displayXYPosition(player);
                     }
                     break label;
                 case "2":
@@ -56,91 +55,74 @@ public class Mechanics {
     //Function to move object on battlefield and check viability of this move
     public static void playerMove(Scanner scanner, Robot player, Battlefield battlefield) {
         boolean check = false;
-        while (!check) {
-        String move = userInputStr("""
-        In welche Richtung möchtest du dich bewegen?\s
-        w = oben
-        a = links
-        s = unten
-        d = rechts
-        e = Bewegung beenden""");
-
-            while(!check){
-                if(move.matches("[wasdeWASDE]+")){
-                    switch (move) {
-                        case "w", "W" -> {
-                            check = checkValidMovePlayer(battlefield, player,0,-1);
-                        }
-                        case "d", "D" -> {
-                            if (!battlefield.hasObjectAt(player.getPositionY(),player.getPositionX())) {
-                                if (player.getPositionY() < battlefield.getWidth() - 1) {
-                                    player.setPositionY(player.getPositionY() + 1);
-                                    check = true;
-                                } else {
-                                    System.out.println("Das Spielfeld geht nicht weiter nach rechts.\nWähle eine andere Richtung.");
-                                    move = scanner.nextLine();
-                                }
+        while(!check){
+            String move = userInputStr("""
+                In welche Richtung möchtest du dich bewegen?\s
+                w = oben
+                a = links
+                s = unten
+                d = rechts
+                e = Bewegung beenden""");
+            if (move.matches("[wasdeWASDE]+")){
+                switch (move) {
+                    case "w", "W" -> {
+                        if (!battlefield.hasObjectAt(player.getPositionX(),player.getPositionY()-1)) {
+                            if (player.getPositionY() > 0) {
+                                player.setPositionY(player.getPositionY()-1);
+                                check = true;
                             } else {
-                                System.out.println("In diesem Feld befindet sich schon ein Objekt.\nWähle eine andere Richtung.");
-                                move = scanner.nextLine();
+                                System.out.println("Das Spielfeld geht nicht weiter nach oben.\nWähle eine andere Richtung.");
                             }
+                        } else {
+                            System.out.println("In diesem Feld befindet sich schon ein Objekt.\nWähle eine andere Richtung.");
                         }
-                        case "s", "S" -> {
-                            if (!battlefield.hasObjectAt(player.getPositionY(),player.getPositionX())) {
-                                if (player.getPositionX() < battlefield.getHeight() - 1) {
-                                    player.setPositionX(player.getPositionX() + 1);
-                                    check = true;
-                                } else {
-                                    System.out.println("Das Spielfeld geht nicht weiter nach unten.\nWähle eine andere Richtung.");
-                                    move = scanner.nextLine();
-                                }
-                            } else {
-                                System.out.println("In diesem Feld befindet sich schon ein Objekt.\nWähle eine andere Richtung.");
-                                move = scanner.nextLine();
-                            }
-                        }
-                        case "a", "A" -> {
-                            if (!battlefield.hasObjectAt(player.getPositionY(),player.getPositionX())) {
-                                if (player.getPositionY() > 0) {
-                                    player.setPositionY(player.getPositionY() - 1);
-                                    check = true;
-                                } else {
-                                    System.out.println("Das Spielfeld geht nicht weiter nach links.\nWähle eine andere Richtung.");
-                                    move = scanner.nextLine();
-                                }
-                            } else {
-                                System.out.println("In diesem Feld befindet sich schon ein Objekt.\nWähle eine andere Richtung.");
-                                move = scanner.nextLine();
-                            }
-                        }
-                        case "e", "E" -> {
-                            check = true;
-                        }
-                        default -> System.out.println("Ungültige Eingabe");
                     }
-                } else {
-                    System.out.println("Ungültige Eingabe!");
-                    break;
+                    case "d", "D" -> {
+                        if (!battlefield.hasObjectAt(player.getPositionX()+1,player.getPositionY())) {
+                            if (player.getPositionX() < battlefield.getWidth()-1) {
+                                player.setPositionX(player.getPositionX() + 1);
+                                check = true;
+                            } else {
+                                System.out.println("Das Spielfeld geht nicht weiter nach rechts.\nWähle eine andere Richtung.");
+                            }
+                        } else {
+                            System.out.println("In diesem Feld befindet sich schon ein Objekt.\nWähle eine andere Richtung.");
+                        }
+                    }
+                    case "s", "S" -> {
+                        if (!battlefield.hasObjectAt(player.getPositionX(),player.getPositionY()+1)) {
+                            if (player.getPositionY() < battlefield.getHeight()-1) {
+                                player.setPositionY(player.getPositionY() + 1);
+                                check = true;
+                            } else {
+                                System.out.println("Das Spielfeld geht nicht weiter nach unten.\nWähle eine andere Richtung.");
+                            }
+                        } else {
+                            System.out.println("In diesem Feld befindet sich schon ein Objekt.\nWähle eine andere Richtung.");
+                        }
+                    }
+                    case "a", "A" -> {
+                        if (!battlefield.hasObjectAt(player.getPositionX()-1,player.getPositionY())) {
+                            if (player.getPositionX() > 0) {
+                                player.setPositionX(player.getPositionX() - 1);
+                                check = true;
+                            } else {
+                                System.out.println("Das Spielfeld geht nicht weiter nach links.\nWähle eine andere Richtung.");
+                            }
+                        } else {
+                            System.out.println("In diesem Feld befindet sich schon ein Objekt.\nWähle eine andere Richtung.");
+                        }
+                    }
+                    case "e", "E" -> {
+                        check = true;
+                    }
+                    default -> System.out.println("Ungültige Eingabe");
                 }
-            }
-        }
-    }
-
-    private static boolean checkValidMovePlayer(Battlefield battlefield, Robot player, int modY , int modX){
-        boolean check = false;
-        if (!battlefield.hasObjectAt(player.getPositionY()+modY,player.getPositionX()+modX)) {
-            if (player.getPositionX() > 0) {
-                player.setPositionX(player.getPositionX() + modX);
-                break;
             } else {
-                System.out.println("Das Spielfeld geht nicht weiter nach oben.\nWähle eine andere Richtung.");
-                move = scanner.nextLine();
+                System.out.println("Ungültige Eingabe!");
             }
-        } else {
-            System.out.println("In diesem Feld befindet sich schon ein Objekt.\nWähle eine andere Richtung.");
-            move = scanner.nextLine();
         }
-        return check;
+        player.displayXYPosition(player);
     }
 
     public static void aiMove(Robot ai, Battlefield battlefield) {
@@ -163,21 +145,22 @@ public class Mechanics {
                 ai.displayXYPosition(ai);
             }
         }
+        updateBattlefield((ArrayList<Robot>) robotList);
     }
 
     private static List<Integer> getValidMoveIntegersAI(Robot ai, Battlefield battlefield) {
         List<Integer> availableMoves = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         // 1 - w - oben; 2 - a - links; 3 - s - unten; 4 - d - rechts
-        if (ai.getPositionY() + 1 > battlefield.getWidth()-1) { // Prüfung auf "d"
+        if (ai.getPositionY() + 1 > battlefield.getHeight()-1) { // Prüfung auf "s"
             availableMoves.remove((Integer) 4);
         }
-        if (ai.getPositionY() - 1 < 0) { // Prüfung auf "s"
+        if (ai.getPositionY() - 1 < 0) { // Prüfung auf "w"
             availableMoves.remove((Integer) 3);
         }
-        if (ai.getPositionX() + 1 > battlefield.getHeight()-1) { // Prüfung auf "a"
+        if (ai.getPositionX() + 1 > battlefield.getWidth()-1) { // Prüfung auf "d"
             availableMoves.remove((Integer) 2);
         }
-        if (ai.getPositionX() - 1 < 0) { // Prüfung auf "w"
+        if (ai.getPositionX() - 1 < 0) { // Prüfung auf "a"
             availableMoves.remove((Integer) 1);
         }
         return availableMoves;

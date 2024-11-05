@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Battlefield {
 
-    public static Battlefield battlefield = new Battlefield(3,3);
+    public static Battlefield battlefield = new Battlefield(2,2);
     private final int height;
     private final int width;
     private static String [][] battlefieldArray;
@@ -39,12 +39,13 @@ public class Battlefield {
         Battlefield.battlefieldArray = battlefieldArray;
     }
 
-    public boolean hasObjectAt(int y, int x) {
-        if (getBattlefieldArray() == null || y < 0 || y >= getBattlefieldArray().length
-                || x < 0 || x >= getBattlefieldArray()[0].length) {
-            throw new IllegalArgumentException("Ungültige Position");
+    public boolean hasObjectAt(int x, int y) {
+        if (getBattlefieldArray() == null
+                || x < 0 || x >= getBattlefieldArray().length
+                || y < 0 || y >= getBattlefieldArray()[0].length) {
+            return false; // Außerhalb des Spielfelds: Kein Objekt vorhanden
         }
-        return !battlefieldArray[y][x].equals("[ ]");
+        return !battlefieldArray[x][y].equals("[ ]");
     }
 
     static void createBattlefield() {
@@ -62,7 +63,7 @@ public class Battlefield {
             for (int j = 0; j < battlefield.getWidth(); j++) {
                 boolean robotFound = false;
                 for (Robot robot : robotList) {
-                    if (i == robot.getPositionX() && j == robot.getPositionY()) {
+                    if (i == robot.getPositionY() && j == robot.getPositionX()) {
                         System.out.print("[" + robot.getNameChar() + "] ");
                         robotFound = true;
                         break;

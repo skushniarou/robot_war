@@ -8,8 +8,8 @@ public class Robot {
 
     private final String name;
     private String nameChar;
-    private int y;
     private int x;
+    private int y;
     private final Colors color;
     private final boolean isHuman;
     private int HP; //Health Points - If Health Points fall below zero, player will lose
@@ -115,12 +115,12 @@ public class Robot {
         return AP;
     }
 
-    public void setPositionY(int y) {
-        this.y = y;
-    }
-
     public void setPositionX(int x) {
         this.x = x;
+    }
+
+    public void setPositionY(int y) {
+        this.y = y;
     }
 
     public void setNameChar (String name){
@@ -179,12 +179,12 @@ public class Robot {
     }
 
     public void generateXYPosition(String [][] battlefieldArray) {
-        this.x = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
-        this.y = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
+        this.x = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
+        this.y = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
     }
 
     public void displayXYPosition(Robot robot){
-        System.out.println(robot.getName() + " hat sich nach Position[" + (robot.getPositionY()+1) + "," + (robot.getPositionX()+1) + "] bewegt.");
+        System.out.println(robot.getName() + " hat sich nach Position [" + robot.getPositionX() + "," + robot.getPositionY() + "] bewegt.");
         System.out.println();
     }
 }
