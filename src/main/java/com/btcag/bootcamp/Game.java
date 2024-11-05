@@ -9,8 +9,8 @@ public class Game {
 
     public static boolean gameOver = true;
     private static int playerCounter;
+    public static List<Robot> robotList = new ArrayList<>();
     private static int aiCounter;
-
 
     public static boolean isGameOver() {
         return gameOver;
@@ -22,6 +22,10 @@ public class Game {
 
     public static int getAiCounter() {
         return aiCounter;
+    }
+
+    public static int getRobotListLength(){
+        return robotList.size();
     }
 
     public static void setGameOver(boolean gameOver) {
@@ -36,8 +40,6 @@ public class Game {
         Game.aiCounter = aiCounter;
     }
 
-    public static List<Robot> robotList = new ArrayList<>();
-
     public static void createRobot (){
         setPlayerCounter(userInputInt("Gebe Anzahl von Spieler ein: "));
         for (int i = 0; i < getPlayerCounter(); i++ ){
@@ -48,7 +50,8 @@ public class Game {
         }
         setAiCounter(userInputInt("Gebe Anzahl von KI-Gegner ein: "));
         for (int i = 0; i < getAiCounter(); i++){
-
+            robotList.add(new Robot());
+            robotList.get(i).generateXYPosition(battlefield.getBattlefieldArray());
         }
     }
 

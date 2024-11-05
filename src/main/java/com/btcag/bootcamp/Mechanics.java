@@ -12,13 +12,13 @@ public class Mechanics {
     public static void playerTurn(Scanner scanner, Robot player, Battlefield battlefield) {
         updateBattlefield((ArrayList<Robot>) robotList);
         String choice;
-        System.out.println(String.format("""
-            Du hast folgende Aktionen %s: Welche willst du auswählen?\s
-            1 = Bewegen
-            2 = Angreifen
-            3 = Warten
-            4 = Aufgeben
-            """, player.getName()));
+        System.out.printf("""
+                Du hast folgende Aktionen %s: Welche willst du auswählen?\s
+                1 = Bewegen
+                2 = Angreifen
+                3 = Warten
+                4 = Aufgeben
+                %n""", player.getName());
         choice = scanner.nextLine();
         label:
         if (choice.matches("[1234]+")) {
@@ -47,6 +47,7 @@ public class Mechanics {
 
     //Opponent decides what to do on his turn
     static void aiTurn(Robot opponent, Battlefield battlefield) {
+        //Mögliche Moves die KI machen kann
         aiMove(opponent,battlefield);
     }
 
