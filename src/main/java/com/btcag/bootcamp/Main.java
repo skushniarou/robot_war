@@ -32,6 +32,7 @@ public class Main {
         }
 
         //Game with Turnorder
+        updateBattlefield((ArrayList<Robot>) robotList);
         while (gameOver) {
             for (int i = 0; i < getRobotListLength(); i++){
                 if (robotList.get(i).getIsHuman() == true) {
