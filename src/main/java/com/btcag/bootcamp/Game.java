@@ -8,16 +8,47 @@ import static com.btcag.bootcamp.Other.*;
 public class Game {
 
     public static boolean gameOver = true;
-    public static int playerCounter;
+    private static int playerCounter;
+    private static int aiCounter;
+
+
+    public static boolean isGameOver() {
+        return gameOver;
+    }
+
+    public static int getPlayerCounter() {
+        return playerCounter;
+    }
+
+    public static int getAiCounter() {
+        return aiCounter;
+    }
+
+    public static void setGameOver(boolean gameOver) {
+        Game.gameOver = gameOver;
+    }
+
+    public static void setPlayerCounter(int playerCounter) {
+        Game.playerCounter = playerCounter;
+    }
+
+    public static void setAiCounter(int aiCounter) {
+        Game.aiCounter = aiCounter;
+    }
+
     public static List<Robot> robotList = new ArrayList<>();
 
     public static void createRobot (){
-        playerCounter = userInputInt("Gebe Anzahl von Spieler ein: ");
-        for (int i = 0; i < playerCounter; i++ ){
+        setPlayerCounter(userInputInt("Gebe Anzahl von Spieler ein: "));
+        for (int i = 0; i < getPlayerCounter(); i++ ){
             String newName = userInputStr("Wie heißt Roboter von Spieler " + (i+1) + ": ");
             robotList.add(new Robot(newName));
             robotList.get(i).generateXYPosition(battlefield.getBattlefieldArray());
             increaseAttributes(i , (ArrayList<Robot>) robotList);
+        }
+        setAiCounter(userInputInt("Gebe Anzahl von KI-Gegner ein: "));
+        for (int i = 0; i < getAiCounter(); i++){
+
         }
     }
 

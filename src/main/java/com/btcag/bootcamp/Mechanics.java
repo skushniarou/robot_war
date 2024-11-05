@@ -2,14 +2,16 @@ package com.btcag.bootcamp;
 
 import java.util.*;
 
+import static com.btcag.bootcamp.Battlefield.updateBattlefield;
 import static com.btcag.bootcamp.Game.gameOver;
+import static com.btcag.bootcamp.Game.robotList;
 
 public class Mechanics {
 
     //Spieler wird abgefragt was er machen will
     public static void playerTurn(Scanner scanner, Robot player, Battlefield battlefield) {
+        updateBattlefield((ArrayList<Robot>) robotList);
         String choice;
-        System.out.println();
         System.out.println(String.format("""
             Du hast folgende Aktionen %s: Welche willst du auswählen?\s
             1 = Bewegen
@@ -22,7 +24,10 @@ public class Mechanics {
         if (choice.matches("[1234]+")) {
             switch (choice) {
                 case "1":
-                    playerMove(scanner, player, battlefield);
+                    for (int i = 0; i < player.getMS(); i++) {
+                        playerMove(scanner, player, battlefield);
+                        updateBattlefield((ArrayList<Robot>) robotList);
+                    }
                     break label;
                 case "2":
                     // Angreifen

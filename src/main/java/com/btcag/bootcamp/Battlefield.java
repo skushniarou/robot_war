@@ -66,5 +66,6 @@ public class Battlefield {
             }
             System.out.println();
         }
+        System.out.println();
     }
 }

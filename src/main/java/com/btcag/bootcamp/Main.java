@@ -35,8 +35,7 @@ public class Main {
 
         //Game with Turnorder
         while (gameOver) {
-            for (int i = 0; i < playerCounter; i++){
-                updateBattlefield((ArrayList<Robot>) robotList);
+            for (int i = 0; i < getPlayerCounter(); i++){
                 playerTurn(scanner,robotList.get(i),battlefield);
                 checkWinConditionPlayer(i,(ArrayList<Robot>) robotList);
                 if (!gameOver) break;
