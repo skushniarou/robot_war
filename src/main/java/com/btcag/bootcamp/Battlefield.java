@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Battlefield {
 
-    public static Battlefield battlefield = new Battlefield(10,15);
+    public static Battlefield battlefield = new Battlefield(3,3);
     private final int height;
     private final int width;
     private static String [][] battlefieldArray;
@@ -18,7 +18,7 @@ public class Battlefield {
 
     Battlefield(){
         Random random = new Random();
-        this.height = random.nextInt(15);
+        this.height = random.nextInt(10);
         this.width = random.nextInt(15);
         battlefieldArray = new String[height][width];
     }
@@ -37,6 +37,14 @@ public class Battlefield {
 
     public void setBattlefieldArray(String[][] battlefieldArray) {
         Battlefield.battlefieldArray = battlefieldArray;
+    }
+
+    public boolean hasObjectAt(int y, int x) {
+        if (getBattlefieldArray() == null || y < 0 || y >= getBattlefieldArray().length
+                || x < 0 || x >= getBattlefieldArray()[0].length) {
+            throw new IllegalArgumentException("Ungültige Position");
+        }
+        return !battlefieldArray[y][x].equals("[ ]");
     }
 
     static void createBattlefield() {

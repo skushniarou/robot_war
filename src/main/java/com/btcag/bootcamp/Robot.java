@@ -8,14 +8,14 @@ public class Robot {
 
     private final String name;
     private String nameChar;
-    private int currentPositionX;
-    private int currentPositionY;
+    private int y;
+    private int x;
     private final Colors color;
     private final boolean isHuman;
     private int HP; //Health Points - If Health Points fall below zero, player will lose
     private int EP; // Energy Points - Needed to use Special Weapons
-    private int AR; // Attack Range - Distance within Robot can Auto-attack
-    private int BD; // Base Damage - Normal Damage that robot deals by attacking
+    private final int AR; // Attack Range - Distance within Robot can Auto-attack
+    private final int BD; // Base Damage - Normal Damage that robot deals by attacking
     private int MS; // Movement Speed - Distance how far can robot Move
 
     private int AS; // Armor Score - Amount of damage reduction
@@ -55,14 +55,6 @@ public class Robot {
         this.AP = 0;
     }
 
-    public int getCurrentPositionY() {
-        return currentPositionY;
-    }
-
-    public int getCurrentPositionX() {
-        return currentPositionX;
-    }
-
     String getName (){
         return name;
     }
@@ -72,11 +64,11 @@ public class Robot {
     }
 
     int getPositionX() {
-        return currentPositionX;
+        return x;
     }
 
     int getPositionY() {
-        return currentPositionY;
+        return y;
     }
 
     Colors getColor(){
@@ -123,12 +115,12 @@ public class Robot {
         return AP;
     }
 
-    public void setCurrentPositionY(int currentPositionY) {
-        this.currentPositionY = currentPositionY;
+    public void setPositionY(int y) {
+        this.y = y;
     }
 
-    public void setCurrentPositionX(int currentPositionX) {
-        this.currentPositionX = currentPositionX;
+    public void setPositionX(int x) {
+        this.x = x;
     }
 
     public void setNameChar (String name){
@@ -187,9 +179,12 @@ public class Robot {
     }
 
     public void generateXYPosition(String [][] battlefieldArray) {
-        this.currentPositionX = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
-        this.currentPositionY = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
+        this.x = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
+        this.y = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
     }
 
-
+    public void displayXYPosition(Robot robot){
+        System.out.println(robot.getName() + " hat sich nach Position[" + (robot.getPositionY()+1) + "," + (robot.getPositionX()+1) + "] bewegt.");
+        System.out.println();
+    }
 }
