@@ -26,6 +26,10 @@ public class Game {
         return aiCounter;
     }
 
+    public static List<Robot> getRobotList() {
+        return robotList;
+    }
+
     public static int getRobotListLength(){
         return robotList.size();
     }

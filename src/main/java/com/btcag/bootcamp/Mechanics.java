@@ -3,8 +3,8 @@ package com.btcag.bootcamp;
 import java.util.*;
 
 import static com.btcag.bootcamp.Battlefield.updateBattlefield;
-import static com.btcag.bootcamp.Game.gameOver;
-import static com.btcag.bootcamp.Game.robotList;
+import static com.btcag.bootcamp.Game.*;
+import static com.btcag.bootcamp.Other.userInputInt;
 import static com.btcag.bootcamp.Other.userInputStr;
 
 public class Mechanics {
@@ -112,7 +112,41 @@ public class Mechanics {
     }
 
     public static void playerAttack(Robot player, Battlefield battlefield){
-        //Attack enemy Roboter
+        List<Robot> validTargetList = getValidTargetList(player);
+        // Display the valid targets with their names and numbers
+        for (int i = 0; i < validTargetList.size(); i++) {
+            System.out.println((i + 1) + ") " + validTargetList.get(i).getName());
+        }
+        int targetIndex = userInputInt("Wer sollte angegriffen werden? (Gebe nummer ein):");
+        if (targetIndex >= 0 && targetIndex < validTargetList.size()) {
+            Robot target = validTargetList.get(targetIndex);
+            // Proceed with the attack on the selected target
+            attackTarget(player, target);
+        } else {
+            System.out.println("Invalid selection. Please try again.");
+        }
+    }
+
+    private static List<Robot> getValidTargetList (Robot currRobot){
+        List<Robot> targetList = getRobotList();
+        //Player Roboter aus der Liste löschen, wenn identisch ist
+        targetList.removeIf(target -> target.equals(currRobot) || target.getName().equals(currRobot.getName()));
+        targetList.removeIf(target -> !isInRange(currRobot, target));
+        return targetList;
+    }
+
+    private static boolean isInRange(Robot currRobot, Robot target) {
+        //Ausrechnen ob Target ist in Range von active Roboter
+        double distance = Math.sqrt(
+                Math.pow(target.getPositionX() - currRobot.getPositionX(), 2) +
+                Math.pow(target.getPositionY() - currRobot.getPositionY(), 2)
+        );
+        return distance <= currRobot.getAR();
+    }
+
+    private static void attackTarget(Robot currRobot, Robot target) {
+        //Calculate damage and outcome
+        System.out.println(currRobot.getName() + " greift " + target.getName() + " an!");
     }
 
     public static void aiMove(Robot ai, Battlefield battlefield) {
@@ -142,7 +176,6 @@ public class Mechanics {
         }
     }
 
-    //ToDo: Test -> hasObjectAtXY still possible
     private static List<Integer> getValidMoveIntegersAI(Robot ai, Battlefield battlefield) {
         List<Integer> availableMoves = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
         // 1 - a - links; 2 - d - rechts; 3 - w - oben; 4 - s - unten
