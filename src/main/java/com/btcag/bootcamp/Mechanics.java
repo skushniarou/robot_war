@@ -10,7 +10,7 @@ import static com.btcag.bootcamp.Other.userInputStr;
 public class Mechanics {
 
     //Spieler wird abgefragt was er machen will
-    public static void playerTurn(Robot player, Battlefield battlefield) {;
+    public static void playerTurn(Robot player, Battlefield battlefield) {
         String choice = userInputStr(String.format(
                 "Du hast folgende Aktionen %s:\nWelche willst du auswählen?\n" +
                         "1 = Bewegen\n" +
@@ -23,6 +23,7 @@ public class Mechanics {
             switch (choice) {
                 case "1":
                     playerMove(player, battlefield);
+                    playerAttack(player, battlefield);
                     break label;
                 case "2":
                     // Angreifen
@@ -33,7 +34,6 @@ public class Mechanics {
                 case "4":
                     System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
                     gameOver = false;
-                    break label;
             }
         } else {
             System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
@@ -109,6 +109,10 @@ public class Mechanics {
             updateBattlefield((ArrayList<Robot>) robotList);
             player.displayXYPosition(player);
         }
+    }
+
+    public static void playerAttack(Robot player, Battlefield battlefield){
+        //Attack enemy Roboter
     }
 
     public static void aiMove(Robot ai, Battlefield battlefield) {

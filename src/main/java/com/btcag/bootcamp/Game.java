@@ -51,10 +51,10 @@ public class Game {
             increaseAttributes(i, (ArrayList<Robot>) robotList);
         });
         setAiCounter(userInputInt("Gebe Anzahl von KI-Gegner ein: "));
-        IntStream.range(0, getAiCounter()).forEach(i -> {
+        IntStream.range(0, getAiCounter()).forEach(_ -> {
             robotList.add(new Robot());
-            int j = robotList.size() - 1;
-            robotList.get(j).generateXYPosition(battlefield.getBattlefieldArray());
+            int index = robotList.size() - 1;
+            robotList.get(index).generateXYPosition(battlefield.getBattlefieldArray());
         });
     }
 
