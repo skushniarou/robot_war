@@ -2,27 +2,28 @@ package com.btcag.bootcamp;
 
 import java.util.*;
 
+import static com.btcag.bootcamp.Battlefield.updateBattlefield;
 import static com.btcag.bootcamp.Game.gameOver;
+import static com.btcag.bootcamp.Game.robotList;
+import static com.btcag.bootcamp.Other.userInputStr;
 
 public class Mechanics {
 
     //Spieler wird abgefragt was er machen will
-    public static void playerTurn(Scanner scanner, Robot player, Battlefield battlefield) {
-        String choice;
-        System.out.println();
-        System.out.println(String.format("""
-            Du hast folgende Aktionen %s: Welche willst du auswählen?\s
-            1 = Bewegen
-            2 = Angreifen
-            3 = Warten
-            4 = Aufgeben
-            """, player.getName()));
-        choice = scanner.nextLine();
+    public static void playerTurn(Robot player, Battlefield battlefield) {
+        String choice = userInputStr(String.format(
+                "Du hast folgende Aktionen %s:\nWelche willst du auswählen?\n" +
+                        "1 = Bewegen\n" +
+                        "2 = Angreifen\n" +
+                        "3 = Warten\n" +
+                        "4 = Aufgeben\n",
+                player.getName()));
         label:
         if (choice.matches("[1234]+")) {
             switch (choice) {
                 case "1":
-                    playerMove(scanner, player, battlefield);
+                    playerMove(player, battlefield);
+                    playerAttack(player, battlefield);
                     break label;
                 case "2":
                     // Angreifen
@@ -33,105 +34,130 @@ public class Mechanics {
                 case "4":
                     System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
                     gameOver = false;
-                    break label;
             }
         } else {
             System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
         }
     }
 
-    //Opponent decides what to do on his turn
-    static void aiTurn(Robot opponent, Battlefield battlefield) {
-        aiMove(opponent,battlefield);
+    //AI decides what to do on his turn
+    static void aiTurn(Robot ai, Battlefield battlefield) {
+        //Mögliche Moves die KI machen kann
+        aiMove(ai,battlefield);
     }
 
     //Function to move object on battlefield and check viability of this move
-    public static void playerMove(Scanner scanner, Robot player, Battlefield battlefield) {
-        String move;
-        boolean check = false;
-        while (!check) {
-            System.out.println("""
-        In welche Richtung möchtest du dich bewegen?\s
-        w = oben
-        a = links
-        s = unten
-        d = rechts""");
-        move = scanner.nextLine();
-
+    public static void playerMove(Robot player, Battlefield battlefield) {
+        for (int i = 0; i < player.getMS(); i++) {
+            boolean check = false;
             while(!check){
-                if(move.matches("[wasdWASD]+")){
+                String move = userInputStr("""
+                    In welche Richtung möchtest du dich bewegen?\s
+                    w = oben
+                    a = links
+                    s = unten
+                    d = rechts
+                    e = Bewegung beenden""");
+                if (move.matches("[wasdeWASDE]+")){
                     switch (move) {
                         case "w", "W" -> {
-                            if (player.getPositionX() > 0) {
-                                player.setCurrentPositionX(player.getCurrentPositionX() - 1);
+                            if (!battlefield.notValidMove(player.getPositionX(), player.getPositionY() - 1)) {
+                                player.setOldPositionY(player.getPositionY());
+                                player.setPositionY(player.getPositionY()-1);
                                 check = true;
                             } else {
-                                System.out.println("Das Spielfeld geht nicht weiter nach oben.\nWähle eine andere Richtung.");
-                                move = scanner.nextLine();
+                                System.out.println("Du kannst nicht weiter Bewegen.\nWähle eine andere Richtung.");
                             }
                         }
                         case "d", "D" -> {
-                            if (player.getPositionY() < battlefield.getWidth() - 1) {
-                                player.setCurrentPositionY(player.getCurrentPositionY() + 1);
+                            if (!battlefield.notValidMove(player.getPositionX() + 1, player.getPositionY())) {
+                                player.setOldPositionX(player.getPositionX());
+                                player.setPositionX(player.getPositionX() + 1);
                                 check = true;
                             } else {
-                                System.out.println("Das Spielfeld geht nicht weiter nach rechts.\nWähle eine andere Richtung.");
-                                move = scanner.nextLine();
+                                System.out.println("Du kannst nicht weiter Bewegen.\nWähle eine andere Richtung.");
                             }
                         }
                         case "s", "S" -> {
-                            if (player.getPositionX() < battlefield.getHeight() - 1) {
-                                player.setCurrentPositionX(player.getCurrentPositionX() + 1);
+                            if (!battlefield.notValidMove(player.getPositionX(), player.getPositionY() + 1)) {
+                                player.setOldPositionY(player.getPositionY());
+                                player.setPositionY(player.getPositionY() + 1);
                                 check = true;
                             } else {
-                                System.out.println("Das Spielfeld geht nicht weiter nach unten.\nWähle eine andere Richtung.");
-                                move = scanner.nextLine();
+                                System.out.println("Du kannst nicht weiter Bewegen.\nWähle eine andere Richtung.");
                             }
                         }
                         case "a", "A" -> {
-                            if (player.getPositionY() > 0) {
-                                player.setCurrentPositionY(player.getCurrentPositionY() - 1);
+                            if (!battlefield.notValidMove(player.getPositionX() - 1, player.getPositionY())) {
+                                player.setOldPositionX(player.getPositionX());
+                                player.setPositionX(player.getPositionX() - 1);
                                 check = true;
                             } else {
-                                System.out.println("Das Spielfeld geht nicht weiter nach links.\nWähle eine andere Richtung.");
-                                move = scanner.nextLine();
+                                System.out.println("Du kannst nicht weiter Bewegen.\nWähle eine andere Richtung.");
                             }
                         }
+                        case "e", "E" -> {
+                            i = player.getMS();
+                            check = true;
+                        }
+                        default -> System.out.println("Ungültige Eingabe");
                     }
                 } else {
-                    System.out.println("Falsche Eingabe!");
-                    break;
+                    System.out.println("Ungültige Eingabe!");
                 }
             }
+            updateBattlefield((ArrayList<Robot>) robotList);
+            player.displayXYPosition(player);
         }
     }
 
-    public static void aiMove(Robot opponent, Battlefield battlefield) {
+    public static void playerAttack(Robot player, Battlefield battlefield){
+        //Attack enemy Roboter
+    }
+
+    public static void aiMove(Robot ai, Battlefield battlefield) {
         Random random = new Random();
+        for (int i = 0; i < ai.getMS(); i++) {
+            List<Integer> availableMoves = getValidMoveIntegersAI(ai, battlefield);
+            int randomIndex = random.nextInt(availableMoves.size());
+            int randomNumber = availableMoves.get(randomIndex);
+            if (randomNumber == 1) {
+                ai.setOldPositionX(ai.getPositionX());
+                ai.setPositionX(ai.getPositionX() - 1);
+                ai.displayXYPosition(ai);
+            } else if (randomNumber == 2) {
+                ai.setOldPositionX(ai.getPositionX());
+                ai.setPositionX(ai.getPositionX() + 1);
+                ai.displayXYPosition(ai);
+            } else if (randomNumber == 3) {
+                ai.setOldPositionY(ai.getPositionY());
+                ai.setPositionY(ai.getPositionY() - 1);
+                ai.displayXYPosition(ai);
+            } else if (randomNumber == 4) {
+                ai.setOldPositionY(ai.getPositionY());
+                ai.setPositionY(ai.getPositionY() + 1);
+                ai.displayXYPosition(ai);
+            }
+            updateBattlefield((ArrayList<Robot>) robotList);
+        }
+    }
+
+    //ToDo: Test -> hasObjectAtXY still possible
+    private static List<Integer> getValidMoveIntegersAI(Robot ai, Battlefield battlefield) {
         List<Integer> availableMoves = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
-        // 1 - w - oben; 2 - a - links; 3 - s - unten; 4 - d - rechts
-        if (opponent.getPositionY() + 1 > battlefield.getWidth()-1) { // Prüfung auf "d"
+        // 1 - a - links; 2 - d - rechts; 3 - w - oben; 4 - s - unten
+        if ((ai.getPositionY() + 1 > battlefield.getHeight()-1) || battlefield.notValidMove(ai.getPositionX(), ai.getPositionY() + 1)) { // Prüfung auf "s"
             availableMoves.remove((Integer) 4);
         }
-        if (opponent.getPositionY() - 1 < 0) { // Prüfung auf "s"
+        if ((ai.getPositionY() - 1 < 0) || battlefield.notValidMove(ai.getPositionX(), ai.getPositionY() - 1)) { // Prüfung auf "w"
             availableMoves.remove((Integer) 3);
         }
-        if (opponent.getPositionX() + 1 > battlefield.getHeight()-1) { // Prüfung auf "a"
+        if ((ai.getPositionX() + 1 > battlefield.getWidth()-1) || battlefield.notValidMove(ai.getPositionX() + 1, ai.getPositionY())) { // Prüfung auf "d"
             availableMoves.remove((Integer) 2);
         }
-        if (opponent.getPositionX() - 1 < 0) { // Prüfung auf "w"
+        if ((ai.getPositionX() - 1 < 0) || battlefield.notValidMove(ai.getPositionX() - 1, ai.getPositionY())) { // Prüfung auf "a"
             availableMoves.remove((Integer) 1);
         }
-        int randomIndex = random.nextInt(availableMoves.size());
-        int randomNumber = availableMoves.get(randomIndex);
-        if (randomNumber == 1){
-            opponent.setCurrentPositionX(opponent.getCurrentPositionX()-1);
-        } else if (randomNumber == 2) {
-            opponent.setCurrentPositionX(opponent.getCurrentPositionX()+1);
-        } else if (randomNumber == 3) {
-            opponent.setCurrentPositionY(opponent.getCurrentPositionY()-1);
-        } else if (randomNumber == 4) {
-            opponent.setCurrentPositionY(opponent.getCurrentPositionY()+1);
-        }
+        return availableMoves;
     }
 }

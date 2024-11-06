@@ -8,12 +8,16 @@ public class Robot {
 
     private final String name;
     private String nameChar;
-    private int currentPositionX;
-    private int currentPositionY;
+    private int x;
+    private int oldX;
+    private int y;
+    private int oldY;
     private final Colors color;
     private final boolean isHuman;
     private int HP; //Health Points - If Health Points fall below zero, player will lose
     private int EP; // Energy Points - Needed to use Special Weapons
+    private final int AR; // Attack Range - Distance within Robot can Auto-attack
+    private final int BD; // Base Damage - Normal Damage that robot deals by attacking
     private int MS; // Movement Speed - Distance how far can robot Move
     private int AS; // Armor Score - Amount of damage reduction
     private float DM; // Damage Modification - Increases amount of sum damage output
@@ -25,8 +29,10 @@ public class Robot {
         this.color = chooseColor();
         setNameChar(name);
         isHuman = true;
-        this.HP = 20;
+        this.HP = 5;
         this.EP = 5;
+        this.AR = 3;
+        this.BD = 2;
         this.MS = 1;
         this.AS = 0;
         this.DM = 1.0F;
@@ -34,20 +40,20 @@ public class Robot {
         this.AP = 100;
     }
 
-    public int getCurrentPositionY() {
-        return currentPositionY;
-    }
-
-    public void setCurrentPositionY(int currentPositionY) {
-        this.currentPositionY = currentPositionY;
-    }
-
-    public int getCurrentPositionX() {
-        return currentPositionX;
-    }
-
-    public void setCurrentPositionX(int currentPositionX) {
-        this.currentPositionX = currentPositionX;
+    public Robot (){
+        this.name = "Testroboter";
+        this.color = Colors.BLUE;
+        setNameChar(this.name);
+        isHuman = false;
+        this.HP = 7;
+        this.EP = 5;
+        this.AR = 1;
+        this.BD = 1;
+        this.MS = 1;
+        this.AS = 0;
+        this.DM = 1.0F;
+        this.AB = 0.00F;
+        this.AP = 0;
     }
 
     String getName (){
@@ -59,11 +65,19 @@ public class Robot {
     }
 
     int getPositionX() {
-        return currentPositionX;
+        return x;
     }
 
     int getPositionY() {
-        return currentPositionY;
+        return y;
+    }
+
+    public int getOldPositionX() {
+        return oldX;
+    }
+
+    public int getOldPositionY() {
+        return oldY;
     }
 
     Colors getColor(){
@@ -80,6 +94,14 @@ public class Robot {
 
     int getEP (){
         return EP;
+    }
+
+    public int getAR() {
+        return AR;
+    }
+
+    public int getBD() {
+        return BD;
     }
 
     int getMS (){
@@ -100,6 +122,22 @@ public class Robot {
 
     int getAP (){
         return AP;
+    }
+
+    public void setPositionX(int x) {
+        this.x = x;
+    }
+
+    public void setPositionY(int y) {
+        this.y = y;
+    }
+
+    public void setOldPositionX(int xLast) {
+        this.oldX = xLast;
+    }
+
+    public void setOldPositionY(int yLast) {
+        this.oldY = yLast;
     }
 
     public void setNameChar (String name){
@@ -158,7 +196,14 @@ public class Robot {
     }
 
     public void generateXYPosition(String [][] battlefieldArray) {
-        this.currentPositionX = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
-        this.currentPositionY = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
+        this.x = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
+        this.y = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
+        this.oldX = x;
+        this.oldY = y;
+    }
+
+    public void displayXYPosition(Robot robot){
+        System.out.println(robot.getName() + " hat sich nach Position [" + robot.getPositionX() + "," + robot.getPositionY() + "] bewegt.");
+        System.out.println();
     }
 }
