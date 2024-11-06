@@ -9,7 +9,9 @@ public class Robot {
     private final String name;
     private String nameChar;
     private int x;
+    private int oldX;
     private int y;
+    private int oldY;
     private final Colors color;
     private final boolean isHuman;
     private int HP; //Health Points - If Health Points fall below zero, player will lose
@@ -17,7 +19,6 @@ public class Robot {
     private final int AR; // Attack Range - Distance within Robot can Auto-attack
     private final int BD; // Base Damage - Normal Damage that robot deals by attacking
     private int MS; // Movement Speed - Distance how far can robot Move
-
     private int AS; // Armor Score - Amount of damage reduction
     private float DM; // Damage Modification - Increases amount of sum damage output
     private float AB; // Accuracy Bonus - Increases hit chance of Weapons
@@ -71,6 +72,14 @@ public class Robot {
         return y;
     }
 
+    public int getOldPositionX() {
+        return oldX;
+    }
+
+    public int getOldPositionY() {
+        return oldY;
+    }
+
     Colors getColor(){
         return color;
     }
@@ -121,6 +130,14 @@ public class Robot {
 
     public void setPositionY(int y) {
         this.y = y;
+    }
+
+    public void setOldPositionX(int xLast) {
+        this.oldX = xLast;
+    }
+
+    public void setOldPositionY(int yLast) {
+        this.oldY = yLast;
     }
 
     public void setNameChar (String name){
@@ -181,6 +198,8 @@ public class Robot {
     public void generateXYPosition(String [][] battlefieldArray) {
         this.x = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
         this.y = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
+        this.oldX = x;
+        this.oldY = y;
     }
 
     public void displayXYPosition(Robot robot){

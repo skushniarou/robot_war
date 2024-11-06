@@ -8,29 +8,30 @@ import static com.btcag.bootcamp.Game.createRobot;
 
 public class Battlefield {
 
-    public static Battlefield battlefield = new Battlefield(2,2);
-    private final int height;
+    public static Battlefield battlefield = new Battlefield(3,5);
     private final int width;
+    private final int height;
     private static String [][] battlefieldArray;
 
-    Battlefield(int height, int width){
-        this.height = height;
+    Battlefield(int width, int height){
         this.width = width;
+        this.height = height;
+        battlefieldArray = new String[width][height];
     }
 
     Battlefield(){
         Random random = new Random();
-        this.height = random.nextInt(10);
         this.width = random.nextInt(15);
-        battlefieldArray = new String[height][width];
-    }
-
-    public int getHeight() {
-        return height;
+        this.height = random.nextInt(10);
+        battlefieldArray = new String[width][height];
     }
 
     public int getWidth() {
         return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public String[][] getBattlefieldArray() {
@@ -41,13 +42,11 @@ public class Battlefield {
         Battlefield.battlefieldArray = battlefieldArray;
     }
 
-    public boolean hasObjectAt(int x, int y) {
-        if (getBattlefieldArray() == null
-                || x < 0 || x >= getBattlefieldArray().length
-                || y < 0 || y >= getBattlefieldArray()[0].length) {
-            return false; // Außerhalb des Spielfelds: Kein Objekt vorhanden
-        }
-        return !battlefieldArray[x][y].equals("[ ]");
+    public boolean notValidMove(int x, int y) {
+        String[][] battlefieldArray = battlefield.getBattlefieldArray();
+        return x < 0 || x >= getWidth()
+                || y < 0 || y >= getHeight()
+                || !battlefieldArray[y][x].equals("[ ]");
     }
 
     static void createGameComponents(){
@@ -63,12 +62,25 @@ public class Battlefield {
         battlefield.setBattlefieldArray(newBattlefield);
     }
 
-    //Updates Battlefield on users interface
-    public static void updateBattlefield(ArrayList<Robot> robotList) {
-        String[][] battlefieldArray = battlefield.getBattlefieldArray();
-        createClearBattlefield(battlefieldArray);
+    // Setzt alten Positionen der Roboter auf "[ ]" in Battlefield
+    static void clearOldRobotPositions(ArrayList<Robot> robotList){
+        for (Robot robot : robotList) {
+            int oldX = robot.getOldPositionX();
+            int oldY = robot.getOldPositionY();
 
+            // Überprüfen, ob die alte Position innerhalb der Grenzen liegt
+            if (oldY >= 0 && oldY < battlefield.getHeight() && oldX >= 0 && oldX < battlefield.getWidth()) {
+                // Nur überschreiben, wenn die Zelle tatsächlich den Roboter enthielt
+                if (battlefieldArray[oldX][oldY].equals("[" + robot.getNameChar() + "]")) {
+                    battlefieldArray[oldX][oldY] = "[ ]";
+                }
+            }
+        }
         System.out.println();
+    }
+
+    //Setzt neue Positionen von Roboter auf dem Battlefield
+    static void setNewRobotPositions(ArrayList<Robot> robotList){
         for (Robot robot : robotList) {
             int x = robot.getPositionX();
             int y = robot.getPositionY();
@@ -78,6 +90,15 @@ public class Battlefield {
                 battlefieldArray[y][x] = "[" + robot.getNameChar() + "]";
             }
         }
+    }
+
+    //Updates Battlefield on users interface
+    public static void updateBattlefield(ArrayList<Robot> robotList) {
+        String[][] battlefieldArray = battlefield.getBattlefieldArray();
+
+        createClearBattlefield(battlefieldArray);
+        //clearOldRobotPositions(robotList);
+        setNewRobotPositions(robotList);
 
         // Spielfeld auf der Konsole anzeigen
         for (int i = 0; i < battlefield.getHeight(); i++) {

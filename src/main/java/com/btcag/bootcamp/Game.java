@@ -2,6 +2,8 @@ package com.btcag.bootcamp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import static com.btcag.bootcamp.Battlefield.*;
 import static com.btcag.bootcamp.Other.*;
 
@@ -42,23 +44,24 @@ public class Game {
 
     public static void createRobot (){
         setPlayerCounter(userInputInt("Gebe Anzahl von Spieler ein: "));
-        for (int i = 0; i < getPlayerCounter(); i++ ){
-            String newName = userInputStr("Wie heißt Roboter von Spieler " + (i+1) + ": ");
+        IntStream.range(0, getPlayerCounter()).forEach(i -> {
+            String newName = userInputStr("Wie heißt Roboter von Spieler " + (i + 1) + ": ");
             robotList.add(new Robot(newName));
             robotList.get(i).generateXYPosition(battlefield.getBattlefieldArray());
-            increaseAttributes(i , (ArrayList<Robot>) robotList);
-        }
+            increaseAttributes(i, (ArrayList<Robot>) robotList);
+        });
         setAiCounter(userInputInt("Gebe Anzahl von KI-Gegner ein: "));
-        for (int i = 0; i < getAiCounter(); i++){
+        IntStream.range(0, getAiCounter()).forEach(i -> {
             robotList.add(new Robot());
-            robotList.get(i).generateXYPosition(battlefield.getBattlefieldArray());
-        }
+            int j = robotList.size() - 1;
+            robotList.get(j).generateXYPosition(battlefield.getBattlefieldArray());
+        });
     }
 
     // Increases Player Robot Attributes at generation and for every Win
     public static void increaseAttributes(int playerIndex, ArrayList<Robot> robotList){
         boolean done = false;
-        while (!done) {
+        do {
             System.out.println();
             System.out.println("Dein Roboter hat folgende Attribute:");
             System.out.println("HP = " + robotList.get(playerIndex).getHP() + ", EP = " + robotList.get(playerIndex).getEP() + ", MS = " + robotList.get(playerIndex).getMS() + ", AS = " + robotList.get(playerIndex).getAS() + ", Damage Mod. = " + robotList.get(playerIndex).getDM() + ", Acc. Bonus = " + robotList.get(playerIndex).getAB());
@@ -75,12 +78,13 @@ public class Game {
                     case 5 -> increaseDM(robotList.get(playerIndex)); // increaseDM();
                     case 6 -> increaseAB(robotList.get(playerIndex)); // increaseAB();
                     case 7 -> done = true;
-                    default -> System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 7.");
+                    default ->
+                            System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 7.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
             }
-        }
+        } while (!done);
     }
 
     static void increaseHP(Robot robot) {

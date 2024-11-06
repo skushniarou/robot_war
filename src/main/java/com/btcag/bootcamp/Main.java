@@ -1,7 +1,6 @@
 package com.btcag.bootcamp;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import static com.btcag.bootcamp.Battlefield.*;
 import static com.btcag.bootcamp.Game.*;
@@ -11,13 +10,10 @@ import static com.btcag.bootcamp.Other.*;
 public class Main {
 
     public static void main(String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-
         //Intro
         introduction();
 
-        //Spielfeld generieren + eine Spielerliste aus Roboter
+        //Spielfeld generieren + eine Spielerliste aus Roboter erstellen
         createGameComponents();
 
         //Gibt Liste von Spieler aus mit Attributen
@@ -31,14 +27,13 @@ public class Main {
         //Game with Turnorder
         updateBattlefield((ArrayList<Robot>) robotList);
         while (gameOver) {
-            for (int i = 0; i < getRobotListLength(); i++){
-                if (robotList.get(i).getIsHuman() == true) {
-                    //playerTurn(scanner, robotList.get(i), battlefield);
+            for (int i = 0; i < getRobotListLength(); i++)
+                if (robotList.get(i).getIsHuman()) {
+                    playerTurn(robotList.get(i), battlefield);
                     //checkWinConditionPlayer(i,(ArrayList<Robot>) robotList);
                     if (!gameOver) break;
                 } else {
                     aiTurn(robotList.get(i), battlefield);
-                }
             }
         }
     }
