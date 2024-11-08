@@ -6,7 +6,8 @@ import java.util.stream.IntStream;
 import java.util.Random;
 
 import static com.btcag.bootcamp.Battlefield.*;
-import static com.btcag.bootcamp.Other.*;
+import static com.btcag.bootcamp.Services.InputService.userInputInt;
+import static com.btcag.bootcamp.Services.InputService.userInputStr;
 
 public class Game {
 

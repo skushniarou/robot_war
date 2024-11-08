@@ -4,8 +4,8 @@ import java.util.*;
 
 import static com.btcag.bootcamp.Battlefield.displayBattlefield;
 import static com.btcag.bootcamp.Game.*;
-import static com.btcag.bootcamp.Other.userInputInt;
-import static com.btcag.bootcamp.Other.userInputStr;
+import static com.btcag.bootcamp.Services.InputService.userInputInt;
+import static com.btcag.bootcamp.Services.InputService.userInputStr;
 import static java.lang.Math.ceil;
 
 public class Mechanics {

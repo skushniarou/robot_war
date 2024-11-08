@@ -1,8 +1,10 @@
 package com.btcag.bootcamp;
 
+import com.btcag.bootcamp.Enums.Colors;
+
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.btcag.bootcamp.Other.*;
+import static com.btcag.bootcamp.Services.InputService.userInputInt;
 
 public class Robot {
 
@@ -54,35 +56,35 @@ public class Robot {
         this.AP = 0;
     }
 
-    String getName (){
+    public String getName(){
         return name;
     }
 
-    String getNameChar () {
+    public String getNameChar() {
         return nameChar;
     }
 
-    int getPositionX() {
+    public int getPositionX() {
         return x;
     }
 
-    int getPositionY() {
+    public int getPositionY() {
         return y;
     }
 
-    Colors getColor(){
+    public Colors getColor(){
         return color;
     }
 
-    boolean getIsHuman(){
+    public boolean getIsHuman(){
         return isHuman;
     }
 
-    int getHP (){
+    public int getHP(){
         return HP;
     }
 
-    int getEP (){
+    public int getEP(){
         return EP;
     }
 
@@ -94,19 +96,19 @@ public class Robot {
         return BD;
     }
 
-    int getMS (){
+    public int getMS(){
         return MS;
     }
 
-    int getAS (){
+    public int getAS(){
         return AS;
     }
 
-    float getDM (){
+    public float getDM(){
         return DM;
     }
 
-    float getAB (){
+    public float getAB(){
         return AB;
     }
 

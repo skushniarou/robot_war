@@ -1,8 +1,8 @@
-package com.btcag.bootcamp;
+package com.btcag.bootcamp.Services;
 
 import java.util.Scanner;
 
-public class Other {
+public class InputService {
 
     public static int userInputInt(String text){
         Scanner scanner = new Scanner(System.in);

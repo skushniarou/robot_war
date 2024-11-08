@@ -1,5 +1,6 @@
 package com.btcag.bootcamp;
 
+import com.btcag.bootcamp.Views.DisplayRobotListView;
 import com.btcag.bootcamp.Views.IntroScreenView;
 
 import java.util.ArrayList;
@@ -18,12 +19,7 @@ public class Main {
         createGameComponents();
 
         //Gibt Liste von Spieler aus mit Attributen
-        System.out.println("Liste der Roboter:");
-        for (Robot robot : robotList) {
-            System.out.println("Name='" + robot.getName() + "', Symbol='" + robot.getNameChar() + "', x=" + robot.getPositionX() + ", y=" + robot.getPositionY() + ", Color=" + robot.getColor() + ", isHuman=" + robot.getIsHuman() + " ");
-            System.out.println("HP = " + robot.getHP() + ", EP = " + robot.getEP() + ", AR = " + robot.getAR() + ", BD = " + robot.getBD() + ", MS = " + robot.getMS() + ", AS = " + robot.getAS() + ", Damage Mod. = " + robot.getDM() + ", AC-Bonus = " + robot.getAB());
-            System.out.println();
-        }
+        DisplayRobotListView.displayRobotList();
 
         //Game with Turnorder
         displayBattlefield((ArrayList<Robot>) robotList);

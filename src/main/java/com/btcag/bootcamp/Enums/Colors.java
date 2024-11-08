@@ -1,4 +1,4 @@
-package com.btcag.bootcamp;
+package com.btcag.bootcamp.Enums;
 
 public enum Colors {
     BLACK("\033[0;30m"),   // BLACK

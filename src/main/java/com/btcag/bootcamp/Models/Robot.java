@@ -1,8 +1,6 @@
 package com.btcag.bootcamp.Models;
 
-import com.btcag.bootcamp.Colors;
-import java.util.concurrent.ThreadLocalRandom;
-import static com.btcag.bootcamp.Other.userInputInt;
+import com.btcag.bootcamp.Enums.Colors;
 
 public class Robot {
 
