@@ -7,7 +7,7 @@ import static com.btcag.bootcamp.Game.createRobot;
 
 public class Battlefield {
 
-    public static Battlefield battlefield = new Battlefield(3,5);
+    public static Battlefield battlefield = new Battlefield(15,10);
     private final int width;
     private final int height;
     private static String [][] battlefieldArray;

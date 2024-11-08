@@ -40,8 +40,8 @@ public class Robot {
         this.AP = 100;
     }
 
-    public Robot (){
-        this.name = "Testroboter";
+    public Robot (int random){
+        this.name = "Testroboter Nr." + random ;
         this.color = Colors.BLUE;
         setNameChar(this.name);
         isHuman = false;

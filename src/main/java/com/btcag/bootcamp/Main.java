@@ -26,14 +26,14 @@ public class Main {
 
         //Game with Turnorder
         updateBattlefield((ArrayList<Robot>) robotList);
-        while (gameOver) {
-            for (int i = 0; i < getRobotListLength(); i++)
+        while (isGameOn()) {
+            for (int i = 0; i < getRobotListLength(); i++) {
                 if (robotList.get(i).getIsHuman()) {
                     playerTurn(robotList.get(i), battlefield);
-                    //checkWinConditionPlayer(i,(ArrayList<Robot>) robotList);
-                    if (!gameOver) break;
                 } else {
                     aiTurn(robotList.get(i), battlefield);
+                }
+                checkWinCondition(i,(ArrayList<Robot>) robotList);
             }
         }
     }

@@ -3,19 +3,21 @@ package com.btcag.bootcamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.Random;
 
 import static com.btcag.bootcamp.Battlefield.*;
 import static com.btcag.bootcamp.Other.*;
 
 public class Game {
 
-    public static boolean gameOver = true;
+    static Random random = new Random();
+    private static boolean gameOn = true;
     private static int playerCounter;
     public static List<Robot> robotList = new ArrayList<>();
     private static int aiCounter;
 
-    public static boolean isGameOver() {
-        return gameOver;
+    public static boolean isGameOn() {
+        return gameOn;
     }
 
     public static int getPlayerCounter() {
@@ -34,8 +36,8 @@ public class Game {
         return robotList.size();
     }
 
-    public static void setGameOver(boolean gameOver) {
-        Game.gameOver = gameOver;
+    public static void setGameOn(boolean gameOn) {
+        Game.gameOn = gameOn;
     }
 
     public static void setPlayerCounter(int playerCounter) {
@@ -56,7 +58,7 @@ public class Game {
         });
         setAiCounter(userInputInt("Gebe Anzahl von KI-Gegner ein: "));
         IntStream.range(0, getAiCounter()).forEach(_ -> {
-            robotList.add(new Robot());
+            robotList.add(new Robot(random.nextInt(1000)));
             int index = robotList.size() - 1;
             robotList.get(index).generateXYPosition(battlefield.getBattlefieldArray());
         });
@@ -175,25 +177,13 @@ public class Game {
             }
     }
 
-    //Checks if player wins the game
-    static void checkWinConditionPlayer(int currentPlayerIndex, ArrayList<Robot> robotList) {
-        Robot currentPlayer = robotList.get(currentPlayerIndex);
-        for (int j = 0; j < robotList.size(); j++) {
-            if (j == currentPlayerIndex) continue;
-            Robot otherPlayer = robotList.get(j);
-
-            if (currentPlayer.getPositionX() == otherPlayer.getPositionX() && currentPlayer.getPositionY() == otherPlayer.getPositionY()) {
-                System.out.println("Spieler " + currentPlayer.getName() + " trifft Spieler " + robotList.get(j).getName() + " und gewinnt!");
-                gameOver = false; // Setzt das Spiel auf beendet
-            }
+    //Checks if only One Robot is in the game left -> he wins the game
+    static void checkWinCondition(int robotIndex, ArrayList<Robot> robotList) {
+        if (robotList.size() == 1) {
+            System.out.println("Robot " + robotList.get(robotIndex) + " ist der letzte Roboter!");
+            System.out.println("Robot " + robotList.get(robotIndex) + " hat gewonnen!");
+            setGameOn(false); // Setzt das Spiel auf beendet
         }
     }
 
-    //Checks if opponent wins the game
-    static void checkWinConditionAI(Robot player, Robot opponent) {
-        if (opponent.getPositionX() == player.getPositionX() && opponent.getPositionY() == player.getPositionY()) {
-            System.out.println("Leider dein Gegner " + opponent.getName() + " war stärker... für dieses mal");
-            gameOver = false;
-        }
-    }
 }

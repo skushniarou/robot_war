@@ -6,6 +6,7 @@ import static com.btcag.bootcamp.Battlefield.updateBattlefield;
 import static com.btcag.bootcamp.Game.*;
 import static com.btcag.bootcamp.Other.userInputInt;
 import static com.btcag.bootcamp.Other.userInputStr;
+import static java.lang.Math.ceil;
 
 public class Mechanics {
 
@@ -26,14 +27,14 @@ public class Mechanics {
                     playerAttack(player, battlefield);
                     break label;
                 case "2":
-                    // Angreifen
+                    playerAttack(player, battlefield);
                     break label;
                 case "3":
                     //Warten
                     break label;
                 case "4":
                     System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
-                    gameOver = false;
+                    setGameOn(false);
             }
         } else {
             System.out.println("Diese Eingabe ist ungültig, geben Sie bitte neu ein!");
@@ -114,29 +115,37 @@ public class Mechanics {
     public static void playerAttack(Robot player, Battlefield battlefield){
         List<Robot> validTargetList = getValidTargetList(player);
         // Display the valid targets with their names and numbers
-        for (int i = 0; i < validTargetList.size(); i++) {
-            System.out.println((i + 1) + ") " + validTargetList.get(i).getName());
-        }
-        int targetIndex = userInputInt("Wer sollte angegriffen werden? (Gebe nummer ein):");
-        if (targetIndex >= 0 && targetIndex < validTargetList.size()) {
-            Robot target = validTargetList.get(targetIndex);
-            // Proceed with the attack on the selected target
-            attackTarget(player, target);
+        int targetIndex;
+        if (validTargetList.size() > 0) {
+            System.out.println("Diese Roboter sind ind deinem Attack Range:");
+            for (int i = 0; i < validTargetList.size(); i++) {
+                System.out.println((i + 1) + ") " + validTargetList.get(i).getName());
+            }
+            //Ask of which opponent must be Attacked
+            do {
+                targetIndex = userInputInt("Wer sollte angegriffen werden? (Gebe nummer ein):");
+                if (targetIndex >= 0 && targetIndex < validTargetList.size() + 1) {
+                    Robot target = validTargetList.get(targetIndex-1);
+                    // Proceed with the attack on the selected target
+                    attackTarget(player, target);
+                } else {
+                    System.out.println("Auswahl ist ungültig. Gebe bitte neu ein.");
+                }
+            } while (targetIndex < 0 || targetIndex >= validTargetList.size() + 1);
         } else {
-            System.out.println("Invalid selection. Please try again.");
+            System.out.println("Niemand ist in deinem Attack Range.");
         }
     }
 
     private static List<Robot> getValidTargetList (Robot currRobot){
-        List<Robot> targetList = getRobotList();
+        List<Robot> targetList = new ArrayList<>(getRobotList());
         //Player Roboter aus der Liste löschen, wenn identisch ist
-        targetList.removeIf(target -> target.equals(currRobot) || target.getName().equals(currRobot.getName()));
-        targetList.removeIf(target -> !isInRange(currRobot, target));
+        targetList.removeIf(target -> target.equals(currRobot) || !isInRange(currRobot, target));
         return targetList;
     }
 
     private static boolean isInRange(Robot currRobot, Robot target) {
-        //Ausrechnen ob Target ist in Range von active Roboter
+        //Ausrechnen, ob Target is in Range von currRoboter
         double distance = Math.sqrt(
                 Math.pow(target.getPositionX() - currRobot.getPositionX(), 2) +
                 Math.pow(target.getPositionY() - currRobot.getPositionY(), 2)
@@ -145,8 +154,20 @@ public class Mechanics {
     }
 
     private static void attackTarget(Robot currRobot, Robot target) {
-        //Calculate damage and outcome
         System.out.println(currRobot.getName() + " greift " + target.getName() + " an!");
+        int damageDone = (int) ceil(currRobot.getBD() - target.getAS()); //ToDo:  * currRobot.getDM() in Zukunft hinzufügen
+        target.setHP(target.getHP()-damageDone);
+        System.out.println(currRobot.getName() + " hat " + damageDone + " Schaden verursacht!");
+        System.out.println(target.getName() + " hat nur " + target.getHP() + " HP übrig!");
+        isRobotDefeated(target);
+    }
+
+    private static void isRobotDefeated(Robot target){
+        if (target.getHP() <= 0 ){
+            System.out.println(target.getName() + " ist besiegt und kann nicht mehr kämpfen");
+            List<Robot> robotList = getRobotList();
+            robotList.removeIf(defeatedRobot -> defeatedRobot.equals(target.getName()));
+        }
     }
 
     public static void aiMove(Robot ai, Battlefield battlefield) {
