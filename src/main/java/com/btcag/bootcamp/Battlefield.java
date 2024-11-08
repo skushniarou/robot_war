@@ -68,7 +68,7 @@ public class Battlefield {
     }
 
     //Updates Battlefield on users interface
-    public static void updateBattlefield(ArrayList<Robot> robotList) {
+    public static void displayBattlefield(ArrayList<Robot> robotList) {
         String[][] battlefieldArray = battlefield.getBattlefieldArray();
 
         createClearBattlefield(battlefieldArray);

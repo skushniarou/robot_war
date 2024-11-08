@@ -2,7 +2,7 @@ package com.btcag.bootcamp;
 
 import java.util.*;
 
-import static com.btcag.bootcamp.Battlefield.updateBattlefield;
+import static com.btcag.bootcamp.Battlefield.displayBattlefield;
 import static com.btcag.bootcamp.Game.*;
 import static com.btcag.bootcamp.Other.userInputInt;
 import static com.btcag.bootcamp.Other.userInputStr;
@@ -63,7 +63,6 @@ public class Mechanics {
                     switch (move) {
                         case "w", "W" -> {
                             if (!battlefield.notValidMove(player.getPositionX(), player.getPositionY() - 1)) {
-                                player.setOldPositionY(player.getPositionY());
                                 player.setPositionY(player.getPositionY()-1);
                                 check = true;
                             } else {
@@ -72,7 +71,6 @@ public class Mechanics {
                         }
                         case "d", "D" -> {
                             if (!battlefield.notValidMove(player.getPositionX() + 1, player.getPositionY())) {
-                                player.setOldPositionX(player.getPositionX());
                                 player.setPositionX(player.getPositionX() + 1);
                                 check = true;
                             } else {
@@ -81,7 +79,6 @@ public class Mechanics {
                         }
                         case "s", "S" -> {
                             if (!battlefield.notValidMove(player.getPositionX(), player.getPositionY() + 1)) {
-                                player.setOldPositionY(player.getPositionY());
                                 player.setPositionY(player.getPositionY() + 1);
                                 check = true;
                             } else {
@@ -90,7 +87,6 @@ public class Mechanics {
                         }
                         case "a", "A" -> {
                             if (!battlefield.notValidMove(player.getPositionX() - 1, player.getPositionY())) {
-                                player.setOldPositionX(player.getPositionX());
                                 player.setPositionX(player.getPositionX() - 1);
                                 check = true;
                             } else {
@@ -107,7 +103,7 @@ public class Mechanics {
                     System.out.println("Ungültige Eingabe!");
                 }
             }
-            updateBattlefield((ArrayList<Robot>) robotList);
+            displayBattlefield((ArrayList<Robot>) robotList);
             player.displayXYPosition(player);
         }
     }
@@ -177,23 +173,19 @@ public class Mechanics {
             int randomIndex = random.nextInt(availableMoves.size());
             int randomNumber = availableMoves.get(randomIndex);
             if (randomNumber == 1) {
-                ai.setOldPositionX(ai.getPositionX());
                 ai.setPositionX(ai.getPositionX() - 1);
                 ai.displayXYPosition(ai);
             } else if (randomNumber == 2) {
-                ai.setOldPositionX(ai.getPositionX());
                 ai.setPositionX(ai.getPositionX() + 1);
                 ai.displayXYPosition(ai);
             } else if (randomNumber == 3) {
-                ai.setOldPositionY(ai.getPositionY());
                 ai.setPositionY(ai.getPositionY() - 1);
                 ai.displayXYPosition(ai);
             } else if (randomNumber == 4) {
-                ai.setOldPositionY(ai.getPositionY());
                 ai.setPositionY(ai.getPositionY() + 1);
                 ai.displayXYPosition(ai);
             }
-            updateBattlefield((ArrayList<Robot>) robotList);
+            displayBattlefield((ArrayList<Robot>) robotList);
         }
     }
 

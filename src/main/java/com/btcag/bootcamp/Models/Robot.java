@@ -1,8 +1,8 @@
-package com.btcag.bootcamp;
+package com.btcag.bootcamp.Models;
 
+import com.btcag.bootcamp.Colors;
 import java.util.concurrent.ThreadLocalRandom;
-
-import static com.btcag.bootcamp.Other.*;
+import static com.btcag.bootcamp.Other.userInputInt;
 
 public class Robot {
 
@@ -177,13 +177,4 @@ public class Robot {
         return null;
     }
 
-    public void generateXYPosition(String [][] battlefieldArray) {
-        this.x = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
-        this.y = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
-    }
-
-    public void displayXYPosition(Robot robot){
-        System.out.println(robot.getName() + " hat sich nach Position [" + robot.getPositionX() + "," + robot.getPositionY() + "] bewegt.");
-        System.out.println();
-    }
 }
