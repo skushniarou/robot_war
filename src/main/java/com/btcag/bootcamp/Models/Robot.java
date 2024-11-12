@@ -2,6 +2,8 @@ package com.btcag.bootcamp.Models;
 
 import com.btcag.bootcamp.Enums.Colors;
 
+import static com.btcag.bootcamp.Services.InputService.userInputInt;
+
 public class Robot {
 
     private final String name;

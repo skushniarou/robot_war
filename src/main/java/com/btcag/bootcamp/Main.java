@@ -1,7 +1,7 @@
 package com.btcag.bootcamp;
 
-import com.btcag.bootcamp.Views.DisplayRobotListView;
-import com.btcag.bootcamp.Views.IntroScreenView;
+import com.btcag.bootcamp.Views.GameView;
+import com.btcag.bootcamp.Views.RobotView;
 
 import java.util.ArrayList;
 
@@ -13,13 +13,13 @@ public class Main {
 
     public static void main(String[] args) {
         //Intro
-        IntroScreenView.introduction();
+        GameView.introduction();
 
         //Spielfeld generieren + eine Spielerliste aus Roboter erstellen
         createGameComponents();
 
         //Gibt Liste von Spieler aus mit Attributen
-        DisplayRobotListView.displayRobotList();
+        RobotView.display();
 
         //Game with Turnorder
         displayBattlefield((ArrayList<Robot>) robotList);

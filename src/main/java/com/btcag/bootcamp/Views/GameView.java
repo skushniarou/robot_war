@@ -1,6 +1,6 @@
 package com.btcag.bootcamp.Views;
 
-public class IntroScreenView {
+public class GameView {
     //Introduction at the start of this game
     public static void introduction() {
         System.out.println("Welcome to Robot Wars!");

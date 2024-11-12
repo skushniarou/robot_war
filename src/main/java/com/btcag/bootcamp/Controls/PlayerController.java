@@ -1,5 +1,4 @@
 package com.btcag.bootcamp.Controls;
 
-public class GameController {
-
+public class PlayerController {
 }

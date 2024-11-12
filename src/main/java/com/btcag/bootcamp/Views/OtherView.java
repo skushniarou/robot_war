@@ -1,4 +1,4 @@
 package com.btcag.bootcamp.Views;
 
-public class AskForRobotNameView {
+public class OtherView {
 }
