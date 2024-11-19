@@ -3,9 +3,9 @@ package com.btcag.bootcamp.Models;
 public class Battlefield {
 
     public static Battlefield battlefield = new Battlefield(15,10);
-    private final int width;
-    private final int height;
-    private static String [][] battlefieldArray;
+    private static int width;
+    private static int height;
+    protected static String [][] battlefieldArray;
 
     Battlefield(int width, int height){
         this.width = width;
@@ -13,19 +13,27 @@ public class Battlefield {
         battlefieldArray = new String[width][height];
     }
 
-    public int getWidth() {
-        return width;
+    public static Battlefield getBattlefield () {
+        return battlefield;
     }
 
-    public int getHeight() {
-        return height;
+    public static void setBattlefield (Battlefield battlefield) {
+        Battlefield.battlefield = battlefield;
     }
 
-    public String[][] getBattlefieldArray() {
+    public static int getWidth () {
+        return battlefield.width;
+    }
+
+    public static int getHeight () {
+        return battlefield.height;
+    }
+
+    public static String[][] getBattlefieldArray () {
         return battlefieldArray;
     }
 
-    public void setBattlefieldArray(String[][] battlefieldArray) {
+    public static void setBattlefieldArray (String[][] battlefieldArray) {
         Battlefield.battlefieldArray = battlefieldArray;
     }
 

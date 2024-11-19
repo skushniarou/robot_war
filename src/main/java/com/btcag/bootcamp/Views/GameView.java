@@ -28,4 +28,5 @@ public class GameView {
                 Bist du bereit für die ultimative Schlacht? Die Arena wartet auf dich!""");
         System.out.println();
     }
+
 }

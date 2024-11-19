@@ -2,9 +2,17 @@ package com.btcag.bootcamp.Models;
 
 import com.btcag.bootcamp.Enums.Colors;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+import static com.btcag.bootcamp.Models.Battlefield.battlefield;
 import static com.btcag.bootcamp.Services.InputService.userInputInt;
 
 public class Robot {
+
+    //Liste von allen Roboter in Spiel
+    public static List<Robot> robotList = new ArrayList<> ();
 
     private final String name;
     private String nameChar;
@@ -54,35 +62,43 @@ public class Robot {
         this.AP = 0;
     }
 
-    String getName (){
+    public static List<Robot> getRobotList() {
+        return robotList;
+    }
+
+    public static int getRobotListLength(){
+        return robotList.size();
+    }
+
+    public String getName (){
         return name;
     }
 
-    String getNameChar () {
+    public String getNameChar () {
         return nameChar;
     }
 
-    int getPositionX() {
+    public int getPositionX () {
         return x;
     }
 
-    int getPositionY() {
+    public int getPositionY () {
         return y;
     }
 
-    Colors getColor(){
+    public Colors getColor (){
         return color;
     }
 
-    boolean getIsHuman(){
+    public boolean getIsHuman (){
         return isHuman;
     }
 
-    int getHP (){
+    public int getHP (){
         return HP;
     }
 
-    int getEP (){
+    public int getEP (){
         return EP;
     }
 
@@ -94,23 +110,23 @@ public class Robot {
         return BD;
     }
 
-    int getMS (){
+    public int getMS (){
         return MS;
     }
 
-    int getAS (){
+    public int getAS (){
         return AS;
     }
 
-    float getDM (){
+    public float getDM (){
         return DM;
     }
 
-    float getAB (){
+    public float getAB (){
         return AB;
     }
 
-    int getAP (){
+    public int getAP (){
         return AP;
     }
 
@@ -177,4 +193,26 @@ public class Robot {
         return null;
     }
 
+    //Setzt neue Positionen von Roboter auf dem Battlefield
+    public static void setNewRobotPositions (ArrayList<Robot> robotList){
+        for (Robot robot : robotList) {
+            int x = robot.getPositionX();
+            int y = robot.getPositionY();
+
+            // Wenn Koordinaten mit Roboter stimmen, ersetze Zelle mit Roboter-Char
+            if (y >= 0 && y < battlefield.getHeight() && x >= 0 && x < battlefield.getWidth()) {
+                Battlefield.battlefieldArray[y][x] = "[" + robot.getNameChar() + "]";
+            }
+        }
+    }
+
+    public void generateXYPosition(String [][] battlefieldArray) {
+        this.x = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
+        this.y = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
+    }
+
+    public void displayXYPosition(Robot robot){
+        System.out.println(robot.getName() + " hat sich nach Position [" + robot.getPositionX() + "," + robot.getPositionY() + "] bewegt.");
+        System.out.println();
+    }
 }

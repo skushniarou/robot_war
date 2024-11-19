@@ -1,10 +1,13 @@
 package com.btcag.bootcamp;
 
+import com.btcag.bootcamp.Models.Robot;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 
-import static com.btcag.bootcamp.Game.*;
+import static com.btcag.bootcamp.Models.Game.isGameOn;
+import static com.btcag.bootcamp.Models.Game.setGameOn;
+import static com.btcag.bootcamp.Models.Robot.*;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
@@ -13,7 +16,7 @@ class GameTest {
     @BeforeEach
     void setUp() {
         setGameOn(true);
-        robotList = new ArrayList<>();
+        robotList = new ArrayList<> ();
     }
 
     @AfterEach
@@ -28,6 +31,9 @@ class GameTest {
         // Überprüfe die Sieg-Bedingung
         checkWinCondition(0, (ArrayList<Robot>) robotList);
         assertFalse(isGameOn(), "gameOn sollte auf false gesetzt sein, wenn nur ein Roboter übrig ist.");
+    }
+
+    private void checkWinCondition (int i, ArrayList<Robot> robotList) {
     }
 
     @Test
