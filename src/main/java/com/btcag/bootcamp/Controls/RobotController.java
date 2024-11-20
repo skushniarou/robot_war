@@ -120,7 +120,7 @@ public class RobotController {
 	private static void isRobotDefeated(Robot target) {
 		if (target.getHP() <= 0 ){
 			RobotView.displayDefeatStatus(target.getName());
-			Robot.getRobotList().removeIf(defeatedRobot -> defeatedRobot.equals(target.getName()));
+			Robot.getRobotList().removeIf(defeatedRobot -> defeatedRobot.equals(target));
 		}
 	}
 

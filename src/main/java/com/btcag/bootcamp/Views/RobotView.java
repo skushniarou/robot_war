@@ -37,7 +37,7 @@ public class RobotView {
     }
 
     public static void displayDefeatStatus(String name){
-        System.out.println(name + " ist besiegt und kann nicht mehr weiter kämpfen");
+        System.out.println(name + " ist besiegt und kann nicht mehr kämpfen");
     }
 
     public static void displayRobotXYPosition(Robot robot){
