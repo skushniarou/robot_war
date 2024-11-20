@@ -38,7 +38,7 @@ public class AIController {
 				ai.setPositionY(ai.getPositionY() + 1);
 				ai.displayXYPosition(ai);
 			}
-			BattlefieldView.displayBattlefield((ArrayList<Robot>) robotList);
+			BattlefieldView.displayBattlefield((ArrayList<Robot>) Robot.getRobotList());
 		}
 	}
 

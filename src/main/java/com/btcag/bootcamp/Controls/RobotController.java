@@ -1,8 +1,10 @@
 package com.btcag.bootcamp.Controls;
 
 import com.btcag.bootcamp.Models.AI;
+import com.btcag.bootcamp.Models.Battlefield;
 import com.btcag.bootcamp.Models.Player;
 import com.btcag.bootcamp.Models.Robot;
+import com.btcag.bootcamp.Views.GameView;
 import com.btcag.bootcamp.Views.RobotView;
 
 import java.util.ArrayList;
@@ -10,7 +12,6 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.btcag.bootcamp.Models.AI.setAiCounter;
-import static com.btcag.bootcamp.Models.Battlefield.battlefield;
 import static com.btcag.bootcamp.Models.Game.getRandom;
 import static com.btcag.bootcamp.Models.Robot.*;
 import static com.btcag.bootcamp.Services.InputService.userInputInt;
@@ -19,24 +20,24 @@ import static java.lang.Math.ceil;
 
 public class RobotController {
 
-	public static void createRobot (){
+	public static void createRobot () {
 		Player.setPlayerCounter(userInputInt("Gebe Anzahl von Spieler ein: "));
 		IntStream.range(0, Player.getPlayerCounter()).forEach(i -> {
 			String newName = userInputStr("Wie heißt Roboter von Spieler " + (i + 1) + ": ");
-			getRobotList().add(new Robot (newName));
-			getRobotList().get(i).generateXYPosition(battlefield.getBattlefieldArray());
-			RobotView.increaseAttributes(i, (ArrayList<Robot>) robotList);
+			Robot.getRobotList().add(new Robot (newName));
+			Robot.getRobotList().get(i).generateXYPosition(Battlefield.getBattlefieldArray());
+			RobotView.increaseAttributes(i, (ArrayList<Robot>) Robot.getRobotList());
 		});
 		setAiCounter(userInputInt("Gebe Anzahl von KI-Gegner ein: "));
 		IntStream.range(0, AI.getAiCounter()).forEach(_ -> {
-			getRobotList().add(new Robot(getRandom().nextInt(1000)));
-			int index = robotList.size() - 1;
-			robotList.get(index).generateXYPosition(battlefield.getBattlefieldArray());
+			Robot.getRobotList().add(new Robot(getRandom().nextInt(1000)));
+			int index = Robot.getRobotListSize() - 1;
+			Robot.getRobotList().get(index).generateXYPosition(Battlefield.getBattlefieldArray());
 		});
 	}
 
-	public static List<Robot> getValidTargetList (Robot currRobot){
-		List<Robot> targetList = new ArrayList<>(getRobotList());
+	public static List<Robot> getValidTargetList (Robot currRobot) {
+		List<Robot> targetList = new ArrayList<>(Robot.getRobotList());
 		//Player Roboter aus der Liste löschen, wenn identisch ist
 		targetList.removeIf(target -> target.equals(currRobot) || !isInRange(currRobot, target));
 		return targetList;
@@ -51,19 +52,18 @@ public class RobotController {
 		return distance <= currRobot.getAR();
 	}
 
-	public static void attackTarget (Robot currRobot, Robot target) {
-		System.out.println(currRobot.getName() + " greift " + target.getName() + " an!");
-		int damageDone = (int) ceil(currRobot.getBD() - target.getAS()); //ToDo:  * currRobot.getDM() in Zukunft hinzufügen
-		target.setHP(target.getHP()-damageDone);
-		System.out.println(currRobot.getName() + " hat " + damageDone + " Schaden verursacht!");
-		System.out.println(target.getName() + " hat nur " + target.getHP() + " HP übrig!");
+	public static void attackTarget (Robot attacker, Robot target) {
+		GameView.displayAttackMessage(attacker, target);
+		int damageOutcome = (int) ceil(attacker.getBD() - target.getAS()); //ToDo:  * attacker.getDM() in Zukunft hinzufügen
+		target.setHP(target.getHP()-damageOutcome);
+		GameView.displayAttackResultMessage(attacker,target,damageOutcome);
 		isRobotDefeated(target);
 	}
 
-	private static void isRobotDefeated(Robot target){
+	private static void isRobotDefeated(Robot target) {
 		if (target.getHP() <= 0 ){
-			System.out.println(target.getName() + " ist besiegt und kann nicht mehr kämpfen");
-			List<Robot> robotList = getRobotList();
+			RobotView.displayDefeatStatus(target.getName());
+			List<Robot> robotList = Robot.getRobotList();
 			robotList.removeIf(defeatedRobot -> defeatedRobot.equals(target.getName()));
 		}
 	}

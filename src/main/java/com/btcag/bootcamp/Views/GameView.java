@@ -1,5 +1,7 @@
 package com.btcag.bootcamp.Views;
 
+import com.btcag.bootcamp.Models.Robot;
+
 public class GameView {
     //Introduction at the start of this game
     public static void introduction() {
@@ -27,6 +29,15 @@ public class GameView {
                 Dein Roboter wird nicht aufgeben, solange du an den Steuerhebeln sitzt.\s
                 Bist du bereit für die ultimative Schlacht? Die Arena wartet auf dich!""");
         System.out.println();
+    }
+
+    public static void displayAttackMessage(Robot attacker, Robot target){
+        System.out.println(attacker.getName() + " greift " + target.getName() + " an!");
+    }
+
+    public static void displayAttackResultMessage(Robot attacker, Robot target, int damage){
+        System.out.println(attacker.getName() + " hat " + damage + " Schaden verursacht!");
+        System.out.println(target.getName() + " hat nur " + target.getHP() + " HP übrig!");
     }
 
 }

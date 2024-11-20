@@ -20,12 +20,12 @@ public class MainController {
 		GameController.createGameComponents();
 
 		//Gibt Liste von Spieler aus mit Attributen
-		RobotView.display();
+		RobotView.displayRobotList();
 
 		//Game with Turnorder
 		BattlefieldView.displayBattlefield((ArrayList<Robot>) Robot.getRobotList());
 		while (Game.isGameOn()) {
-			for (int i = 0; i < Robot.getRobotListLength(); i++) {
+			for (int i = 0; i < Robot.getRobotListSize(); i++) {
 				if (Robot.getRobotList().get(i).getIsHuman()) {
 					PlayerView.playerTurn(Robot.getRobotList().get(i), Battlefield.getBattlefield());
 				} else {

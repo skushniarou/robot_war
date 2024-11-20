@@ -66,7 +66,7 @@ public class Robot {
         return robotList;
     }
 
-    public static int getRobotListLength(){
+    public static int getRobotListSize(){
         return robotList.size();
     }
 

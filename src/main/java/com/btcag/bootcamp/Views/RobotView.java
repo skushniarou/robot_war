@@ -9,7 +9,7 @@ import static com.btcag.bootcamp.Models.Robot.robotList;
 import static com.btcag.bootcamp.Services.InputService.userInputInt;
 
 public class RobotView {
-    public static void display() {
+    public static void displayRobotList () {
         System.out.println("Liste der Roboter:");
         for (Robot robot : robotList) {
             System.out.println("Name='" + robot.getName() + "', Symbol='" + robot.getNameChar() + "', x=" + robot.getPositionX() + ", y=" + robot.getPositionY() + ", Color=" + robot.getColor() + ", isHuman=" + robot.getIsHuman() + " ");
@@ -47,4 +47,7 @@ public class RobotView {
         } while (!done);
     }
 
+    public static void displayDefeatStatus(String name){
+        System.out.println(name + " ist besiegt und kann nicht mehr kämpfen");
+    }
 }
