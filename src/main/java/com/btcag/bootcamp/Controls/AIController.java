@@ -4,7 +4,6 @@ import com.btcag.bootcamp.Models.AI;
 import com.btcag.bootcamp.Models.Battlefield;
 import com.btcag.bootcamp.Models.Robot;
 import com.btcag.bootcamp.Views.AIView;
-import com.btcag.bootcamp.Views.BattlefieldView;
 import com.btcag.bootcamp.Views.RobotView;
 
 import java.util.ArrayList;
@@ -41,23 +40,23 @@ public class AIController {
 				ai.setPositionY(ai.getPositionY() + 1);
 				RobotView.displayRobotXYPosition(ai);
 			}
-			BattlefieldView.displayBattlefield((ArrayList<Robot>) Robot.getRobotList());
+			BattlefieldController.manageBattlefield();
 		}
 	}
 
 	private static List<Integer> getValidMoveIntegersAI(Robot ai) {
 		List<Integer> availableMoves = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
 		// 1 - a - links; 2 - d - rechts; 3 - w - oben; 4 - s - unten
-		if ((ai.getPositionY() + 1 > Battlefield.getHeight()-1) || BattlefieldController.notValidMove(ai.getPositionX(), ai.getPositionY() + 1)) { // Prüfung auf "s"
+		if ((ai.getPositionY() + 1 > Battlefield.getHeight()-1) || BattlefieldController.invalidMove(ai.getPositionX(), ai.getPositionY() + 1)) { // Prüfung auf "s"
 			availableMoves.remove((Integer) 4);
 		}
-		if ((ai.getPositionY() - 1 < 0) || BattlefieldController.notValidMove(ai.getPositionX(), ai.getPositionY() - 1)) { // Prüfung auf "w"
+		if ((ai.getPositionY() - 1 < 0) || BattlefieldController.invalidMove(ai.getPositionX(), ai.getPositionY() - 1)) { // Prüfung auf "w"
 			availableMoves.remove((Integer) 3);
 		}
-		if ((ai.getPositionX() + 1 > Battlefield.getWidth()-1) || BattlefieldController.notValidMove(ai.getPositionX() + 1, ai.getPositionY())) { // Prüfung auf "d"
+		if ((ai.getPositionX() + 1 > Battlefield.getWidth()-1) || BattlefieldController.invalidMove(ai.getPositionX() + 1, ai.getPositionY())) { // Prüfung auf "d"
 			availableMoves.remove((Integer) 2);
 		}
-		if ((ai.getPositionX() - 1 < 0) || BattlefieldController.notValidMove(ai.getPositionX() - 1, ai.getPositionY())) { // Prüfung auf "a"
+		if ((ai.getPositionX() - 1 < 0) || BattlefieldController.invalidMove(ai.getPositionX() - 1, ai.getPositionY())) { // Prüfung auf "a"
 			availableMoves.remove((Integer) 1);
 		}
 		return availableMoves;

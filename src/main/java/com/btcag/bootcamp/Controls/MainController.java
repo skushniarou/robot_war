@@ -23,15 +23,15 @@ public class MainController {
 		RobotView.displayRobotList();
 
 		//Game with Turnorder
-		BattlefieldView.displayBattlefield((ArrayList<Robot>) Robot.getRobotList());
+		BattlefieldController.manageBattlefield();
 		while (Game.isGameOn()) {
 			for (int i = 0; i < Robot.getRobotListSize(); i++) {
 				if (Robot.getRobotList().get(i).getIsHuman()) {
-					PlayerView.playerTurn(Robot.getRobotList().get(i), Battlefield.getBattlefield());
+					PlayerController.playerTurn(Robot.getRobotList().get(i), Battlefield.getBattlefield());
 				} else {
 					AIController.aiTurn(Robot.getRobotList().get(i));
 				}
-				GameController.checkWinCondition(i,(ArrayList<Robot>) Robot.getRobotList());
+				GameController.checkWinCondition(i, Robot.getRobotList());
 			}
 		}
 	}

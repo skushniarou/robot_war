@@ -32,7 +32,7 @@ class GameTest {
         Robot robot = new Robot(1);
         getRobotList().add(robot);
         // Überprüfe die Sieg-Bedingung
-        GameController.checkWinCondition(0, (ArrayList<Robot>) getRobotList());
+        GameController.checkWinCondition(0, getRobotList());
         assertFalse(isGameOn(), "gameOn sollte auf false gesetzt sein, wenn nur ein Roboter übrig ist.");
     }
 
@@ -44,7 +44,7 @@ class GameTest {
         robotList.add(robot2);
 
         // Überprüfe die Sieg-Bedingung
-        GameController.checkWinCondition(0, (ArrayList<Robot>) robotList);
+        GameController.checkWinCondition(0, getRobotList());
         assertTrue(isGameOn(),"gameOn sollte auf true bleiben, wenn 2+ Roboter in Spiel sind.");
     }
 }

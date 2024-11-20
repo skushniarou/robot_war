@@ -37,7 +37,11 @@ public class GameView {
 
     public static void displayAttackResultMessage(Robot attacker, Robot target, int damage){
         System.out.println(attacker.getName() + " hat " + damage + " Schaden verursacht!");
-        System.out.println(target.getName() + " hat nur " + target.getHP() + " HP übrig!");
+        if (target.getHP() >= 1) System.out.println(target.getName() + " hat nur " + target.getHP() + " HP übrig!");
+    }
+
+    public static void displaySurrender(){
+        System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
     }
 
     public static void displayWinner(String winner){

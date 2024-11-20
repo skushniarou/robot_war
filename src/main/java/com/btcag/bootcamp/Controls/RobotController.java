@@ -11,10 +11,10 @@ import com.btcag.bootcamp.Views.RobotView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 import static com.btcag.bootcamp.Models.Game.getRandom;
-import static com.btcag.bootcamp.Services.InputService.userInputInt;
 import static java.lang.Math.ceil;
 
 public class RobotController {
@@ -23,23 +23,22 @@ public class RobotController {
 		PlayerController.askPlayersNumber();
 		IntStream.range(0, Player.getPlayerCounter()).forEach(i -> {
 			Robot.getRobotList().add(new Robot(RobotView.displayAskRobotName(i)));
-			Robot.getRobotList().get(i).generateXYPosition(Battlefield.getBattlefieldArray());
-			increaseAttributes(i, (ArrayList<Robot>) Robot.getRobotList());
+			generateXYPosition(Battlefield.getBattlefieldArray(),i);
+			increaseAttributes(i, Robot.getRobotList());
 		});
 		AIController.askAICounter();
 		IntStream.range(0, AI.getAiCounter()).forEach(_ -> {
 			Robot.getRobotList().add(new Robot(getRandom().nextInt(1000)));
 			int index = Robot.getRobotListSize() - 1;
-			Robot.getRobotList().get(index).generateXYPosition(Battlefield.getBattlefieldArray());
+			generateXYPosition(Battlefield.getBattlefieldArray(),index);
 		});
 	}
 
 	public static Colors chooseColor(){
 		boolean validInput = false;
 		while (!validInput) {
-			int input;
 			try {
-				input = RobotView.displayAskRobotColor();
+				int input = RobotView.displayAskRobotColor();
 				switch (input) {
 					case 1 -> {validInput = true; return Colors.BLACK;  } // Setzt Farbe auf Schwarz
 					case 2 -> {validInput = true; return Colors.RED;}     // Setzt Farbe auf Rot
@@ -48,13 +47,53 @@ public class RobotController {
 					case 5 -> {validInput = true; return Colors.BLUE; }   // Setzt Farbe auf Blau
 					case 6 -> {validInput = true; return Colors.PURPLE; } // Setzt Farbe auf Lila
 					case 7 -> {validInput = true; return Colors.CYAN; }   // Setzt Farbe auf Cyan
-					default -> System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 7.");
+					default -> OtherView.displayInvalidInputBetweenTwoInt(1,7);
 				}
 			} catch (NumberFormatException e) {
 				OtherView.displayInvalidInputInt();
 			}
 		}
 		return null;
+	}
+
+	public static void generateXYPosition(String[][] battlefieldArray, int index) {
+		boolean isUnique;
+		int x, y;
+		do {
+			// Zufällige Koordinaten generieren
+			x = ThreadLocalRandom.current().nextInt(0, battlefieldArray[0].length);
+			y = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
+
+			// Annahme: Die Koordinaten sind einzigartig
+			isUnique = true;
+
+			// Überprüfe alle Objekte in der Liste
+			for (Robot robot : Robot.getRobotList()) {
+				// Wenn irgendein Roboter dieselben Koordinaten hat, sind sie nicht einzigartig
+				if (robot.getPositionX() == x && robot.getPositionY() == y) {
+					isUnique = false;
+					break;
+				}
+			}
+
+		} while (!isUnique); // Wiederholen, bis einzigartige Koordinaten gefunden werden
+
+		// Setze die neuen Koordinaten für das Objekt mit dem gegebenen Index
+		Robot.getRobotList().get(index).setPositionX(x);
+		Robot.getRobotList().get(index).setPositionY(y);
+	}
+
+	//Setzt neue Positionen von Roboter auf dem Battlefield
+	public static void setNewRobotPositions (ArrayList<Robot> robotList){
+		for (Robot robot : robotList) {
+			int x = robot.getPositionX();
+			int y = robot.getPositionY();
+
+			// Wenn Koordinaten mit Roboter stimmen, ersetze Zelle mit Roboter-Char
+			if (y >= 0 && y < Battlefield.getHeight() && x >= 0 && x < Battlefield.getWidth()) {
+				Battlefield.getBattlefieldArray()[y][x] = "[" + robot.getNameChar() + "]";
+			}
+		}
 	}
 
 	public static List<Robot> getValidTargetList (Robot currRobot) {
@@ -65,11 +104,8 @@ public class RobotController {
 	}
 
 	private static boolean isInRange(Robot currRobot, Robot target) {
-		//Ausrechnen, ob Target is in Range von currRoboter
-		double distance = Math.sqrt(
-				Math.pow(target.getPositionX() - currRobot.getPositionX(), 2) +
-						Math.pow(target.getPositionY() - currRobot.getPositionY(), 2)
-		);
+		//Distanz berechnen
+		int distance = Math.max(Math.abs(currRobot.getPositionX() - target.getPositionX()), Math.abs(currRobot.getPositionY() - target.getPositionY()));
 		return distance <= currRobot.getAR();
 	}
 
@@ -77,15 +113,14 @@ public class RobotController {
 		GameView.displayAttackMessage(attacker, target);
 		int damageOutcome = (int) ceil(attacker.getBD() - target.getAS()); //ToDo:  * attacker.getDM() in Zukunft hinzufügen
 		target.setHP(target.getHP()-damageOutcome);
-		GameView.displayAttackResultMessage(attacker,target,damageOutcome);
+		GameView.displayAttackResultMessage(attacker, target, damageOutcome);
 		isRobotDefeated(target);
 	}
 
 	private static void isRobotDefeated(Robot target) {
 		if (target.getHP() <= 0 ){
 			RobotView.displayDefeatStatus(target.getName());
-			List<Robot> robotList = Robot.getRobotList();
-			robotList.removeIf(defeatedRobot -> defeatedRobot.equals(target.getName()));
+			Robot.getRobotList().removeIf(defeatedRobot -> defeatedRobot.equals(target.getName()));
 		}
 	}
 
@@ -107,8 +142,7 @@ public class RobotController {
 					case 7 -> RobotController.increaseDM(robot); // Erhöht Damage Modifier
 					case 8 -> RobotController.increaseAB(robot); // Erhöht Accuracy Bonus
 					case 9 -> done = true;
-					default ->
-							System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 9.");
+					default -> OtherView.displayInvalidInputBetweenTwoInt(1,9);
 				}
 			} catch (NumberFormatException e) {
 				OtherView.displayInvalidInputInt();
@@ -145,12 +179,12 @@ public class RobotController {
 				currentValue = robot.getAB();
 				break;
 			default:
-				System.out.println("Unbekanntes Attribut: " + attributeName);
+				OtherView.displayInvalidAttribute(attributeName);
 				return;
 		}
 
 		// Kosten berechnen
-		int cost = (int) Math.ceil(currentValue * costMultiplier + baseCost);
+		int cost = (int) ceil(currentValue * costMultiplier + baseCost);
 
 		// Überprüfen, ob genügend AP vorhanden sind
 		if (cost > robot.getAP()) {

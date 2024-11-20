@@ -1,5 +1,7 @@
 package com.btcag.bootcamp.Services;
 
+import com.btcag.bootcamp.Views.OtherView;
+
 import java.util.Scanner;
 
 public class InputService {
@@ -11,7 +13,7 @@ public class InputService {
             try {
                 return Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println("Ungültige Eingabe! Bitte eine ganze Zahl eingeben.");
+                OtherView.displayInvalidInputInt();
             }
         }
     }
@@ -23,7 +25,7 @@ public class InputService {
             try {
                 return scanner.nextLine();
             } catch (NumberFormatException e) {
-                System.out.println("Ungültige Eingabe! Bitte neu eingeben.");
+                OtherView.displayInvalidInputOverall();
             }
         }
     }

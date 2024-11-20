@@ -36,12 +36,8 @@ public class RobotView {
         return userInputInt("Wähle bitte Farbe von deinem Roboter? 1 - BLACK, 2 - RED, 3 - GREEN, 4 - YELLOW, 5 - BLUE, 6 - PURPLE, 7 - CYAN: ");
     }
 
-    public static void displayRobotAttributesPoints(Robot robot){
-        System.out.println("Du hasst " + robot.getAP() + " Attributes Punkten noch übrig");
-    }
-
     public static void displayDefeatStatus(String name){
-        System.out.println(name + " ist besiegt und kann nicht mehr kämpfen");
+        System.out.println(name + " ist besiegt und kann nicht mehr weiter kämpfen");
     }
 
     public static void displayRobotXYPosition(Robot robot){
@@ -49,8 +45,12 @@ public class RobotView {
         System.out.println();
     }
 
+    public static void displayRobotAttributesPoints(Robot robot){
+        System.out.println("Du hasst " + robot.getAP() + " " + Attributes.AP.getLongForm() + " noch übrig");
+    }
+
     public static void displayNotEnoughAP(int cost, int ap){
-        System.out.println("Sie haben nicht genug Attributes Punkte um HP zu erhöhen. Sie brauchen " + cost + " AP, aber haben nur " + ap);
+        System.out.println("Sie haben nicht genug "+ Attributes.AP.getLongForm() + " um Attribut zu erhöhen. Sie brauchen " + cost + " " + Attributes.AP.getShortForm() + ", aber haben nur " + ap);
     }
 
     public static void displayIncreaseAttributes(Robot robot){
