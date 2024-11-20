@@ -29,7 +29,7 @@ public class MainController {
 				if (Robot.getRobotList().get(i).getIsHuman()) {
 					PlayerView.playerTurn(Robot.getRobotList().get(i), Battlefield.getBattlefield());
 				} else {
-					AIController.aiTurn(Robot.getRobotList().get(i), Battlefield.getBattlefield());
+					AIController.aiTurn(Robot.getRobotList().get(i));
 				}
 				GameController.checkWinCondition(i,(ArrayList<Robot>) Robot.getRobotList());
 			}

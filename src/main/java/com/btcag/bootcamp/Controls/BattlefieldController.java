@@ -1,7 +1,9 @@
 package com.btcag.bootcamp.Controls;
 
 import com.btcag.bootcamp.Models.Battlefield;
+import com.btcag.bootcamp.Models.Robot;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class BattlefieldController {
@@ -13,6 +15,10 @@ public class BattlefieldController {
 			Arrays.fill(strings, "[ ]");
 		}
 		Battlefield.setBattlefieldArray(newBattlefield);
+	}
+
+	// Replace with displayBattlefield
+	public static void manageBattlefield(ArrayList<Robot> robotList) {
 	}
 
 	public static boolean notValidMove (int x, int y) {

@@ -1,6 +1,7 @@
 package com.btcag.bootcamp.Models;
 
 import com.btcag.bootcamp.Controls.BattlefieldController;
+import com.btcag.bootcamp.Controls.RobotController;
 import com.btcag.bootcamp.Enums.Colors;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Robot {
     private String nameChar;
     private int x;
     private int y;
-    private final Colors color;
+    private Colors color;
     private final boolean isHuman;
     private int HP; //Health Points - If Health Points fall below zero, player will lose
     private int EP; // Energy Points - Needed to use Special Weapons
@@ -33,7 +34,7 @@ public class Robot {
     //Constructor für Spieler
     public Robot(String name){
         this.name = name;
-        this.color = chooseColor();
+        setColor();
         setNameChar(name);
         isHuman = true;
         this.HP = 5;
@@ -184,27 +185,8 @@ public class Robot {
         this.AP = AP;
     }
 
-    public Colors chooseColor(){
-        boolean validInput = false;
-        while (!validInput) {
-            int input;
-            try {
-                input = userInputInt("Wähle bitte Farbe von deinem Roboter? 1 - BLACK, 2 - RED, 3 - GREEN, 4 - YELLOW, 5 - BLUE, 6 - PURPLE, 7 - CYAN: ");
-                switch (input) {
-                    case 1 -> {validInput = true; return Colors.BLACK;  }
-                    case 2 -> {validInput = true; return Colors.RED;}
-                    case 3 -> {validInput = true; return Colors.GREEN; }
-                    case 4 -> {validInput = true; return Colors.YELLOW; }
-                    case 5 -> {validInput = true; return Colors.BLUE; }
-                    case 6 -> {validInput = true; return Colors.PURPLE; }
-                    case 7 -> {validInput = true; return Colors.CYAN; }
-                    default -> System.out.println("Ungültige Eingabe. Bitte wählen Sie eine Zahl zwischen 1 und 7.");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
-            }
-        }
-        return null;
+    public void setColor(){
+        this.color = RobotController.chooseColor();
     }
 
     //Setzt neue Positionen von Roboter auf dem Battlefield
@@ -214,7 +196,7 @@ public class Robot {
             int y = robot.getPositionY();
 
             // Wenn Koordinaten mit Roboter stimmen, ersetze Zelle mit Roboter-Char
-            if (y >= 0 && y < Battlefield.getHeight() && x >= 0 && x < BattlefieldController.battlefield.getWidth()) {
+            if (y >= 0 && y < Battlefield.getHeight() && x >= 0 && x < Battlefield.getWidth()) {
                 Battlefield.battlefieldArray[y][x] = "[" + robot.getNameChar() + "]";
             }
         }

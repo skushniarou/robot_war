@@ -4,19 +4,20 @@ import com.btcag.bootcamp.Controls.BattlefieldController;
 import com.btcag.bootcamp.Controls.RobotController;
 import com.btcag.bootcamp.Models.Battlefield;
 import com.btcag.bootcamp.Models.Game;
+import com.btcag.bootcamp.Models.Player;
 import com.btcag.bootcamp.Models.Robot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.btcag.bootcamp.Controls.RobotController.attackTarget;
-import static com.btcag.bootcamp.Controls.RobotController.getValidTargetList;
-import static com.btcag.bootcamp.Models.Robot.robotList;
 import static com.btcag.bootcamp.Services.InputService.userInputInt;
 import static com.btcag.bootcamp.Services.InputService.userInputStr;
-import static com.btcag.bootcamp.Views.BattlefieldView.displayBattlefield;
 
 public class PlayerView {
+
+	public static int askPlayerNumber(){
+		return userInputInt("Gebe Anzahl von Spieler ein: ");
+	}
 
 	//Spieler wird abgefragt was er machen will
 	public static void playerTurn(Robot player, Battlefield battlefield) {
