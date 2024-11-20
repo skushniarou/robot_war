@@ -3,6 +3,7 @@ package com.btcag.bootcamp.Controls;
 import com.btcag.bootcamp.Models.Battlefield;
 import com.btcag.bootcamp.Models.Robot;
 import com.btcag.bootcamp.Views.BattlefieldView;
+import com.btcag.bootcamp.Views.RobotView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,16 +28,16 @@ public class AIController {
 			int randomNumber = availableMoves.get(randomIndex);
 			if (randomNumber == 1) {
 				ai.setPositionX(ai.getPositionX() - 1);
-				ai.displayXYPosition(ai);
+				RobotView.displayRobotXYPosition(ai);
 			} else if (randomNumber == 2) {
 				ai.setPositionX(ai.getPositionX() + 1);
-				ai.displayXYPosition(ai);
+				RobotView.displayRobotXYPosition(ai);
 			} else if (randomNumber == 3) {
 				ai.setPositionY(ai.getPositionY() - 1);
-				ai.displayXYPosition(ai);
+				RobotView.displayRobotXYPosition(ai);
 			} else if (randomNumber == 4) {
 				ai.setPositionY(ai.getPositionY() + 1);
-				ai.displayXYPosition(ai);
+				RobotView.displayRobotXYPosition(ai);
 			}
 			BattlefieldView.displayBattlefield((ArrayList<Robot>) Robot.getRobotList());
 		}

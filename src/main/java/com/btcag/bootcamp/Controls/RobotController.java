@@ -13,7 +13,6 @@ import java.util.stream.IntStream;
 
 import static com.btcag.bootcamp.Models.AI.setAiCounter;
 import static com.btcag.bootcamp.Models.Game.getRandom;
-import static com.btcag.bootcamp.Models.Robot.*;
 import static com.btcag.bootcamp.Services.InputService.userInputInt;
 import static com.btcag.bootcamp.Services.InputService.userInputStr;
 import static java.lang.Math.ceil;
@@ -68,4 +67,125 @@ public class RobotController {
 		}
 	}
 
+	public static void increaseAttribute(Robot robot, String attributeName, double costMultiplier, double baseCost, double increaseValue) {
+		// Dynamisch den aktuellen Attributwert ermitteln
+		double currentValue;
+		switch (attributeName) {
+			case "HP":
+				currentValue = robot.getHP();
+				break;
+			case "EP":
+				currentValue = robot.getEP();
+				break;
+			case "AR":
+				currentValue = robot.getAR();
+				break;
+			case "BD":
+				currentValue = robot.getBD();
+				break;
+			case "MS":
+				currentValue = robot.getMS();
+				break;
+			case "AS":
+				currentValue = robot.getAS();
+				break;
+			case "DM":
+				currentValue = robot.getDM();
+				break;
+			case "AB":
+				currentValue = robot.getAB();
+				break;
+			default:
+				System.out.println("Unbekanntes Attribut: " + attributeName);
+				return;
+		}
+
+		// Kosten berechnen
+		int cost = (int) Math.ceil(currentValue * costMultiplier + baseCost);
+
+		// Überprüfen, ob genügend AP vorhanden sind
+		if (cost > robot.getAP()) {
+			RobotView.displayNotEnoughAP(cost, robot.getAP());
+			return;
+		}
+
+		try {
+			// AP anpassen
+			robot.setAP(robot.getAP() - cost);
+
+			// Attribut erhöhen
+			switch (attributeName) {
+				case "HP":
+					robot.setHP((int) (currentValue + increaseValue));
+					break;
+				case "EP":
+					robot.setEP((int) (currentValue + increaseValue));
+					break;
+				case "AR":
+					robot.setAR((int) (currentValue + increaseValue));
+					break;
+				case "BD":
+					robot.setBD((int) (currentValue + increaseValue));
+					break;
+				case "MS":
+					robot.setMS((int) (currentValue + increaseValue));
+					break;
+				case "AS":
+					robot.setAS((int) (currentValue + increaseValue));
+					break;
+				case "DM":
+					robot.setDM((float) (currentValue + increaseValue));
+					break;
+				case "AB":
+					robot.setAB((float) (currentValue + increaseValue));
+					break;
+			}
+
+			// Erfolgsnachricht anzeigen
+			System.out.printf("Du hast %s um %.2f Punkte erhöht. Dein %s ist jetzt %.2f Es hat dir %d Attributpunkte gekostet.%n",
+					attributeName, increaseValue, attributeName, currentValue + increaseValue, cost);
+		} catch (NumberFormatException e) {
+			System.out.println("Ungültige Eingabe. Bitte geben Sie eine Zahl ein.");
+		}
+	}
+
+	//Erhöht Health Points
+	public static void increaseHP(Robot robot) {
+		increaseAttribute(robot, "HP", 1.0 / 8.0, 0, 3);
+	}
+
+	// Erhöht Energy Points
+	public static void increaseEP(Robot robot) {
+		increaseAttribute(robot, "EP", 1.0 / 3.0, 0, 2);
+	}
+
+	// Erhöht Attack Range
+	public static void increaseAR(Robot robot) {
+		increaseAttribute(robot, "AR", 2, 0, 1);
+	}
+
+	//Erhöht Base Damage
+	public static void increaseBD(Robot robot) {
+		increaseAttribute(robot, "BD", 3, 0, 1);
+	}
+
+	// Erhöht Movement Speed
+	public static void increaseMS(Robot robot) {
+		increaseAttribute(robot, "MS", 1.5, 0, 1);
+	}
+
+	//Erhöht Armor Score
+	public static void increaseAS(Robot robot) {
+		increaseAttribute(robot, "AS", 1.7, 2, 1);
+	}
+
+	//Erhöht Damage Modifier
+	public static void increaseDM(Robot robot) {
+		increaseAttribute(robot, "DM", 1.6, 1, 0.15);
+	}
+
+	//Erhöht Accuracy Bonus
+	public static void increaseAB(Robot robot) {
+		increaseAttribute(robot, "AB", 7.5, 2, 0.05);
+	}
 }

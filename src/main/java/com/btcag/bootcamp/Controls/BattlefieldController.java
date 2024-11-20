@@ -4,9 +4,9 @@ import com.btcag.bootcamp.Models.Battlefield;
 
 import java.util.Arrays;
 
-import static com.btcag.bootcamp.Models.Battlefield.battlefield;
-
 public class BattlefieldController {
+
+	public static Battlefield battlefield = new Battlefield(15,10);
 
 	public static void createClearBattlefield (String[][] newBattlefield) {
 		for (String[] strings : newBattlefield) {

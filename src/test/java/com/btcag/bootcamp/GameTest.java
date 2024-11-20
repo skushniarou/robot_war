@@ -1,5 +1,7 @@
 package com.btcag.bootcamp;
 
+import com.btcag.bootcamp.Controls.GameController;
+import com.btcag.bootcamp.Controls.RobotController;
 import com.btcag.bootcamp.Models.Robot;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,18 +24,16 @@ class GameTest {
     @AfterEach
     void tearDown() {
         robotList.clear();
+        Robot.setRobotList(robotList);
     }
 
     @Test
     void testCheckWinConditionWithOneRobot() {
         Robot robot = new Robot(1);
-        robotList.add(robot);
+        getRobotList().add(robot);
         // Überprüfe die Sieg-Bedingung
-        checkWinCondition(0, (ArrayList<Robot>) robotList);
+        GameController.checkWinCondition(0, (ArrayList<Robot>) getRobotList());
         assertFalse(isGameOn(), "gameOn sollte auf false gesetzt sein, wenn nur ein Roboter übrig ist.");
-    }
-
-    private void checkWinCondition (int i, ArrayList<Robot> robotList) {
     }
 
     @Test
@@ -44,7 +44,7 @@ class GameTest {
         robotList.add(robot2);
 
         // Überprüfe die Sieg-Bedingung
-        checkWinCondition(0, (ArrayList<Robot>) robotList);
+        GameController.checkWinCondition(0, (ArrayList<Robot>) robotList);
         assertTrue(isGameOn(),"gameOn sollte auf true bleiben, wenn 2+ Roboter in Spiel sind.");
     }
 }

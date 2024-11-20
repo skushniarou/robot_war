@@ -1,12 +1,12 @@
 package com.btcag.bootcamp.Models;
 
+import com.btcag.bootcamp.Controls.BattlefieldController;
 import com.btcag.bootcamp.Enums.Colors;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.btcag.bootcamp.Models.Battlefield.battlefield;
 import static com.btcag.bootcamp.Services.InputService.userInputInt;
 
 public class Robot {
@@ -22,14 +22,15 @@ public class Robot {
     private final boolean isHuman;
     private int HP; //Health Points - If Health Points fall below zero, player will lose
     private int EP; // Energy Points - Needed to use Special Weapons
-    private final int AR; // Attack Range - Distance within Robot can Auto-attack
-    private final int BD; // Base Damage - Normal Damage that robot deals by attacking
+    private int AR; // Attack Range - Distance within Robot can Auto-attack
+    private int BD; // Base Damage - Normal Damage that robot deals by attacking
     private int MS; // Movement Speed - Distance how far can robot Move
     private int AS; // Armor Score - Amount of damage reduction
     private float DM; // Damage Modification - Increases amount of sum damage output
     private float AB; // Accuracy Bonus - Increases hit chance of Weapons
     private int AP; // Attributes Points
 
+    //Constructor für Spieler
     public Robot(String name){
         this.name = name;
         this.color = chooseColor();
@@ -43,9 +44,10 @@ public class Robot {
         this.AS = 0;
         this.DM = 1.0F;
         this.AB = 0.00F;
-        this.AP = 100;
+        this.AP = 10;
     }
 
+    // Constructor für AI
     public Robot (int random){
         this.name = "Testroboter Nr." + random ;
         this.color = Colors.BLUE;
@@ -130,6 +132,10 @@ public class Robot {
         return AP;
     }
 
+    public static void setRobotList(List<Robot> robotList) {
+        Robot.robotList = robotList;
+    }
+
     public void setPositionX(int x) {
         this.x = x;
     }
@@ -148,6 +154,14 @@ public class Robot {
 
     public void setEP (int EP){
         this.EP = EP;
+    }
+
+    public void setAR(int AR) {
+        this.AR = AR;
+    }
+
+    public void setBD(int BD) {
+        this.BD = BD;
     }
 
     public void setMS (int MS){
@@ -200,7 +214,7 @@ public class Robot {
             int y = robot.getPositionY();
 
             // Wenn Koordinaten mit Roboter stimmen, ersetze Zelle mit Roboter-Char
-            if (y >= 0 && y < battlefield.getHeight() && x >= 0 && x < battlefield.getWidth()) {
+            if (y >= 0 && y < Battlefield.getHeight() && x >= 0 && x < BattlefieldController.battlefield.getWidth()) {
                 Battlefield.battlefieldArray[y][x] = "[" + robot.getNameChar() + "]";
             }
         }
@@ -211,8 +225,4 @@ public class Robot {
         this.y = ThreadLocalRandom.current().nextInt(0, battlefieldArray.length);
     }
 
-    public void displayXYPosition(Robot robot){
-        System.out.println(robot.getName() + " hat sich nach Position [" + robot.getPositionX() + "," + robot.getPositionY() + "] bewegt.");
-        System.out.println();
-    }
 }

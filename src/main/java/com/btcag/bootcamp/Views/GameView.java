@@ -40,4 +40,8 @@ public class GameView {
         System.out.println(target.getName() + " hat nur " + target.getHP() + " HP übrig!");
     }
 
+    public static void displayWinner(String winner){
+        System.out.println("Robot " + winner + " ist der letzte Roboter!");
+        System.out.println("Robot " + winner + " hat gewonnen!");
+    }
 }

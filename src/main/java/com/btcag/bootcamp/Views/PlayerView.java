@@ -105,8 +105,8 @@ public class PlayerView {
 					System.out.println("Ungültige Eingabe!");
 				}
 			}
-			displayBattlefield((ArrayList<Robot>) Robot.getRobotList());
-			player.displayXYPosition(player);
+			BattlefieldView.displayBattlefield((ArrayList<Robot>) Robot.getRobotList());
+			RobotView.displayRobotXYPosition(player);
 		}
 	}
 
