@@ -1,9 +1,8 @@
-package com.btcag.bootcamp;
+package com.btcag.bootcamp.Views;
 
-import java.util.Scanner;
+import com.btcag.bootcamp.Models.Robot;
 
-public class Other {
-
+public class GameView {
     //Introduction at the start of this game
     public static void introduction() {
         System.out.println("Welcome to Robot Wars!");
@@ -32,27 +31,21 @@ public class Other {
         System.out.println();
     }
 
-    public static int userInputInt(String text){
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println(text);
-            try {
-                return Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Ungültige Eingabe! Bitte eine ganze Zahl eingeben.");
-            }
-        }
+    public static void displayAttackMessage(Robot attacker, Robot target){
+        System.out.println(attacker.getName() + " greift " + target.getName() + " an!");
     }
 
-    public static String userInputStr(String text) {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println(text);
-            try {
-                return scanner.nextLine();
-            } catch (NumberFormatException e) {
-                System.out.println("Ungültige Eingabe! Bitte neu eingeben.");
-            }
-        }
+    public static void displayAttackResultMessage(Robot attacker, Robot target, int damage){
+        System.out.println(attacker.getName() + " hat " + damage + " Schaden verursacht!");
+        if (target.getHP() >= 1) System.out.println(target.getName() + " hat nur " + target.getHP() + " HP übrig!");
+    }
+
+    public static void displaySurrender(){
+        System.out.println("Du hasst kein Kraft mehr... Leider in diese Kampf hasst du verloren");
+    }
+
+    public static void displayWinner(String winner){
+        System.out.println("Robot " + winner + " ist der letzte Roboter!");
+        System.out.println("Robot " + winner + " hat gewonnen!");
     }
 }
