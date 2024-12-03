@@ -1,6 +1,5 @@
 package com.btcag.bootcamp.Controls;
 
-import com.btcag.bootcamp.Models.Battlefield;
 import com.btcag.bootcamp.Models.Game;
 import com.btcag.bootcamp.Models.Player;
 import com.btcag.bootcamp.Models.Robot;
@@ -11,9 +10,6 @@ import com.btcag.bootcamp.Views.RobotView;
 
 import java.util.List;
 
-import static com.btcag.bootcamp.Services.InputService.userInputInt;
-
-
 public class PlayerController {
 
 	public static void askPlayersNumber(){
@@ -21,17 +17,17 @@ public class PlayerController {
 	}
 
 	//Spieler wird abgefragt was er machen will
-	public static void playerTurn(Robot player, Battlefield battlefield) {
+	public static void playerTurn(Robot player) {
 		String choice = PlayerView.askPlayerTurn(player.getName());
 		turn:
 		if (choice.matches("[1234]+")) {
 			switch (choice) {
 				case "1":
-					playerMove(player, battlefield);
-					playerAttack(player, battlefield);
+					playerMove(player);
+					playerAttack(player);
 					break turn;
 				case "2":
-					playerAttack(player, battlefield);
+					playerAttack(player);
 					break turn;
 				case "3":
 					//Warten
@@ -46,7 +42,7 @@ public class PlayerController {
 	}
 
 	//Function to move object on battlefield and check viability of this move
-	public static void playerMove(Robot player, Battlefield battlefield) {
+	public static void playerMove(Robot player) {
 		for (int i = 0; i < player.getMS(); i++) {
 			boolean check = false;
 			do {
@@ -100,11 +96,11 @@ public class PlayerController {
 		}
 	}
 
-	public static void playerAttack(Robot player, Battlefield battlefield){
+	public static void playerAttack(Robot player){
 		List<Robot> validTargetList = RobotController.getValidTargetList(player);
 
 		// Display the valid targets with their names and numbers
-		if (validTargetList.size() > 0) {
+		if (!validTargetList.isEmpty()) {
 			PlayerView.displayPlayerValidTargetList(validTargetList);
 			//Ask of which opponent must be Attacked
 			int targetIndex;

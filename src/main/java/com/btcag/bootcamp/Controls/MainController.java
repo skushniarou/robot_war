@@ -1,14 +1,9 @@
 package com.btcag.bootcamp.Controls;
 
-import com.btcag.bootcamp.Models.Battlefield;
 import com.btcag.bootcamp.Models.Game;
 import com.btcag.bootcamp.Models.Robot;
-import com.btcag.bootcamp.Views.BattlefieldView;
 import com.btcag.bootcamp.Views.GameView;
-import com.btcag.bootcamp.Views.PlayerView;
 import com.btcag.bootcamp.Views.RobotView;
-
-import java.util.ArrayList;
 
 public class MainController {
 
@@ -27,7 +22,7 @@ public class MainController {
 		while (Game.isGameOn()) {
 			for (int i = 0; i < Robot.getRobotListSize(); i++) {
 				if (Robot.getRobotList().get(i).getIsHuman()) {
-					PlayerController.playerTurn(Robot.getRobotList().get(i), Battlefield.getBattlefield());
+					PlayerController.playerTurn(Robot.getRobotList().get(i));
 				} else {
 					AIController.aiTurn(Robot.getRobotList().get(i));
 				}
